@@ -11,7 +11,7 @@ import Forgot from "./pages/LogInSignUp";
 import Reset from "./pages/LogInSignUp";
 import Welcome from "./pages/Welcome";
 import Lobby from "./pages/Lobby";
-import {socket} from 'socket.io-client';
+import {io} from 'socket.io-client';
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //import { set } from "mongoose";
@@ -23,7 +23,6 @@ function App() {
     const socket = io();
     socket.on('connection');
     socket.emit('welcome');
-
     const [user, setUsername] = useState(null);
 
     // Funtion to replace log in and sign up buttons with the account name
