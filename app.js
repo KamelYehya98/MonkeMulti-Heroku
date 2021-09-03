@@ -54,8 +54,8 @@ const PORT = process.env.PORT || 3000;
 const server = app
   .use(express.static(path.resolve(__dirname, './client/build')))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
-  
-const io = socketIO(server);
+
+const io = require("socket.io")(server);
 
 io.on('connect', (socket) => {
     console.log('a user is connected with id: ' + socket.id);
