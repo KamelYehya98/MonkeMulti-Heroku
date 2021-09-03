@@ -21,7 +21,7 @@ mongoose.connect(dbURI,{
 
 
 // middleware
-app.use(express.static(path.resolve(__dirname, './client/build')));
+//app.use(express.static(path.resolve(__dirname, './client/build')));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({credentials: true, origin: true}));
@@ -34,7 +34,7 @@ app.get('*', checkUser);
 if (process.env.NODE_ENV === 'production')
 {
   //starts React from build folder
-  app.use(express.static('client/build'));
+  ///app.use(express.static('client/build'));
 
   //for reconnecting purposes
   app.get('*', (req, res) => {
@@ -43,10 +43,19 @@ if (process.env.NODE_ENV === 'production')
 }
 
 //socket.io connection
-var http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+// var http = require('http');
+// const server = http.createServer(app);
+// const { Server } = require("socket.io");
+// const io = new Server(server);
+
+
+const PORT = process.env.PORT || 3000;
+
+const server = app
+  .use(express.static(path.resolve(__dirname, './client/build')))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+  
+const io = socketIO(server);
 
 io.on('connect', (socket) => {
     console.log('a user is connected with id: ' + socket.id);
