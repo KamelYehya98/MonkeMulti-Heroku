@@ -6,7 +6,7 @@ import {socket} from "../service/socket";
 export default function LobbyRoom() {
     let messages, input;
     
-    
+    socket.on('connection');
     useEffect(() => {
         socket.on('join room', function(msg) {
             console.log('message : ' + msg + ' from : ' + socket.id);   
@@ -21,9 +21,9 @@ export default function LobbyRoom() {
         console.log('connect_error due to ' + err.message);
     });
     console.log('check 1', socket.connected);
-    socket.on('connect', function() {
-        console.log('check 2', socket.connected);
-    });
+    // socket.on('connection', function() {
+    //     console.log('check 2', socket.connected);
+    // });
 
     //var socket = io (SERVER);
     async function SendMessage(e){ 
