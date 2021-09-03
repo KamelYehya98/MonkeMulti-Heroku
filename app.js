@@ -5,9 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const {checkUser} = require('./middleware/authMiddleware');
 
-const app = express()
-  .use((req, res) => res.sendFile('/', { root: __dirname }));
-
+const app = express();
 app.listen( process.env.PORT || 3000);
 
 const http = require('http').createServer(app)
