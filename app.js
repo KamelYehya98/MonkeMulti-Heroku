@@ -45,7 +45,8 @@ if (process.env.NODE_ENV === 'production')
 //socket.io connection
 var http = require('http');
 const server = http.createServer(app);
-const io = require("socket.io")(server);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
 io.on('connect', (socket) => {
     console.log('a user is connected with id: ' + socket.id);
@@ -57,6 +58,6 @@ io.on('connect', (socket) => {
         io.emit('join room', msg);
     });
 });
-server.listen(8000, () => {
-    console.log('listening in back end port: 8000');
+server.listen(1337, () => {
+    console.log('listening in back end port: 1337');
 });
