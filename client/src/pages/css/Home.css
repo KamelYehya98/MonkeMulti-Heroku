@@ -1,0 +1,156 @@
+:root{
+    --placeholder-green: #8fc6b0;
+    --light-green: #0fc473;
+    --dark-green: #198a68;
+    --input-background-green: #0e8556;
+    --input-selected-green: #095537;
+    --text-gray: #203141;
+    --background-gray: #2c2f38;
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.fluid-container{
+    padding: 0 5em;
+}
+
+.left-col{
+    padding-top: 5.5em;
+}
+
+.left-col img{
+    padding: 0 4em;
+    width: 100%;
+}
+
+.right-col{
+    padding-top: 4em;
+}
+
+.right-col-content{
+    padding-top: 5em;
+    padding-left: 5em;
+    padding-right: 4em;
+}
+
+.right-col-content h1{
+    font-size: 2.6em;
+    font-family: 'Baloo 2', sans-serif;
+    color: white;
+}
+
+.right-col-content p{
+    font-size: 1.4em;
+    margin: 2em 0 1em;
+    color: white;
+}
+
+/* Change the headers in each of the log in sign up forget pages */
+
+.play-now-btn{
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white;
+    background: var(--light-green);
+    padding: 0.4em 1em;    
+    margin-right: 1.5rem;
+    border-radius: 25px;
+}
+
+.play-now-btn:hover, .play-now-btn:active{
+    transition: 250ms;
+    color:white;
+    box-shadow: 0px 4px 8px var(--dark-green);
+}
+
+.learn-to-play{
+    display: inline-block;
+    letter-spacing: 0.03rem;
+    text-decoration: underline;
+    text-decoration-color: #0dc794;
+    text-align: center;
+    text-decoration-thickness: 2px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-top: 1em;
+    background: -webkit-linear-gradient( left, #0ACBBF, #0ACBBF, #0ACBBF, var(--light-green),var(--light-green));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.learn-to-play:hover, .learn-to-play:active{
+    background: -webkit-linear-gradient( left, var(--light-green),var(--light-green), #0ACBBF, #0ACBBF, #0ACBBF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@media only screen and (min-width: 1900px) {
+    :root{
+        font-size: 1.5rem;
+    }
+}
+
+@media only screen and (max-width: 1024px){
+    html{
+        font-size: 0.75rem;
+    }
+
+    .left-col img{
+        width: 100%;
+    }
+
+    .right-col-content{
+        margin-top: 1em;
+    }
+}
+
+@media only screen and (max-width: 768px){
+
+    html{
+        font-size: 0.8rem;
+    }
+
+    .right-col-content{
+        text-align: center;
+        padding: 0 0 0;
+    }
+    
+    .left-col img{
+        position: static;
+        height: auto;
+        width: 100%;
+    }
+
+    .right-col{
+        margin-bottom: 0em;
+    }
+
+    .right-col p{
+        margin: 1em 0;
+    }
+
+    .play-now-btn{
+        margin-right: 0em;
+    }
+
+    .learn-to-play{
+        margin-top: 1em;
+        margin-left: 0em;
+    }
+
+    .right-col-content{
+        margin-top: 0;
+    }
+}

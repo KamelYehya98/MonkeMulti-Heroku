@@ -1,0 +1,151 @@
+:root{
+    --placeholder-green: #8fc6b0;
+    --light-green: #0fc473;
+    --dark-green: #198a68;
+    --input-background-green: #0e8556;
+    --input-selected-green: #095537;
+    --text-gray: #203141;
+    --background-gray: #2c2f38;
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+body{
+    background: var(--background-gray) !important;
+}
+
+.content{
+    position: relative;
+    margin: 4.75em 0em;
+    padding: 3em 2.5em 1em;
+    border-radius: 15px;
+    background: linear-gradient(to bottom right, var(--light-green), var(--dark-green));
+    width: 50vw;
+}
+
+.content .card-decor{
+    position: absolute;
+    right: -5%;
+    top: -8.5%;
+    width: 15%;
+}
+
+.content h1{
+    font-family: 'Baloo 2', sans-serif;
+    color: white;
+}
+
+center p{
+    margin-top: 1.5em;
+    color: white;
+}
+
+.button{
+    font-size: 1.2rem;
+    min-height: 2.5em;
+    font-family: 'Baloo 2', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    width: 45%;
+    color: white;
+    background: var(--text-gray);
+    box-shadow: 0px 2px 4px var(--background-gray);
+    transition: 250ms;
+}
+
+.button:hover{
+    color:white;
+    box-shadow: 0px 6px 12px var(--background-gray);
+}
+
+.bottom-button{
+    width: 100%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border: none;
+}
+
+label{
+    margin-top: 1em;
+    color: white;
+}
+
+input{
+    filter: none;
+    width: 100%;
+    outline: none;
+}
+
+input[type=text], input[type=password], input[type=email]{
+    color: white;
+    padding-left: 1em;
+    background: var(--input-background-green);
+    border: none;
+    border-radius: 8px;
+    min-height: 3em;
+    transition: 250ms;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus{
+    background: var(--input-selected-green);
+    box-shadow: 0px 6px 12px var(--background-gray);
+}
+
+::placeholder{
+    color: var(--placeholder-green);
+}
+
+.forget-password{
+    font-size: 0.8rem;
+    color: white;
+}
+
+.forget-password:hover{
+    color: var(--text-gray);
+}
+
+.error{
+    color: var(--text-gray);
+}
+
+@media only screen and (min-width: 1900px) {
+    html{
+        font-size: 1.35rem;
+    }
+}
+
+@media only screen and (max-width: 1150px) {
+    
+    .content .card-decor{
+        right: -5%;
+        top: -9%;
+        width: 20%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    
+    .content{
+        width: auto;
+    }
+
+    .content .card-decor{
+        right: -5%;
+        top: -8%;
+        width: 25%;
+    }
+
+    .button{
+        font-size: 0.95rem;
+    }
+}
