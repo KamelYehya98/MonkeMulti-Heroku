@@ -12,13 +12,14 @@ import Reset from "./pages/LogInSignUp";
 import Welcome from "./pages/Welcome";
 import Lobby from "./pages/Lobby";
 import io from "socket.io-client";
-const socket = io("https://monke-test.herokuapp.com");
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //import { set } from "mongoose";
 
 
 function App() {
+    
+    const socket = io("https://monke-test.herokuapp.com");
     socket.on("connect_error", (err) => {
         console.log('connect_error due to ' + err.message);
     });
