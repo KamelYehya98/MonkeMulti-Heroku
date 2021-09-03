@@ -51,9 +51,9 @@ if (process.env.NODE_ENV === 'production')
 
 const MAX_PLAYERS = 2;
 
-io.on("connection", function (socket) {
+io.on("connection", (socket) => {
   console.log("user connected socketid: " + socket.id);
-  socket.on("join room", function ({msg}) {
+  socket.on("join room", (msg) => {
     socket.emit('join room', msg);
     // Add roomId to socket object
     // socket.roomId = roomId;
