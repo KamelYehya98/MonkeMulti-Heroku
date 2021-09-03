@@ -1,12 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import { io } from "socket.io-client";
 import React, { useEffect } from 'react';
-import {socket} from "../App";
+import io from "socket.io-client";
 
 export default function LobbyRoom() {
     let messages, input;
     
-    
+    var socket = io();
+
     useEffect(() => {
         socket.on('join room', function(msg) {
             console.log('message : ' + msg + ' from : ' + socket.id);   

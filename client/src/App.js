@@ -11,7 +11,6 @@ import Forgot from "./pages/LogInSignUp";
 import Reset from "./pages/LogInSignUp";
 import Welcome from "./pages/Welcome";
 import Lobby from "./pages/Lobby";
-import io from "socket.io-client";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //import { set } from "mongoose";
@@ -19,14 +18,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
     
-    export var socket = io();
-    socket.on("connect_error", (err) => {
-        console.log('connect_error due to ' + err.message);
-    });
-    console.log('check 1', socket.connected);
-    socket.on('connect', function() {
-        console.log('check 2', socket.connected);
-    });
+    
 
     // Global state variables
 
