@@ -19,7 +19,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
     
-    var socket = io();
+    export var socket = io();
     socket.on("connect_error", (err) => {
         console.log('connect_error due to ' + err.message);
     });
