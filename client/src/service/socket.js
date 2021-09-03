@@ -1,2 +1,2 @@
 import io from "socket.io-client";
-export const socket = io("https://monke-test.herokuapp.com/");
+export const socket = io("https://monke-test.herokuapp.com");
