@@ -4,19 +4,37 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const {checkUser} = require('./middleware/authMiddleware');
-const app = express();
-const cors = require('cors');
 
+const app = express()
+  .use((req, res) => res.sendFile('/joinRoom', { root: __dirname }));
+
+app.listen( process.env.PORT || 3000);
+
+const http = require('http').createServer(app)
+const io = require('socket.io')(http);
+
+const cors = require('cors');
 app.use(cors({credentials: true}));
-var http = require('http').createServer(app)
-var io = require('socket.io')(http);
 
 
 //relative path to work on different OSes
 const path = require('path');
 const bodyParser = require('body-parser');
 
-app.listen( process.env.PORT || 3001);
+const MAX_PLAYERS = 2;
+
+io.on("connection", socket => {
+  console.log("user connected socketid: " + socket.id);
+  socket.on("join room", (msg) => {
+    socket.emit('join room', msg);
+    // Add roomId to socket object
+    // socket.roomId = roomId;
+    // console.log('joined room!', socket.roomId, 'socket.id: ', socket.id);
+    // // join the room
+    // socket.join(roomId);
+  })
+});
+
 // database connection
 const dbURI = "mongodb+srv://kamelyehya:kamelyehya@cluster0.rpil9.mongodb.net/monkedbn?retryWrites=true&w=majority"
 mongoose.connect(dbURI,{
@@ -26,7 +44,6 @@ mongoose.connect(dbURI,{
 })
 .then(()=> console.log('Connected to the database.'))
 .catch((err)=>console.log('Failed to connect to Database error:' + err));
-
 
 // middleware
 app.use(express.static(path.resolve(__dirname, './client/build')));
@@ -48,17 +65,3 @@ if (process.env.NODE_ENV === 'production')
     res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
   });
 }
-
-const MAX_PLAYERS = 2;
-
-io.on("connection", (socket) => {
-  console.log("user connected socketid: " + socket.id);
-  socket.on("join room", (msg) => {
-    socket.emit('join room', msg);
-    // Add roomId to socket object
-    // socket.roomId = roomId;
-    // console.log('joined room!', socket.roomId, 'socket.id: ', socket.id);
-    // // join the room
-    // socket.join(roomId);
-  })
-});
