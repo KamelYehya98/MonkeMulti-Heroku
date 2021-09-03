@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const {checkUser} = require('./middleware/authMiddleware');
 
 const app = express()
-  .use((req, res) => res.sendFile('/joinRoom', { root: __dirname }));
+  .use((req, res) => res.sendFile('/', { root: __dirname }));
 
 app.listen( process.env.PORT || 3000);
 
@@ -32,6 +32,9 @@ io.on("connection", socket => {
     // console.log('joined room!', socket.roomId, 'socket.id: ', socket.id);
     // // join the room
     // socket.join(roomId);
+  });
+  socket.on('welcome', ()=>{
+    console.log("user connected to welcome socket");
   })
 });
 
