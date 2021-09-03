@@ -21,7 +21,7 @@ mongoose.connect(dbURI,{
 
 
 // middleware
-//app.use(express.static(path.resolve(__dirname, './client/build')));
+app.use(express.static(path.resolve(__dirname, './client/build')));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({credentials: true, origin: true}));
@@ -51,9 +51,7 @@ if (process.env.NODE_ENV === 'production')
 
 const PORT = process.env.PORT || 3000;
 
-const server = app
-  .use(express.static(path.resolve(__dirname, './client/build')))
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const io = require("socket.io")(server);
 
