@@ -44,7 +44,6 @@ if (process.env.NODE_ENV === 'production')
 
 //socket.io connection
 var http = require('http');
-const app = require('express')();
 const server = http.createServer(app);
 const io = require("socket.io")(server);
 
