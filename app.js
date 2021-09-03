@@ -9,7 +9,7 @@ const cors = require('cors');
 
 app.use(cors({credentials: true}));
 var http = require('http').createServer(app)
-var io = require('scoket.io')(http);
+var io = require('socket.io')(http);
 
 
 //relative path to work on different OSes

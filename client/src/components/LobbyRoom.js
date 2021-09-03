@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 import React, { useEffect } from 'react';
 import {socket} from "../service/socket";
 
