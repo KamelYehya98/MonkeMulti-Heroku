@@ -6,10 +6,11 @@ const cookieParser = require('cookie-parser');
 const {checkUser} = require('./middleware/authMiddleware');
 
 const app = express();
-app.listen( process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
 
-const http = require('http').createServer(app)
-const io = require('socket.io')(http);
+const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+const io = require("socket.io")(server);
 
 const cors = require('cors');
 app.use(cors({credentials: true}));
@@ -47,7 +48,6 @@ mongoose.connect(dbURI,{
 .catch((err)=>console.log('Failed to connect to Database error:' + err));
 
 // middleware
-app.use(express.static(path.resolve(__dirname, './client/build')));
 app.use(express.json());
 app.use(cookieParser());
 app.use(authRoutes);
@@ -59,7 +59,7 @@ app.get('*', checkUser);
 if (process.env.NODE_ENV === 'production')
 {
   //starts React from build folder
-  app.use(express.static('client/build'));
+  app.use(express.static(path.resolve(__dirname, './client/build')));
 
   //for reconnecting purposes
   app.get('*', (req, res) => {

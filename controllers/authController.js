@@ -167,27 +167,6 @@ module.exports.joinroom_post = async (req, res) => {
             res.json({ error })
         }else{
             res.status(200).json({});
-            
-            // //socket.io connection
-            // var http = require('http');
-            // const app = require('express')();
-            // const server = http.createServer(app);
-            // const io = require("socket.io")(server);
-
-            // io.on('connect', (socket) => {
-            //     console.log('a user is connected with id: ' + socket.id);
-            //     socket.on('disconnect', () => {
-            //         console.log('user disconnected with id: ' + socket.id);
-            //     });
-            //     socket.on('join room', (msg) => {
-            //         console.log('message : ' + msg + ' from : ' + socket.id);
-            //         io.emit('join room', msg);
-            //     });
-            // });
-            // server.listen(3000, () => {
-            //     console.log('listening in back end port: 8000');
-            // });
-            
         }
     }catch(err){
         console.log(err);
