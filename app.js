@@ -10,7 +10,7 @@ const cors = require('cors');
 //relative path to work on different OSes
 const path = require('path');
 
-app.listen( process.env.PORT || 3001);
+//app.listen( process.env.PORT || 3001);
 // database connection
 const dbURI = "mongodb+srv://kamelyehya:kamelyehya@cluster0.rpil9.mongodb.net/monkedbn?retryWrites=true&w=majority"
 mongoose.connect(dbURI,{
@@ -67,6 +67,6 @@ io.on('connect', (socket) => {
         io.emit('join room', msg);
     });
 });
-server.listen(1337, () => {
-    console.log('listening in back end port: 1337');
-});
+// server.listen(1337, () => {
+//     console.log('listening in back end port: 1337');
+// });
