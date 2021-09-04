@@ -1,51 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function PlayerStats({ username }) {
+
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+
+        setTimeout(() => {
+           setLoading(false)
+        }, 3000)
+  
+      }, []);
 
     let gamesPlayed = '-';
     let roundsPlayed = '-';
     let winrate = '-';
     let rating = '-';
 
-    function wait(){
-        return new Promise(resolve=>{
-            setTimeout(()=>{
-                console.log("waiting...");
-            }, 1000);
+    // function wait(){
+    //     return new Promise(resolve=>{
+    //         setTimeout(()=>{
+    //             console.log("waiting...");
+    //         }, 1000);
+    //     });
+    // }
+
+    try{
+        console.log('Reacccccccccccccccched getting stats');
+        const res = await fetch('/getstats', {
+            method: 'POST',
+            body: JSON.stringify({ username }),
+            headers: { 'Content-Type' : 'application/json' },
+            credentials: 'include'
         });
-    }
-    async function getStats(){
-        try{
-            console.log('Reacccccccccccccccched getting stats');
-            const res = await fetch('/getstats', {
-                method: 'POST',
-                body: JSON.stringify({ username }),
-                headers: { 'Content-Type' : 'application/json' },
-                credentials: 'include'
-            });
-            const data = await res.json();
-            console.log("Stats data is:" +  data);
-            let err_text = document.getElementById('stats-container');
-            if(data.error){
-                console.log("error in getting stats: " + data.error);
-                err_text.innerHTML = "Your session ended - Please login again";
-            }else{
-                console.log("reached the else condition");
-                gamesPlayed = data.gamesPlayed;
-                roundsPlayed = data.roundsPlayed;
-                winrate = data.winrate;
-                rating = data.rating;
-                console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
-            }
-        }catch(err){
-            console.log(err);
+        const data = await res.json();
+        console.log("Stats data is:" +  data);
+        let err_text = document.getElementById('stats-container');
+        if(data.error){
+            console.log("error in getting stats: " + data.error);
+            err_text.innerHTML = "Your session ended - Please login again";
+        }else{
+            console.log("reached the else condition");
+            gamesPlayed = data.gamesPlayed;
+            roundsPlayed = data.roundsPlayed;
+            winrate = data.winrate;
+            rating = data.rating;
+            console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
         }
-        await wait();
+    }catch(err){
+        console.log(err);
     }
 
-    await getStats();
+    if(!loading){
+        return <div>loading...</div> 
+        }
     
     return (
         <div id='stats-container' className="text-danger w-100">
