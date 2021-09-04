@@ -9,6 +9,13 @@ export default function PlayerStats({ username }) {
     let winrate = '-';
     let rating = '-';
 
+    function wait(){
+        return new Promise(resolve=>{
+            setTimeout(()=>{
+                console.log("waiting...");
+            }, 1000);
+        });
+    }
     async function getStats(){
         try{
             console.log('Reacccccccccccccccched getting stats');
@@ -35,6 +42,7 @@ export default function PlayerStats({ username }) {
         }catch(err){
             console.log(err);
         }
+        await wait();
     }
     
     getStats();
