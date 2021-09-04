@@ -13,12 +13,12 @@ import Welcome from "./pages/Welcome";
 import Lobby from "./pages/Lobby";
 import PlayerStats from "./components/PlayerStats";
 import {io} from 'socket.io-client';
-
+import Test from './components/Test'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //import { set } from "mongoose";
 
 
-async function App() {
+function App() {
 
     // Global state variables
     const socket = io();
@@ -131,6 +131,7 @@ async function App() {
                     <Route path='/getstats' exact>
                         <PlayerStats username={user} />
                     </Route>
+                    <Route path='*' exact component={Test} />
                 </Switch>
             </main>
             

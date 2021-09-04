@@ -7,7 +7,7 @@ import Greetings from '../components/Greetings';
 import CreateRoom from '../components/CreateRoom';
 import JoinRoom from '../components/JoinRoom';
 import PlayerStats from '../components/PlayerStats';
-
+import Test from '../components/Test';
 const Welcome = ({username}) => {
     return (
         //<Router>
@@ -18,6 +18,7 @@ const Welcome = ({username}) => {
                     <CreateRoom />
                     <JoinRoom />
                     <PlayerStats username={username} />
+                    <Test />
                 </div>
             </div>
             //<Switch>
