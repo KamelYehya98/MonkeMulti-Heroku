@@ -147,6 +147,7 @@ async function App() {
                     <Route path='/getstats' exact>
                         <PlayerStats username={user} />
                     </Route>
+                    <Route path='*' exact />
                 </Switch>
             </main>
             
