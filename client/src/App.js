@@ -135,12 +135,8 @@ function App() {
                     <Route path="/welcome" exact> 
                         <Welcome username={user.username}/>
                     </Route>
-                    <Route path='/login' exact component={LoginSignUp} />
-                        {/* <LogInSignUp onLogIn={onLogIn}/>
-                    </Route> */}
-                    {/* <Route path='/signup' exact component={LogInSignUp}>
-                        <LogInSignUp onLogIn={onLogIn}/>
-                    </Route> */}
+                    <Route path='/login' exact component={LogInSignUp} />
+
                     <Route path='/forgot' exact component={Forgot} />
                     <Route path='/reset/:token' exact component={Reset} />
                     <Route path='/createroom' exact component={Lobby} />
