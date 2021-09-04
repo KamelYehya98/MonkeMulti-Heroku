@@ -78,7 +78,6 @@ async function App() {
         console.log('Reacccccccccccccccched getting GET requests');
         const res = await fetch('*', {
             method: 'GET',
-            body: JSON.stringify({ username, password }),
             headers: { 'Content-Type' : 'application/json' },
             credentials: 'include'
         });
