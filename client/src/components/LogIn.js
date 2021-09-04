@@ -2,7 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 
-export default function LogIn({onLogIn}) {
+export default function LogIn() {
   const history = useHistory();
   const state = {redirect: '/welocme'};
   const routerToWelcome = () => {
@@ -37,7 +37,7 @@ export default function LogIn({onLogIn}) {
           }
           if(data.user){
               console.log('user logged in successfully');
-              onLogIn(form.username.value);
+              //onLogIn(form.username.value);
           }
           //window.location.assign('/welcome');
           routerToWelcome();

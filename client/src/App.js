@@ -28,12 +28,12 @@ function App() {
 
     // Funtion to replace log in and sign up buttons with the account name
 
-    const onLogIn = (username) => {
-        setUsername(username);
-        document.querySelector('.secondary-nav').style.display = 'none';
-        document.querySelector('.account-nav').style.display = 'flex';
-        document.querySelector('.account-options').style.display = 'none';
-    };
+    // const onLogIn = (username) => {
+    //     //setUsername(username);
+    //     document.querySelector('.secondary-nav').style.display = 'none';
+    //     document.querySelector('.account-nav').style.display = 'flex';
+    //     document.querySelector('.account-options').style.display = 'none';
+    // };
 
     // To hide and display the navigation tab and account options menu (log out and stats)
 
@@ -82,7 +82,7 @@ function App() {
                 headers: { 'Content-Type' : 'application/json' },
                 credentials: 'include'
             });
-            setUsername( await res.json().username );
+            setUsername( await res.json() );
             if(user)
                 console.log("The goddamn use is: " + user.username);
             else
@@ -114,7 +114,7 @@ function App() {
                     </ul>
 
                     <div className="account-nav" onClick={hideShowOptions}>
-                        <p>{user}</p> <img src={accountImage} alt="Account Image"/>
+                        <p>{user.username}</p> <img src={accountImage} alt="Account Image"/>
                     </div>
 
                     <ul className="account-options">
@@ -135,12 +135,12 @@ function App() {
                     <Route path="/welcome" exact> 
                         <Welcome username={user.username}/>
                     </Route>
-                    <Route path='/login' exact>
+                    <Route path='/login' exact component={LoginSignUp} />
+                        {/* <LogInSignUp onLogIn={onLogIn}/>
+                    </Route> */}
+                    {/* <Route path='/signup' exact component={LogInSignUp}>
                         <LogInSignUp onLogIn={onLogIn}/>
-                    </Route>
-                    <Route path='/signup' exact component={LogInSignUp}>
-                        <LogInSignUp onLogIn={onLogIn}/>
-                    </Route>
+                    </Route> */}
                     <Route path='/forgot' exact component={Forgot} />
                     <Route path='/reset/:token' exact component={Reset} />
                     <Route path='/createroom' exact component={Lobby} />
