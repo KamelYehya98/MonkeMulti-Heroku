@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
+
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function PlayerStats({ username }) {
 
-    setTimeOut(async function(){
-
-        let [gamesPlayedVal, roundsPlayedVal, winrateVal, ratingVal] = useState(true);
-
-        let gamesPlayed = document.getElementById('gamesPlayed');
-        let roundsPlayed = document.getElementById('roundsPlayed');
-        let winrate = document.getElementById('winrate');
-        let rating = document.getElementById('rating');
+    const [stats, setStats] = useState([
+        {
+            rating: '-',
+            winrate: '-',
+            roundsPlayed: '-',
+            gamesPlayed: '-',
+        }
+    ]);
     
-        useEffect(()=>{
-            gamesPlayed.innerHTML = gamesPlayedVal;
-            roundsPlayed.innerHTML = roundsPlayedVal;
-            winrate.innerHTML = winrateVal;
-            rating.innerHTML = ratingVal;
-        });
-
+    async function getStats(){
         try{
             console.log('Reacccccccccccccccched getting stats');
             const res = await fetch('/getstats', {
@@ -36,17 +31,14 @@ export default function PlayerStats({ username }) {
                 err_text.innerHTML = "Your session ended - Please login again";
             }else{
                 console.log("reached the else condition");
-                gamesPlayedVal = data.gamesPlayed;
-                roundsPlayedVal = data.roundsPlayed;
-                winrateVal = data.winrate;
-                ratingVal = data.rating;
-                console.log(gamesPlayedVal + ", " + roundsPlayedVal + ", " + ratingVal + ", " + winrateVal);
+                setStats([data.rating, data.winrate, data.roundsPlayed, data.gamesPlayed]);
+                console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
             }
         }catch(err){
             console.log(err);
         }
-    }, 2000);
-
+    }
+    getStats();
     
     return (
         <div id='stats-container' className="text-danger w-100">
@@ -58,10 +50,10 @@ export default function PlayerStats({ username }) {
                     <th>Rounds Played</th>
                 </tr>
                 <tr className="text-light">
-                    <th id="rating">{ratingVal}</th>
-                    <th id="winrate">{winrateVal}%</th>
-                    <th id="gamesPlayed">{gamesPlayedVal}</th>
-                    <th id="roundsPlayed">{roundsPlayedVal}</th>
+                    <th id="rating">{rating}</th>
+                    <th id="winrate">{winrate}%</th>
+                    <th id="gamesPlayed">{gamesPlayed}</th>
+                    <th id="roundsPlayed">{roundsPlayed}</th>
                 </tr>
             </table>
         </div>
