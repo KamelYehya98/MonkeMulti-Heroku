@@ -8,7 +8,7 @@ export default function Test() {
     async function khara(){
         try{
             console.log('Reacccccccccccccccched getting GET requests');
-            const res = await fetch('*', {
+            const res = await fetch('/', {
                 method: 'GET',
                 headers: { 'Content-Type' : 'application/json' },
                 credentials: 'include'
