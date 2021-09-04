@@ -5,6 +5,7 @@ import React from 'react';
 export default function LogIn({onLogIn}) {
   const SERVER_URL = process.env.SERVER_URL || "";
   console.log("Working URL in Login: " + SERVER_URL);
+  
   const history = useHistory();
   const state = {redirect: '/welocme'};
   const routerToWelcome = () => {
