@@ -9,7 +9,7 @@ import Greetings from '../components/Greetings';
 import CreateRoom from '../components/CreateRoom';
 import JoinRoom from '../components/JoinRoom';
 
-const Welcome = (username) => {
+const Welcome = ({username}) => {
     return (
         //<Router>
             <div className="container">
