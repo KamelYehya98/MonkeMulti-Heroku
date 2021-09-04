@@ -44,8 +44,8 @@ export default function PlayerStats({ username }) {
         }
         await wait();
     }
-    
-    getStats();
+
+    await getStats();
     
     return (
         <div id='stats-container' className="text-danger w-100">
