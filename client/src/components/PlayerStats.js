@@ -2,7 +2,7 @@ import React from 'react';
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function PlayerStats({ username }) {
+export default async function PlayerStats({ username }) {
 
     let gamesPlayed = '-';
     let roundsPlayed = '-';
