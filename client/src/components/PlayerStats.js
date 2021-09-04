@@ -5,14 +5,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function PlayerStats({ username }) {
 
-    const [stats, setStats] = useState([
+    const [stats, setStats] = useState(
         {
             rating: '-',
             winrate: '-',
             roundsPlayed: '-',
             gamesPlayed: '-',
         }
-    ]);
+    );
     
     async function getStats(){
         try{
@@ -31,8 +31,8 @@ export default function PlayerStats({ username }) {
                 err_text.innerHTML = "Your session ended - Please login again";
             }else{
                 console.log("reached the else condition");
-                setStats([data.rating, data.winrate, data.roundsPlayed, data.gamesPlayed]);
-                console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
+                setStats({rating:data.rating, winrate:data.winrate, roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
+                //console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
             }
         }catch(err){
             console.log(err);
@@ -50,10 +50,10 @@ export default function PlayerStats({ username }) {
                     <th>Rounds Played</th>
                 </tr>
                 <tr className="text-light">
-                    <th id="rating">{rating}</th>
-                    <th id="winrate">{winrate}%</th>
-                    <th id="gamesPlayed">{gamesPlayed}</th>
-                    <th id="roundsPlayed">{roundsPlayed}</th>
+                    <th id="rating">{stats.rating}</th>
+                    <th id="winrate">{stats.winrate}%</th>
+                    <th id="gamesPlayed">{stats.gamesPlayed}</th>
+                    <th id="roundsPlayed">{stats.roundsPlayed}</th>
                 </tr>
             </table>
         </div>
