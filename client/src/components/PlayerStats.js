@@ -4,14 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function PlayerStats({ username }) {
 
-    const [loading, setLoading] = useState(true);
     useEffect(() => {
-
-        setTimeout(() => {
-           setLoading(false)
-        }, 3000)
-  
-      }, []);
+        getStats();
+    }, []);
 
     let gamesPlayed = '-';
     let roundsPlayed = '-';
@@ -52,11 +47,6 @@ export default function PlayerStats({ username }) {
         }catch(err){
             console.log(err);
         }
-    }
-    getStats();
-
-    if(!loading){
-        return <div>loading...</div> 
     }
     
     return (
