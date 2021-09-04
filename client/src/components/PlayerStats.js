@@ -4,33 +4,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function PlayerStats({ username }) {
 
-    let gamesPlayedVal = useState(0);
-    let roundsPlayedVal = useState(0);
-    let winrateVal = useState(0);
-    let ratingVal = useState(0);
+    setTimeOut(()=>{
 
+        let gamesPlayedVal = useState(0);
+        let roundsPlayedVal = useState(0);
+        let winrateVal = useState(0);
+        let ratingVal = useState(0);
 
-    let gamesPlayed = document.getElementById('gamesPlayed');
-    let roundsPlayed = document.getElementById('roundsPlayed');
-    let winrate = document.getElementById('winrate');
-    let rating = document.getElementById('rating');
-
-    useEffect(()=>{
-        gamesPlayed.innerHTML = gamesPlayedVal;
-        roundsPlayed.innerHTML = roundsPlayedVal;
-        winrate.innerHTML = winrateVal;
-        rating.innerHTML = ratingVal;
-    });
-
-    // function stay(){
-    //     return new Promise(resolve=>{
-    //         setTimeout(()=>{
-    //             console.log("waiting...");
-    //         }, 5000);
-    //     });
-    // }
+        let gamesPlayed = document.getElementById('gamesPlayed');
+        let roundsPlayed = document.getElementById('roundsPlayed');
+        let winrate = document.getElementById('winrate');
+        let rating = document.getElementById('rating');
     
-    async function getStats(){
+        useEffect(()=>{
+            gamesPlayed.innerHTML = gamesPlayedVal;
+            roundsPlayed.innerHTML = roundsPlayedVal;
+            winrate.innerHTML = winrateVal;
+            rating.innerHTML = ratingVal;
+        });
+
         try{
             console.log('Reacccccccccccccccched getting stats');
             const res = await fetch('/getstats', {
@@ -56,8 +48,8 @@ export default function PlayerStats({ username }) {
         }catch(err){
             console.log(err);
         }
-    }
-    getStats();
+    }, 2000);
+
     
     return (
         <div id='stats-container' className="text-danger w-100">
