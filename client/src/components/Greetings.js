@@ -1,9 +1,10 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Greetings({username}) {
   return (
     <div>
-        <h1>Greetings, {username}</h1>
+        <div className="text-light">Greetings, {username}</div>
     </div>
   );
 }

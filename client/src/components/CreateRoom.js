@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function CreateRoom() {
 
@@ -19,7 +20,7 @@ export default function CreateRoom() {
     }
     return (
     <div>
-        <button onClick={createRoom} >CREATE ROOM</button>
+        <button onClick={createRoom} className="btn btn-primary w-100">CREATE ROOM</button>
     </div>
     )
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 export default function JoinRoom() {
     const history = useHistory();
     const routerToRoom = () => {
@@ -10,11 +12,16 @@ export default function JoinRoom() {
     async function joinRoom(){
         const room_id = document.getElementById('room_id').value;
         let error_div = document.getElementById('error_div');
+        //creating the error text
+        let err_text = document.createElement('div');
+        err_text.classList.add('text-danger text-center');
+        error_div.appendChild(err_text);
+
         if(room_id == null){
-            error_div.innerHTML = "Please enter a room ID";
+            err_text.innerHTML = "Please enter a room ID";
             return;
         }else {
-            error_div.innerHTML = "";
+            err_text.innerHTML = "";
         }
         try{
             console.log('Reacccccccccccccccched joining room');
@@ -27,7 +34,7 @@ export default function JoinRoom() {
               const data = await res.json();
               if(data.error)
               {
-                  error_div.innerHTML = "Room doesn't exist";
+                err_text.innerHTML = "Room doesn't exist";
                   return;
               }
               console.log(data);
@@ -38,13 +45,13 @@ export default function JoinRoom() {
           }
     }
     return (
-        <div>
+        <div className="d-flex flex-col align-items-center">
             <div>
-                <div id='error_div'></div>
-                <spam for="room_id">Enter Room ID: </spam>
+                <div id='error_div' className="bg-light"></div>
+                <span htmlFor="room_id" className="text-light">Enter Room ID: </span>
                 <input type="text" id="room_id" name="room_id" />
             </div>
-            <button onClick={joinRoom} >JOIN ROOM</button>
+            <button onClick={joinRoom} className="btn btn-success" >JOIN ROOM</button>
         </div>
     );
 }
