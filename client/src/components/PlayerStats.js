@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function PlayerStats({ username }) {
 
-    setTimeOut(()=>{
+    setTimeOut(async function(){
 
         let gamesPlayedVal = useState(0);
         let roundsPlayedVal = useState(0);
