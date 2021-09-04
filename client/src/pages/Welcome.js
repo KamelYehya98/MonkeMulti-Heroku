@@ -9,7 +9,7 @@ import Greetings from '../components/Greetings';
 import CreateRoom from '../components/CreateRoom';
 import JoinRoom from '../components/JoinRoom';
 
-const Welcome = () => {
+const Welcome = (username) => {
     return (
         //<Router>
             <div className="container">
@@ -19,7 +19,7 @@ const Welcome = () => {
                         <img src={logo} alt='Monkey Logo'/>
                     </div>
 
-                <Greetings />
+                <Greetings username={username}/>
                 <CreateRoom />
                 <JoinRoom />
                 </div>

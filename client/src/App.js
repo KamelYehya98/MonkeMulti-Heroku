@@ -112,7 +112,9 @@ function App() {
             <main>
                 <Switch>
                     <Route path='/' exact component={Home} />
-                    <Route path="/welcome" exact component={Welcome} />
+                    <Route path="/welcome" exact> 
+                        <Welcome username={username}/>
+                    </Route>
                     <Route path='/login' exact>
                         <LogInSignUp onLogIn={onLogIn}/>
                     </Route>
