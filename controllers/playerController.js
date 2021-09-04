@@ -6,6 +6,7 @@ module.exports.getStats = async (req, res) => {
     try{
         const { user } = req.body;
         const player = await Player.findOne({ user });
+        console.log("player found was: " + player);
         if(player){
             res.json({
                 gamesPlayed: player.gamesPlayed,

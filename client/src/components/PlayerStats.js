@@ -22,12 +22,15 @@ export default function PlayerStats({ username }) {
             console.log("Stats data is:" +  data);
             let err_text = document.getElementById('stats-container');
             if(data.error){
+                console.log("error in getting stats: " + data.error);
                 err_text.innerHTML = "Your session ended - Please login again";
             }else{
+                console.log("reached the else condition");
                 gamesPlayed = data.gamesPlayed;
                 roundsPlayed = data.roundsPlayed;
                 winrate = data.winrate;
                 rating = data.rating;
+                console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
             }
         }catch(err){
             console.log(err);
@@ -47,7 +50,7 @@ export default function PlayerStats({ username }) {
                 </tr>
                 <tr className="text-light">
                     <th>{rating}</th>
-                    <th>{winrate}</th>
+                    <th>{winrate}%</th>
                     <th>{gamesPlayed}</th>
                     <th>{roundsPlayed}</th>
                 </tr>
