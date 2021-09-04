@@ -54,7 +54,9 @@ app.use(authRoutes);
 
 // routes
 app.get('*', checkUser);
-
+app.get('/', (req, res)=>{
+  console.log('test');
+})
 //checking if app is running on Heroku
 if (process.env.NODE_ENV === 'production')
 {

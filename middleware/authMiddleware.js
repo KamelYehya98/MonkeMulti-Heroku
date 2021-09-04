@@ -27,16 +27,17 @@ const checkUser = (req, res, next)=>{
         jwt.verify(token, 'yumeoakirameteshindekure', async(err, decodedToken)=>{
             if(err){
                 console.log(err.message);
-                res.locals.user = null;
+                //set user to undefined
                 next();
             }else{
                 console.log(decodedToken);
                 let user = await User.findById(decodedToken.id);
+                //now the user has a value
                 next();
             }
         })
     }else{
-        res.locals.user = null;
+        //set user to undefined
         next();
     }
 }
