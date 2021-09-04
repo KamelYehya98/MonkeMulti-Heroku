@@ -45,7 +45,7 @@ export default function JoinRoom() {
           }
     }
     return (
-        <div className="d-flex flex-col align-items-center">
+        <div className="d-flex flex-row align-items-center">
             <div>
                 <div id='error_div' className="bg-light"></div>
                 <span htmlFor="room_id" className="text-light">Enter Room ID: </span>

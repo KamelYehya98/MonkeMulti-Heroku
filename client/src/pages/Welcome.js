@@ -6,6 +6,7 @@ import './css/Welcome.css';
 import Greetings from '../components/Greetings';
 import CreateRoom from '../components/CreateRoom';
 import JoinRoom from '../components/JoinRoom';
+import PlayerStats from '../components/PlayerStats';
 
 const Welcome = ({username}) => {
     return (
@@ -16,6 +17,7 @@ const Welcome = ({username}) => {
                     <Greetings username={username}/>
                     <CreateRoom />
                     <JoinRoom />
+                    <PlayerStats username={username} />
                 </div>
             </div>
             //<Switch>

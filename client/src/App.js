@@ -125,6 +125,9 @@ function App() {
                     <Route path='/reset/:token' exact component={Reset} />
                     <Route path='/createroom' exact component={Lobby} />
                     <Route path='/joinroom' exact component={Lobby} />
+                    <Route path='/getstats' exact>
+                        <PlayerStats username={user} />
+                    </Route>
                 </Switch>
             </main>
             

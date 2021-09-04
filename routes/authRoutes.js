@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const authController = require('../controllers/authController.js');
-
+const playerController = require('../controllers/playerController');
 
 
 const router = Router();
@@ -15,4 +15,5 @@ router.post('/reset/:token', authController.reset_post);
 router.post('/createroom', authController.createroom_post);
 router.post('/joinroom', authController.joinroom_post);
 
+router.post('/getstats', playerController.getStats);
 module.exports = router;
