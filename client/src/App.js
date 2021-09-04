@@ -82,9 +82,9 @@ function App() {
                 headers: { 'Content-Type' : 'application/json' },
                 credentials: 'include'
             });
-            setUsername( await res.json().user );
+            setUsername( await res.json().username );
             if(user)
-                console.log("The goddamn use is: " + user.user);
+                console.log("The goddamn use is: " + user.username);
             else
                 console.log("There is no user token");
         }catch(err){
@@ -133,7 +133,7 @@ function App() {
                 <Switch>
                     <Route path='/' exact component={Home} />
                     <Route path="/welcome" exact> 
-                        <Welcome username={user}/>
+                        <Welcome username={user.username}/>
                     </Route>
                     <Route path='/login' exact>
                         <LogInSignUp onLogIn={onLogIn}/>
@@ -146,7 +146,7 @@ function App() {
                     <Route path='/createroom' exact component={Lobby} />
                     <Route path='/joinroom' exact component={Lobby} />
                     <Route path='/getstats' exact>
-                        <PlayerStats username={user} />
+                        <PlayerStats username={user.username} />
                     </Route>
                     <Route path='*' exact component={Test} />
                 </Switch>
