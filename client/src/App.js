@@ -114,7 +114,7 @@ function App() {
                     </ul>
 
                     <div className="account-nav" onClick={hideShowOptions}>
-                        <p>{user.username}</p> <img src={accountImage} alt="Account Image"/>
+                        {user!=undefined && (<div><p>{user.username}</p> <img src={accountImage} alt="Account Image"/></div>)}
                     </div>
 
                     <ul className="account-options">
