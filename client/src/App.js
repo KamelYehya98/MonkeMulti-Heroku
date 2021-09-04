@@ -132,7 +132,7 @@ async function App() {
                     <Route path='/getstats' exact>
                         <PlayerStats username={user} />
                     </Route>
-                    <Route path='*' exact component={Test} />
+                    <Route path='/' exact component={Test} />
                 </Switch>
             </main>
             
