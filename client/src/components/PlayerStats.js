@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -9,20 +9,13 @@ export default function PlayerStats({ username }) {
     let winrate = '-';
     let rating = '-';
 
-    useEffect(() => {
-        gamesPlayed;
-        winrate;
-        rating;
-        roundsPlayed;
-    });
-
-    // function wait(){
-    //     return new Promise(resolve=>{
-    //         setTimeout(()=>{
-    //             console.log("waiting...");
-    //         }, 1000);
-    //     });
-    // }
+    function stay(){
+        return new Promise(resolve=>{
+            setTimeout(()=>{
+                console.log("waiting...");
+            }, 5000);
+        });
+    }
     
     async function getStats(){
         try{
@@ -51,6 +44,8 @@ export default function PlayerStats({ username }) {
             console.log(err);
         }
     }
+    getStats();
+    await stay();
     
     return (
         <div id='stats-container' className="text-danger w-100">
