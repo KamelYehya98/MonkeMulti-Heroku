@@ -53,7 +53,7 @@ app.use(cookieParser());
 app.use(authRoutes);
 
 // routes
-app.get('*', checkUser);
+//app.get('*', checkUser);
 
 //checking if app is running on Heroku
 if (process.env.NODE_ENV === 'production')

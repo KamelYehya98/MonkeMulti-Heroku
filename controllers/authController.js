@@ -173,3 +173,28 @@ module.exports.joinroom_post = async (req, res) => {
         res.status(400).json({ err });
     }
 }
+
+module.exports.checkUser = (req, res)=>{
+    const token = req.cookies.jwt;
+    console.log("The fucking token is: "+token)
+    let user = undefined;
+    if(token){
+        jwt.verify(token, 'yumeoakirameteshindekure', async(err, decodedToken)=>{
+            if(err){
+                console.log(err.message);
+                //res.locals.user = null;
+                res.json({user});
+                //next();
+            }else{
+                console.log(decodedToken);
+                user = await User.findById(decodedToken.id);
+                res.json({user});
+                //next();
+            }
+        });
+    }else{
+        //res.locals.user = null;
+        res.json({user});
+        //next();
+    }
+}

@@ -8,8 +8,8 @@ export default function Test() {
     async function khara(){
         try{
             console.log('Reacccccccccccccccched getting GET requests');
-            const res = await fetch('*', {
-                method: 'GET',
+            const res = await fetch('checkuser', {
+                method: 'POST',
                 headers: { 'Content-Type' : 'application/json' },
                 credentials: 'include'
             });
