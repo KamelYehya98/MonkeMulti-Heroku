@@ -113,7 +113,7 @@ function App() {
                 <Switch>
                     <Route path='/' exact component={Home} />
                     <Route path="/welcome" exact> 
-                        <Welcome username={username}/>
+                        <Welcome username={user}/>
                     </Route>
                     <Route path='/login' exact>
                         <LogInSignUp onLogIn={onLogIn}/>
