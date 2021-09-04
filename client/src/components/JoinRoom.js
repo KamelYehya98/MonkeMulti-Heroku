@@ -14,7 +14,7 @@ export default function JoinRoom() {
         let error_div = document.getElementById('error_div');
         //creating the error text
         let err_text = document.createElement('div');
-        err_text.classList.add('text-danger text-center');
+        err_text.classList.add('text-danger', 'text-center');
         error_div.appendChild(err_text);
 
         if(room_id == null){
