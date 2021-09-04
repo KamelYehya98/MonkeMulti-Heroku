@@ -6,10 +6,7 @@ export default function PlayerStats({ username }) {
 
     setTimeOut(async function(){
 
-        let gamesPlayedVal = useState(0);
-        let roundsPlayedVal = useState(0);
-        let winrateVal = useState(0);
-        let ratingVal = useState(0);
+        let [gamesPlayedVal, roundsPlayedVal, winrateVal, ratingVal] = useState(true);
 
         let gamesPlayed = document.getElementById('gamesPlayed');
         let roundsPlayed = document.getElementById('roundsPlayed');
