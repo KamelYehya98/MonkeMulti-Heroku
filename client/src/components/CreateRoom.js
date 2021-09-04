@@ -1,11 +1,12 @@
 import React from 'react';
+import { SERVER_URL } from '../constants';
 
 export default function CreateRoom() {
 
     async function createRoom(){
         try{
             console.log('Reacccccccccccccccched creating room');
-              const res = await fetch('/createroom', {
+              const res = await fetch(`${SERVER_URL}/createroom`, {
                   method: 'POST',
                   headers: { 'Content-Type' : 'application/json' },
                   credentials: 'include'

@@ -41,6 +41,7 @@ if (process.env.NODE_ENV === 'production')
     res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
   });
 }
+<<<<<<< Updated upstream
 
 //socket.io connection
 // var http = require('http');
@@ -68,3 +69,15 @@ io.on('connect', (socket) => {
 // server.listen(1337, () => {
 //     console.log('listening in back end port: 1337');
 // });
+=======
+else
+{
+  //app running locally
+  app.use(express.static(path.resolve(__dirname, './client/build')));
+
+  //for reconnecting purposes
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+  });
+}
+>>>>>>> Stashed changes

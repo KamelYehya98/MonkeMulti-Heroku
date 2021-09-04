@@ -1,5 +1,6 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
+import { SERVER_URL } from '../constants';
 
 export default function Reset() {
 
@@ -29,7 +30,7 @@ export default function Reset() {
 
     try {
         console.log("new password reached");
-        const res = await fetch("/reset/:" + {token}, { 
+        const res = await fetch(`${SERVER_URL}/reset/:` + {token}, { 
           method: 'POST', 
           body: JSON.stringify({ password1, token }),
           headers: {'Content-Type': 'application/json'},

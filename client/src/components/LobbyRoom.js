@@ -21,11 +21,14 @@ export default function LobbyRoom() {
         console.log('connect_error due to ' + err.message);
     });
     console.log('check 1', socket.connected);
+<<<<<<< Updated upstream
     socket.on('connect', function() {
+=======
+    socket.on('connection', function() {
+>>>>>>> Stashed changes
         console.log('check 2', socket.connected);
     });
 
-    //var socket = io (SERVER);
     async function SendMessage(e){ 
         e.preventDefault();
         messages = document.getElementById('messages');

@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const session = require('express-session');
+const SERVER_URL = require('../client/src/constants');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -116,7 +117,7 @@ module.exports.forgot_post = (req, res)=> {
                 from:"noreply.monke@gmail.com",
                 subject:"Password Reset",
                 // html:`<p>click <a href="http://localhost:${FrontEndPORT}/reset/${token}">here</a> to reset your password</p>`
-                html:`<p>click <a href="/reset/${token}">here</a> to reset your password</p>`
+                html:`<p>click <a href="${SERVER_URL}/reset/${token}">here</a> to reset your password</p>`
 
             })
             res.json({message:"A link has been sent to your email"})
