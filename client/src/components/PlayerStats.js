@@ -4,14 +4,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function PlayerStats({ username }) {
 
-    useEffect(() => {
-        getStats();
-    }, []);
-
     let gamesPlayed = '-';
     let roundsPlayed = '-';
     let winrate = '-';
     let rating = '-';
+
+    useEffect(() => {
+        gamesPlayed;
+        winrate;
+        rating;
+        roundsPlayed;
+    });
 
     // function wait(){
     //     return new Promise(resolve=>{
