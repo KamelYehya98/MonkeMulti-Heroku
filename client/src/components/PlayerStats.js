@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function PlayerStats({ username }) {
+export default async function PlayerStats({ username }) {
 
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -54,7 +54,7 @@ export default function PlayerStats({ username }) {
 
     if(!loading){
         return <div>loading...</div> 
-        }
+    }
     
     return (
         <div id='stats-container' className="text-danger w-100">
