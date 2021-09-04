@@ -72,7 +72,26 @@ function App() {
         } else {
           hideAccountOptions();
         }
-      } 
+    }
+
+    try{
+        console.log('Reacccccccccccccccched getting GET requests');
+        const res = await fetch('*', {
+            method: 'GET',
+            body: JSON.stringify({ username, password }),
+            headers: { 'Content-Type' : 'application/json' },
+            credentials: 'include'
+        });
+        const data = await res.json();
+        console.log(data);
+        if(data.user){
+            console.log("user exists: " + data.user);
+        }else{
+            console.log("user doesn't exist");
+        }
+    }catch(err){
+        console.log(err);
+    }
 
     return (
         <Router>
