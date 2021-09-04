@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default async function PlayerStats({ username }) {
+export default function PlayerStats({ username }) {
 
-    let gamesPlayed = '-';
-    let roundsPlayed = '-';
-    let winrate = '-';
-    let rating = '-';
+    let gamesPlayedVal = useState(0);
+    let roundsPlayedVal = useState(0);
+    let winrateVal = useState(0);
+    let ratingVal = useState(0);
 
-    function stay(){
-        return new Promise(resolve=>{
-            setTimeout(()=>{
-                console.log("waiting...");
-            }, 5000);
-        });
-    }
+
+    let gamesPlayed = document.getElementById('gamesPlayed');
+    let roundsPlayed = document.getElementById('roundsPlayed');
+    let winrate = document.getElementById('winrate');
+    let rating = document.getElementById('rating');
+
+    useEffect(()=>{
+        gamesPlayed.innerHTML = gamesPlayedVal;
+        roundsPlayed.innerHTML = roundsPlayedVal;
+        winrate.innerHTML = winrateVal;
+        rating.innerHTML = ratingVal;
+    });
+
+    // function stay(){
+    //     return new Promise(resolve=>{
+    //         setTimeout(()=>{
+    //             console.log("waiting...");
+    //         }, 5000);
+    //     });
+    // }
     
     async function getStats(){
         try{
@@ -34,18 +47,17 @@ export default async function PlayerStats({ username }) {
                 err_text.innerHTML = "Your session ended - Please login again";
             }else{
                 console.log("reached the else condition");
-                gamesPlayed = data.gamesPlayed;
-                roundsPlayed = data.roundsPlayed;
-                winrate = data.winrate;
-                rating = data.rating;
-                console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
+                gamesPlayedVal = data.gamesPlayed;
+                roundsPlayedVal = data.roundsPlayed;
+                winrateVal = data.winrate;
+                ratingVal = data.rating;
+                console.log(gamesPlayedVal + ", " + roundsPlayedVal + ", " + ratingVal + ", " + winrateVal);
             }
         }catch(err){
             console.log(err);
         }
     }
     getStats();
-    await stay();
     
     return (
         <div id='stats-container' className="text-danger w-100">
@@ -57,10 +69,10 @@ export default async function PlayerStats({ username }) {
                     <th>Rounds Played</th>
                 </tr>
                 <tr className="text-light">
-                    <th>{rating}</th>
-                    <th>{winrate}%</th>
-                    <th>{gamesPlayed}</th>
-                    <th>{roundsPlayed}</th>
+                    <th id="rating">{ratingVal}</th>
+                    <th id="winrate">{winrateVal}%</th>
+                    <th id="gamesPlayed">{gamesPlayedVal}</th>
+                    <th id="roundsPlayed">{roundsPlayedVal}</th>
                 </tr>
             </table>
         </div>
