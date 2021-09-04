@@ -74,7 +74,24 @@ function App() {
         }
     }
 
-
+    async function checkUser(){
+        try{
+            console.log('Reacccccccccccccccched getting GET requests');
+            const res = await fetch('checkuser', {
+                method: 'POST',
+                headers: { 'Content-Type' : 'application/json' },
+                credentials: 'include'
+            });
+            setUsername( await res.json().user );
+            if(user)
+                console.log("The goddamn use is: " + user.user);
+            else
+                console.log("There is no user token");
+        }catch(err){
+            console.log(err);
+        }
+    }
+    checkUser();
 
     return (
         <Router>
