@@ -19,6 +19,7 @@ export default function PlayerStats({ username }) {
                 credentials: 'include'
             });
             const data = await res.json();
+            console.log("Stats data is:" +  data);
             let err_text = document.getElementById('stats-container');
             if(data.error){
                 err_text.innerHTML = "Your session ended - Please login again";
