@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
+import { SERVER_URL } from '../constants';
 
 export default function SignUp({onLogIn}) {
 
@@ -25,7 +26,7 @@ export default function SignUp({onLogIn}) {
 
     try {
         console.log("signup reached");
-        const res = await fetch("/signup", { 
+        const res = await fetch(`${SERVER_URL}/signup`, { 
           method: 'POST', 
           body: JSON.stringify({ email, password, username }),
           headers: {'Content-Type': 'application/json'},

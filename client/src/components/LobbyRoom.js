@@ -1,12 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import io from "socket.io-client";
 import React, { useEffect } from 'react';
+import io from "socket.io-client";
 
 export default function LobbyRoom() {
     let messages, input;
     
     var socket = io();
-
     socket.on('connection');
 
     useEffect(() => {
@@ -23,11 +22,10 @@ export default function LobbyRoom() {
         console.log('connect_error due to ' + err.message);
     });
     console.log('check 1', socket.connected);
-    // socket.on('connection', function() {
-    //     console.log('check 2', socket.connected);
-    // });
+    socket.on('connection', function() {
+        console.log('check 2', socket.connected);
+    });
 
-    //var socket = io (SERVER);
     async function SendMessage(e){ 
         e.preventDefault();
         messages = document.getElementById('messages');

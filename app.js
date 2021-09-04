@@ -15,7 +15,6 @@ const io = require("socket.io")(server);
 const cors = require('cors');
 app.use(cors({credentials: true}));
 
-
 //relative path to work on different OSes
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -59,6 +58,16 @@ app.get('*', checkUser);
 if (process.env.NODE_ENV === 'production')
 {
   //starts React from build folder
+  app.use(express.static(path.resolve(__dirname, './client/build')));
+
+  //for reconnecting purposes
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+  });
+}
+else
+{
+  //app running locally
   app.use(express.static(path.resolve(__dirname, './client/build')));
 
   //for reconnecting purposes
