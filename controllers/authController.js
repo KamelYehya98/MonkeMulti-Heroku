@@ -116,7 +116,7 @@ module.exports.forgot_post = (req, res)=> {
                 from:"noreply.monke@gmail.com",
                 subject:"Password Reset",
                 // html:`<p>click <a href="http://localhost:${FrontEndPORT}/reset/${token}">here</a> to reset your password</p>`
-                html:`<p>click <a href="https://monke-multi.herokuapp.com/reset/${token}">here</a> to reset your password</p>`
+                html:`<p>click <a href="/reset/${token}">here</a> to reset your password</p>`
 
             })
             res.json({message:"A link has been sent to your email"})
