@@ -18,7 +18,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //import { set } from "mongoose";
 
 
-function App() {
+async function App() {
 
     // Global state variables
     const socket = io();
