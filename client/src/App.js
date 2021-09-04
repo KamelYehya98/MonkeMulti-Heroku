@@ -11,6 +11,7 @@ import Forgot from "./pages/LogInSignUp";
 import Reset from "./pages/LogInSignUp";
 import Welcome from "./pages/Welcome";
 import Lobby from "./pages/Lobby";
+import PlayerStats from "./components/PlayerStats";
 import {io} from 'socket.io-client';
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
