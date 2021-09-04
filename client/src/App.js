@@ -13,6 +13,7 @@ import Welcome from "./pages/Welcome";
 import Lobby from "./pages/Lobby";
 import PlayerStats from "./components/PlayerStats";
 import {io} from 'socket.io-client';
+import Test from './components/Test';
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //import { set } from "mongoose";
@@ -74,23 +75,7 @@ async function App() {
         }
     }
 
-    try{
-        console.log('Reacccccccccccccccched getting GET requests');
-        const res = await fetch('*', {
-            method: 'GET',
-            headers: { 'Content-Type' : 'application/json' },
-            credentials: 'include'
-        });
-        const data = await res.json();
-        console.log(data);
-        if(data.user){
-            console.log("user exists: " + data.user);
-        }else{
-            console.log("user doesn't exist");
-        }
-    }catch(err){
-        console.log(err);
-    }
+
 
     return (
         <Router>
@@ -147,7 +132,7 @@ async function App() {
                     <Route path='/getstats' exact>
                         <PlayerStats username={user} />
                     </Route>
-                    <Route path='*' exact />
+                    <Route path='*' exact component={Test} />
                 </Switch>
             </main>
             
