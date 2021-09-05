@@ -40,10 +40,13 @@ export default function LogIn() {
           }
           if(data.user){
               console.log('user logged in successfully');
+
               //onLogIn(form.username.value);
+              onLogIn(form.username.value);
+              routerToWelcome();
           }
           //window.location.assign('/welcome');
-          routerToWelcome();
+          
       }catch(err){
           console.log(err);
       }

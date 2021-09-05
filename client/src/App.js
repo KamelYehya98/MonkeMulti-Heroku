@@ -20,12 +20,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
     
-    
-
     // Global state variables
     const socket = io();
     socket.on('connection');
     socket.emit('welcome');
+    
     const [user, setUsername] = useState(null);
 
     // Funtion to replace log in and sign up buttons with the account name
@@ -95,9 +94,7 @@ function App() {
     }
     useEffect(() => {
         checkUser();
-        checkUser();
-    }, []);
-    
+    });
     return (
         <Router>
             <header className="d-flex justify-content-between">
