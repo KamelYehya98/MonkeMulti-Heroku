@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import arrow from './img/arrow.svg'
@@ -91,8 +91,10 @@ function App() {
             console.log(err);
         }
     }
-    checkUser();
-
+    useEffect(() => {
+        checkUser();
+    }, );
+    
     return (
         <Router>
             <header className="d-flex justify-content-between">
