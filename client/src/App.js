@@ -20,12 +20,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
     
-    
-
     // Global state variables
     const socket = io();
     socket.on('connection');
     socket.emit('welcome');
+    
     const [user, setUsername] = useState(null);
 
     // Funtion to replace log in and sign up buttons with the account name
@@ -75,6 +74,27 @@ function App() {
           hideAccountOptions();
         }
       } 
+
+    async function checkUser(){
+        try{
+            console.log('Reacccccccccccccccched getting GET requests');
+            const res = await fetch('checkuser', {
+                method: 'POST',
+                headers: { 'Content-Type' : 'application/json' },
+                credentials: 'include'
+            });
+            setUsername( await res.json() );
+            if(user)
+                console.log("The goddamn use is: " + user.username);
+            else
+                console.log("There is no user token");
+        }catch(err){
+            console.log(err);
+        }
+    }
+    useEffect(() => {
+        checkUser();
+    }, []);
 
     return (
         <Router>

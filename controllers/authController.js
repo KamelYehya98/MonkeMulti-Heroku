@@ -173,4 +173,33 @@ module.exports.joinroom_post = async (req, res) => {
         console.log(err);
         res.status(400).json({ err });
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+
+module.exports.checkUser = (req, res)=>{
+    const token = req.cookies.jwt;
+    console.log("The fucking token is: "+token)
+    let user = null;
+    if(token){
+        jwt.verify(token, 'yumeoakirameteshindekure', async(err, decodedToken)=>{
+            if(err){
+                console.log(err.message);
+                //res.locals.user = null;
+                res.json({user});
+                //next();
+            }else{
+                console.log(decodedToken);
+                user = await User.findById(decodedToken.id);
+                res.json({user});
+                //next();
+            }
+        });
+    }else{
+        //res.locals.user = null;
+        res.json({user});
+        //next();
+    }
+}
+>>>>>>> Stashed changes
