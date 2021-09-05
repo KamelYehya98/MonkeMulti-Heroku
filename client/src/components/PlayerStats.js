@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SERVER_URL from "../constants";
 
 export default function PlayerStats({ username }) {
 
@@ -29,7 +30,7 @@ export default function PlayerStats({ username }) {
     async function getStats(){
         try{
             console.log('Reacccccccccccccccched getting stats');
-            const res = await fetch('/getstats', {
+            const res = await fetch(`${SERVER_URL}/getstats`, {
                 method: 'POST',
                 body: JSON.stringify({ username }),
                 headers: { 'Content-Type' : 'application/json' },

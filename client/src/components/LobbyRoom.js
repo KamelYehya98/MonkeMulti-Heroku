@@ -6,7 +6,6 @@ export default function LobbyRoom() {
     let messages, input;
     
     var socket = io();
-    socket.on('connection');
 
     useEffect(() => {
         socket.on('join room', (msg) => {

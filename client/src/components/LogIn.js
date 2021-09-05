@@ -1,10 +1,11 @@
 import { Link, useHistory } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
+import SERVER_URL from "../constants";
 
 export default function LogIn({onLogIn}) {
-  const SERVER_URL = process.env.SERVER_URL || "";
-  console.log("Working URL in Login: " + SERVER_URL);
+  
+  console.log(`Working URL in Login ${SERVER_URL}`);
   
   const history = useHistory();
   const state = {redirect: '/welocme'};
@@ -26,7 +27,7 @@ export default function LogIn({onLogIn}) {
   
       try{
         console.log('Reacccccccccccccccched');
-          const res = await fetch(SERVER_URL + '/login', {
+          const res = await fetch(`${SERVER_URL}/login`, {
               method: 'POST',
               body: JSON.stringify({ username, password }),
               headers: { 'Content-Type' : 'application/json' },

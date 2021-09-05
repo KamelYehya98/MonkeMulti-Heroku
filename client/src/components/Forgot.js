@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import { SERVER_URL } from '../constants';
+import SERVER_URL from "../constants";
 
 export default function Forgot() {
 

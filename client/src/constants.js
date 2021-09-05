@@ -1,6 +1,2 @@
-const SERVER_URL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "";
-
+const SERVER_URL = process.env.REACT_APP_URL == 'undefinded' ? "" :process.env.REACT_APP_URL;
 module.exports = SERVER_URL;

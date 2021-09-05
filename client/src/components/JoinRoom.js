@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { SERVER_URL } from '../constants';
+import SERVER_URL from "../constants";
 
 export default function JoinRoom() {
     const history = useHistory();
