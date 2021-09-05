@@ -42,9 +42,9 @@ export default function LogIn({onLogIn}) {
           if(data.user){
               console.log('user logged in successfully');
               onLogIn(form.username.value);
+              routerToWelcome();
           }
           //window.location.assign('/welcome');
-          routerToWelcome();
       }catch(err){
           console.log(err);
       }
