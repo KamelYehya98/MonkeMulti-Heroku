@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import arrow from './img/arrow.svg'
@@ -13,7 +13,7 @@ import Welcome from "./pages/Welcome";
 import Lobby from "./pages/Lobby";
 import PlayerStats from "./components/PlayerStats";
 import {io} from 'socket.io-client';
-
+import Test from './components/Test'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //import { set } from "mongoose";
 
@@ -29,12 +29,12 @@ function App() {
 
     // Funtion to replace log in and sign up buttons with the account name
 
-    const onLogIn = (username) => {
-        setUsername(username);
-        document.querySelector('.secondary-nav').style.display = 'none';
-        document.querySelector('.account-nav').style.display = 'flex';
-        document.querySelector('.account-options').style.display = 'none';
-    };
+    // const onLogIn = (username) => {
+    //     //setUsername(username);
+    //     document.querySelector('.secondary-nav').style.display = 'none';
+    //     document.querySelector('.account-nav').style.display = 'flex';
+    //     document.querySelector('.account-options').style.display = 'none';
+    // };
 
     // To hide and display the navigation tab and account options menu (log out and stats)
 
@@ -73,7 +73,7 @@ function App() {
         } else {
           hideAccountOptions();
         }
-      } 
+    }
 
     async function checkUser(){
         try{
@@ -94,8 +94,7 @@ function App() {
     }
     useEffect(() => {
         checkUser();
-    }, []);
-
+    });
     return (
         <Router>
             <header className="d-flex justify-content-between">
@@ -117,7 +116,7 @@ function App() {
                     </ul>
 
                     <div className="account-nav" onClick={hideShowOptions}>
-                        <p>{user}</p> <img src={accountImage} alt="Account Image"/>
+                        {user!=null && (<div><p>{user.username}</p> <img src={accountImage} alt="Account Image"/></div>)}
                     </div>
 
                     <ul className="account-options">
@@ -136,21 +135,18 @@ function App() {
                 <Switch>
                     <Route path='/' exact component={Home} />
                     <Route path="/welcome" exact> 
-                        <Welcome username={user}/>
+                        <Welcome username={user!=null ? user.username: null}/>
                     </Route>
-                    <Route path='/login' exact>
-                        <LogInSignUp onLogIn={onLogIn}/>
-                    </Route>
-                    <Route path='/signup' exact component={LogInSignUp}>
-                        <LogInSignUp onLogIn={onLogIn}/>
-                    </Route>
+                    <Route path='/login' exact component={LogInSignUp} />
+
                     <Route path='/forgot' exact component={Forgot} />
                     <Route path='/reset/:token' exact component={Reset} />
                     <Route path='/createroom' exact component={Lobby} />
                     <Route path='/joinroom' exact component={Lobby} />
                     <Route path='/getstats' exact>
-                        <PlayerStats username={user} />
+                        <PlayerStats username={user!=null ? user.username: null} />
                     </Route>
+                    <Route path='*' exact component={Test} />
                 </Switch>
             </main>
             

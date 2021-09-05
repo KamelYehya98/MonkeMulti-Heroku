@@ -1,31 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState, useEffect} from 'react';
+
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SERVER_URL from "../constants";
 
 export default function PlayerStats({ username }) {
 
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-
-        setTimeout(() => {
-           setLoading(false)
-        }, 3000)
-  
-      }, []);
-
-    let gamesPlayed = '-';
-    let roundsPlayed = '-';
-    let winrate = '-';
-    let rating = '-';
-
-    // function wait(){
-    //     return new Promise(resolve=>{
-    //         setTimeout(()=>{
-    //             console.log("waiting...");
-    //         }, 1000);
-    //     });
-    // }
+    const [stats, setStats] = useState(
+        {
+            rating: '-',
+            winrate: '-',
+            roundsPlayed: '-',
+            gamesPlayed: '-',
+        }
+    );
     
     async function getStats(){
         try{
@@ -44,21 +32,14 @@ export default function PlayerStats({ username }) {
                 err_text.innerHTML = "Your session ended - Please login again";
             }else{
                 console.log("reached the else condition");
-                gamesPlayed = data.gamesPlayed;
-                roundsPlayed = data.roundsPlayed;
-                winrate = data.winrate;
-                rating = data.rating;
-                console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
+                setStats({rating:data.rating, winrate:data.winrate, roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
+                //console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
             }
         }catch(err){
             console.log(err);
         }
     }
     getStats();
-
-    if(!loading){
-        return <div>loading...</div> 
-    }
     
     return (
         <div id='stats-container' className="text-danger w-100">
@@ -70,10 +51,10 @@ export default function PlayerStats({ username }) {
                     <th>Rounds Played</th>
                 </tr>
                 <tr className="text-light">
-                    <th>{rating}</th>
-                    <th>{winrate}%</th>
-                    <th>{gamesPlayed}</th>
-                    <th>{roundsPlayed}</th>
+                    <th id="rating">{stats.rating}</th>
+                    <th id="winrate">{stats.winrate}%</th>
+                    <th id="gamesPlayed">{stats.gamesPlayed}</th>
+                    <th id="roundsPlayed">{stats.roundsPlayed}</th>
                 </tr>
             </table>
         </div>

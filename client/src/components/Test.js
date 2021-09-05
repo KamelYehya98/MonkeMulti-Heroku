@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function Test() {
 
     const [data, setData] = useState(null);
+
     
     async function khara(){
         try{
@@ -20,7 +21,7 @@ export default function Test() {
         }
     }
     khara();
-    
+
     if(data){
         if(data.user){
             return(

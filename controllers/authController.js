@@ -173,15 +173,13 @@ module.exports.joinroom_post = async (req, res) => {
         console.log(err);
         res.status(400).json({ err });
     }
-<<<<<<< Updated upstream
-}
-=======
 }
 
 module.exports.checkUser = (req, res)=>{
     const token = req.cookies.jwt;
     console.log("The fucking token is: "+token)
     let user = null;
+
     if(token){
         jwt.verify(token, 'yumeoakirameteshindekure', async(err, decodedToken)=>{
             if(err){
@@ -202,4 +200,3 @@ module.exports.checkUser = (req, res)=>{
         //next();
     }
 }
->>>>>>> Stashed changes
