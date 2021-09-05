@@ -133,7 +133,7 @@ function App() {
                 <Switch>
                     <Route path='/' exact component={Home} />
                     <Route path="/welcome" exact> 
-                        <Welcome username={user.username}/>
+                        <Welcome username={user!=null ? user.username: null}/>
                     </Route>
                     <Route path='/login' exact component={LogInSignUp} />
 
@@ -142,7 +142,7 @@ function App() {
                     <Route path='/createroom' exact component={Lobby} />
                     <Route path='/joinroom' exact component={Lobby} />
                     <Route path='/getstats' exact>
-                        <PlayerStats username={user.username} />
+                        <PlayerStats username={user!=null? user.username: null} />
                     </Route>
                     <Route path='*' exact component={Test} />
                 </Switch>
