@@ -93,7 +93,8 @@ function App() {
     }
     useEffect(() => {
         checkUser();
-    }, );
+        checkUser();
+    }, []);
     
     return (
         <Router>
@@ -144,7 +145,7 @@ function App() {
                     <Route path='/createroom' exact component={Lobby} />
                     <Route path='/joinroom' exact component={Lobby} />
                     <Route path='/getstats' exact>
-                        <PlayerStats username={user!=null? user.username: null} />
+                        <PlayerStats username={user!=null ? user.username: null} />
                     </Route>
                     <Route path='*' exact component={Test} />
                 </Switch>

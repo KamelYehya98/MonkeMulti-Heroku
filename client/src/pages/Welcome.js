@@ -10,6 +10,7 @@ import PlayerStats from '../components/PlayerStats';
 import Test from '../components/Test';
 
 const Welcome = ({username}) => {
+    console.log("username is: " + username);
     return (
         //<Router>
             <div className="container">
