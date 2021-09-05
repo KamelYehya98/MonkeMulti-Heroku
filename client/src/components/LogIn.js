@@ -3,14 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import SERVER_URL from "../constants";
 
-export default function LogIn({onLogIn}) {
-  
-  console.log(`Working URL in Login ${SERVER_URL}`);
-  
+export default function LogIn() {
+
   const history = useHistory();
-  const state = {redirect: '/welocme'};
-  const routerToWelcome = () => {
-    history.push('/welcome');
+    console.log(`Working URL in Login ${SERVER_URL}`);
+    const state = {redirect: '/welocme'};
+    const routerToWelcome = () => {
+      history.push('/welcome');
   }
   async function LogInForm(e){
     const form = document.querySelector('form');
@@ -41,7 +40,7 @@ export default function LogIn({onLogIn}) {
           }
           if(data.user){
               console.log('user logged in successfully');
-              onLogIn(form.username.value);
+              //onLogIn(form.username.value);
           }
           //window.location.assign('/welcome');
           routerToWelcome();
