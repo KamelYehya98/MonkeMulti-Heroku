@@ -21,7 +21,7 @@ export default function LobbyRoom() {
         console.log('connect_error due to ' + err.message);
     });
     console.log('check 1', socket.connected);
-    socket.on('connection', function() {
+    socket.on('connect', function() {
         console.log('check 2', socket.connected);
     });
 
