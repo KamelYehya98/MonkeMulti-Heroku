@@ -1,8 +1,12 @@
 import { Link, useHistory } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
+import SERVER_URL from "../constants";
 
-export default function LogIn() {
+export default function LogIn({onLogIn}) {
+  
+  console.log(`Working URL in Login ${SERVER_URL}`);
+  
   const history = useHistory();
   const state = {redirect: '/welocme'};
   const routerToWelcome = () => {
@@ -23,7 +27,7 @@ export default function LogIn() {
   
       try{
         console.log('Reacccccccccccccccched');
-          const res = await fetch('/login', {
+          const res = await fetch(`${SERVER_URL}/login`, {
               method: 'POST',
               body: JSON.stringify({ username, password }),
               headers: { 'Content-Type' : 'application/json' },
@@ -37,7 +41,7 @@ export default function LogIn() {
           }
           if(data.user){
               console.log('user logged in successfully');
-              //onLogIn(form.username.value);
+              onLogIn(form.username.value);
           }
           //window.location.assign('/welcome');
           routerToWelcome();
@@ -49,7 +53,7 @@ export default function LogIn() {
 async function logOutCall(){
   try{
     console.log('Reacccccccccccccccched logout');
-      const res = await fetch('/logout', {
+      const res = await fetch(`${SERVER_URL}/logout`, {
           method: 'GET',
           headers: { 'Content-Type' : 'application/json' },
           credentials: 'include'

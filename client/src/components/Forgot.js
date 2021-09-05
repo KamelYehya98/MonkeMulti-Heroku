@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-
+import SERVER_URL from "../constants";
 
 export default function Forgot() {
 
@@ -18,7 +18,7 @@ export default function Forgot() {
 
     try{
         console.log('Reacccccccccccccccched Forgot Password');
-        const res = await fetch('/forgot', {
+        const res = await fetch(`${SERVER_URL}/forgot`, {
             method: 'POST',
             body: JSON.stringify({ email }),
             headers: { 'Content-Type' : 'application/json' }, 

@@ -11,6 +11,7 @@
     "connect-mongodb-session": "^3.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-jwt": "^6.1.0",
     "express-session": "^1.17.2",
@@ -27,13 +28,16 @@
   },
   "scripts": {
     "start": "node app.js",
-    "build": "cd client && npm install && npm run build"
+    "build": "cd client && npm install && npm run build",
+    "client": "cd client && npm start",
+    "server": "nodemon app.js",
+    "dev": "set 'REACT_APP_URL=http://localhost:3000' && cd client && npm run build && cd .. && heroku local -e .env.development"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "14.17.5"
+    "node": "16.7"
   },
   "homepage": "https://monke-multi.herokuapp.com"
 }

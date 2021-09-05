@@ -4,17 +4,19 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const {checkUser} = require('./middleware/authMiddleware');
+const SERVER_URL = require('./client/src/constants');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
+console.log('Starting in ' + process.env.NODE_ENV + ' mode');
+
 const io = require("socket.io")(server);
 
 const cors = require('cors');
 app.use(cors({credentials: true}));
-
 
 //relative path to work on different OSes
 const path = require('path');
@@ -53,12 +55,22 @@ app.use(cookieParser());
 app.use(authRoutes);
 
 // routes
-//app.get('*', checkUser);
+app.get('*', checkUser);
 
 //checking if app is running on Heroku
 if (process.env.NODE_ENV === 'production')
 {
   //starts React from build folder
+  app.use(express.static(path.resolve(__dirname, './client/build')));
+
+  //for reconnecting purposes
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+  });
+}
+else
+{
+  //app running locally
   app.use(express.static(path.resolve(__dirname, './client/build')));
 
   //for reconnecting purposes

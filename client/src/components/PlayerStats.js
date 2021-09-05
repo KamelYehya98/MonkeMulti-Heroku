@@ -1,23 +1,36 @@
-import React, {useState, useEffect} from 'react';
-
+import React, { useEffect, useState } from 'react';
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SERVER_URL from "../constants";
 
 export default function PlayerStats({ username }) {
 
-    const [stats, setStats] = useState(
-        {
-            rating: '-',
-            winrate: '-',
-            roundsPlayed: '-',
-            gamesPlayed: '-',
-        }
-    );
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+
+        setTimeout(() => {
+           setLoading(false)
+        }, 3000)
+  
+      }, []);
+
+    let gamesPlayed = '-';
+    let roundsPlayed = '-';
+    let winrate = '-';
+    let rating = '-';
+
+    // function wait(){
+    //     return new Promise(resolve=>{
+    //         setTimeout(()=>{
+    //             console.log("waiting...");
+    //         }, 1000);
+    //     });
+    // }
     
     async function getStats(){
         try{
             console.log('Reacccccccccccccccched getting stats');
-            const res = await fetch('/getstats', {
+            const res = await fetch(`${SERVER_URL}/getstats`, {
                 method: 'POST',
                 body: JSON.stringify({ username }),
                 headers: { 'Content-Type' : 'application/json' },
@@ -31,14 +44,21 @@ export default function PlayerStats({ username }) {
                 err_text.innerHTML = "Your session ended - Please login again";
             }else{
                 console.log("reached the else condition");
-                setStats({rating:data.rating, winrate:data.winrate, roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
-                //console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
+                gamesPlayed = data.gamesPlayed;
+                roundsPlayed = data.roundsPlayed;
+                winrate = data.winrate;
+                rating = data.rating;
+                console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
             }
         }catch(err){
             console.log(err);
         }
     }
     getStats();
+
+    if(!loading){
+        return <div>loading...</div> 
+    }
     
     return (
         <div id='stats-container' className="text-danger w-100">
@@ -50,10 +70,10 @@ export default function PlayerStats({ username }) {
                     <th>Rounds Played</th>
                 </tr>
                 <tr className="text-light">
-                    <th id="rating">{stats.rating}</th>
-                    <th id="winrate">{stats.winrate}%</th>
-                    <th id="gamesPlayed">{stats.gamesPlayed}</th>
-                    <th id="roundsPlayed">{stats.roundsPlayed}</th>
+                    <th>{rating}</th>
+                    <th>{winrate}%</th>
+                    <th>{gamesPlayed}</th>
+                    <th>{roundsPlayed}</th>
                 </tr>
             </table>
         </div>

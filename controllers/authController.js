@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const session = require('express-session');
+const SERVER_URL = require('../client/src/constants');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -116,7 +117,7 @@ module.exports.forgot_post = (req, res)=> {
                 from:"noreply.monke@gmail.com",
                 subject:"Password Reset",
                 // html:`<p>click <a href="http://localhost:${FrontEndPORT}/reset/${token}">here</a> to reset your password</p>`
-                html:`<p>click <a href="/reset/${token}">here</a> to reset your password</p>`
+                html:`<p>click <a href="${SERVER_URL}/reset/${token}">here</a> to reset your password</p>`
 
             })
             res.json({message:"A link has been sent to your email"})
@@ -171,30 +172,5 @@ module.exports.joinroom_post = async (req, res) => {
     }catch(err){
         console.log(err);
         res.status(400).json({ err });
-    }
-}
-
-module.exports.checkUser = (req, res)=>{
-    const token = req.cookies.jwt;
-    console.log("The fucking token is: "+token)
-    let user = undefined;
-    if(token){
-        jwt.verify(token, 'yumeoakirameteshindekure', async(err, decodedToken)=>{
-            if(err){
-                console.log(err.message);
-                //res.locals.user = null;
-                res.json({user});
-                //next();
-            }else{
-                console.log(decodedToken);
-                user = await User.findById(decodedToken.id);
-                res.json({user});
-                //next();
-            }
-        });
-    }else{
-        //res.locals.user = null;
-        res.json({user});
-        //next();
     }
 }
