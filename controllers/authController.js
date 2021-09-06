@@ -176,13 +176,7 @@ module.exports.joinroom_post = async (req, res) => {
 
 module.exports.checkUser = (req, res)=>{
     const token = req.cookies.jwt;
-<<<<<<< Updated upstream
-    console.log("The fucking token is: "+token)
     let user = null;
-
-=======
-    let user = null;
->>>>>>> Stashed changes
     if(token){
         jwt.verify(token, 'yumeoakirameteshindekure', async(err, decodedToken)=>{
             if(err){
