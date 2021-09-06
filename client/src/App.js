@@ -92,9 +92,17 @@ function App() {
                 credentials: 'include'
             });
             const data = await res.json();
-            if (data !== user)
+            if (user == null || data.user == null || data.user.username !== user.username)
             {
                 setUser( data.user );
+            }
+            if (user == null)
+            {
+                console.log("User ba3do null");
+            }
+            else
+            {
+                console.log("L user battal null. It's: " + user.username);
             }
             
         }catch(err){

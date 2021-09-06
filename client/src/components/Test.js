@@ -15,11 +15,13 @@ export default function Test() {
                 credentials: 'include'
             });
             const dummy = await res.json();
-            if (dummy !== data)
-            {
-                setData(dummy);
-            }
             console.log(data);
+            if (data == null || dummy.user.username !== data.username)
+            {
+                console.log("The user in Test is: " + dummy.user.username);
+                setData(dummy.user);
+            }
+            //console.log(data);
         }catch(err){
             console.log(err);
         }
@@ -28,7 +30,7 @@ export default function Test() {
     khara();
 
     if(data){
-        if(data.user){
+        if(data.username){
             return(
                 <h1>User exists</h1>
             );

@@ -29,10 +29,11 @@ export default function PlayerStats({ username }) {
             // if(data.error != undefined){
             //     err_text.innerHTML = "Your session ended - Please login again";
             // }else{
-                if (data !== stats)
-                {
-                    setStats({rating:data.rating, winrate:data.winrate, roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
-                }
+            if (data.rating !== stats.rating || data.winrate !== stats.winrate || data.roundsPlayed !== stats.roundsPlayed || data.gamesPlayed !== stats.gamesPlayed)
+            {
+                console.log(data.rating + data.winrate);
+                setStats({rating:data.rating, winrate:data.winrate, roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
+            }
             //}
         }catch(err){
             console.log(err);
