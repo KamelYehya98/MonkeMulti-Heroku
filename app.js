@@ -27,6 +27,7 @@ io.on("connection", socket => {
   console.log("user connected socketid: " + socket.id);
   socket.on("join room", (msg) => {
     socket.emit('join room', msg);
+    console.log("message: " + msg + " from user: " + socket.id + " in app");
     // Add roomId to socket object
     // socket.roomId = roomId;
     // console.log('joined room!', socket.roomId, 'socket.id: ', socket.id);

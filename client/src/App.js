@@ -13,18 +13,26 @@ import Lobby from "./pages/Lobby";
 import LogOut from "./components/LogOut";
 import PlayerStats from "./components/PlayerStats";
 import {io} from 'socket.io-client';
-import Test from './components/Test'
+import Test from './components/Test';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LogInSignUp from "./pages/LogInSignUp";
+import {socket} from "./services/socket";
 //import { set } from "mongoose";
 
 
 function App() {
     
     // Global state variables
-    const socket = io();
-    socket.on('connection');
-    socket.emit('welcome');
+    useEffect(() =>
+    {
+        if (socket.connected)
+        {
+            socket.emit('welcome');
+        }
+    }, [socket.id]);
+    // socket.on('connection', ()=>{
+    //     socket.emit('welcome');
+    //   });
     const [user, setUser] = useState(null);
 
 

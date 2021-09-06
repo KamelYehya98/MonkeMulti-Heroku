@@ -1,22 +1,20 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect } from 'react';
-import io from "socket.io-client";
+import {socket} from "../services/socket";
 
 export default function LobbyRoom() {
     let messages, input;
-    
-    var socket = io();
 
     useEffect(() => {
         socket.on('join room', (msg) => {
-            console.log('message : ' + msg + ' from : ' + socket.id);   
+            console.log('message : ' + msg + ' from : ' + socket.id + " in Lobby");   
             var item = document.createElement('li');
             item.innerHTML = msg;
             messages = document.getElementById('messages');
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
         });
-    });
+    }, [messages]);
     socket.on("connect_error", (err) => {
         console.log('connect_error due to ' + err.message);
     });

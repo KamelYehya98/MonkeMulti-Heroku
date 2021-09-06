@@ -23,7 +23,7 @@ export default function Test() {
     
     useEffect(() => {
         khara();
-    });
+    }, [data]);
 
     if(data){
         if(data.user){

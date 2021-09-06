@@ -37,7 +37,7 @@ export default function PlayerStats({ username }) {
     }
     useEffect(() => {
         getStats();
-    });
+    }, [stats]);
     
     return (
         <div id='stats-container' className="text-danger w-100">
