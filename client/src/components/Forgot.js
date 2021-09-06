@@ -11,7 +11,7 @@ export default function Forgot() {
     e.preventDefault();
 
     //reset errors
-    errorsEmail.textContent = "";
+    errorsEmail.innerHTML = "";
 
     //get the values
     const email = form.email.value;
@@ -27,7 +27,7 @@ export default function Forgot() {
         const data = await res.json();
         console.log(data);
         if(data){
-            errorsEmail.textContent = data.message;
+            errorsEmail.innerHTML = data.message;
         }
     }catch(err){
         console.log(err);

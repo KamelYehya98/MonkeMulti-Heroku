@@ -11,7 +11,7 @@ export default function LobbyRoom() {
         socket.on('join room', (msg) => {
             console.log('message : ' + msg + ' from : ' + socket.id);   
             var item = document.createElement('li');
-            item.textContent = msg;
+            item.innerHTML = msg;
             messages = document.getElementById('messages');
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);

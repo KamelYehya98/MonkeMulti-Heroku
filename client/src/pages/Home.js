@@ -5,7 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/Home.css'
 
 const Home = () => {
+<<<<<<< Updated upstream
     
+=======
+
+>>>>>>> Stashed changes
     return (
         <div className="container-fluid fluid-container">
                 <div className="row d-flex flex-no-wrap flex-md-row flex-column">
@@ -17,7 +21,7 @@ const Home = () => {
                         <div className="right-col-content">
                             <h1>Welcome To Monke!</h1>
                             <p>Challenge your friends and other people online in this exciting card game that is fit for all ages!</p>
-                            <Link className="play-now-btn">PLAY NOW!</Link>
+                            <Link to='/welcome' className="play-now-btn">PLAY NOW!</Link>
                             <Link className="learn-to-play">Learn to play.</Link>
                         </div>
                     </div>

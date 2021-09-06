@@ -46,13 +46,13 @@ export default function JoinRoom() {
           }
     }
     return (
-        <div className="d-flex flex-col align-items-center">
+        <div className="">
             <div>
-                <div id='error_div' className="bg-light"></div>
                 <span htmlFor="room_id" className="text-light">Enter Room ID: </span>
+                <div id='error_div' className="bg-light"></div>
                 <input type="text" id="room_id" name="room_id" />
             </div>
-            <button onClick={joinRoom} className="btn btn-success" >JOIN ROOM</button>
+            <button onClick={joinRoom} className="btn btn-success mt-1">JOIN ROOM</button>
         </div>
     );
 }

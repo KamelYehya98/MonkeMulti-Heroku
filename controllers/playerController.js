@@ -3,10 +3,9 @@ const Player = require('../models/Players')
 const Room = require('../models/Room');
 
 module.exports.getStats = async (req, res) => {
+    const { username } = req.body;
     try{
-        const { user } = req.body;
-        const player = await Player.findOne({ user });
-        console.log("player found was: " + player);
+        const player = await Player.findOne({ username });
         if(player){
             res.json({
                 gamesPlayed: player.gamesPlayed,
@@ -14,10 +13,16 @@ module.exports.getStats = async (req, res) => {
                 roundsPlayed: player.roundsPlayed,
                 rating: player.rating
             });
-        }else{
-            res.json({error: "user not found"});
+            return;
         }
-    }catch(err){
-        res.json({err});
+        res.json({
+            gamesPlayed: '-',
+            winrate: '-',
+            roundsPlayed: '-',
+            rating: '-'
+        });
+    }catch(error){
+        console.log(error);
+        res.json({error: "database connection error / user not found"});
     }
 }

@@ -1,14 +1,14 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import SERVER_URL from "../constants";
 
 export default function SignUp() {
 
  async function  SignUpForm(e){ 
-  const history = useHistory();
-  const routerToHome = () => {
-    history.push('/');
-  }
+  //const history = useHistory();
+  // const routerToHome = () => {
+  //   history.push('/');
+  // }
 
 
     // get values
@@ -20,9 +20,9 @@ export default function SignUp() {
     const email = form.email.value;
     const password = form.password.value;
     const username = form.username.value;
-    emailError.textContent = '';
-    passwordError.textContent = '';
-    userError.textContent = '';
+    emailError.innerHTML = '';
+    passwordError.innerHTML = '';
+    userError.innerHTML = '';
 
     try {
         console.log("signup reached");
@@ -34,16 +34,14 @@ export default function SignUp() {
         });
         const data = await res.json();
         if (data.errors) {
-          emailError.textContent = data.errors.email;
-          passwordError.textContent = data.errors.password;
-          userError.textContent = data.errors.username;
-
+          emailError.innerHTML = data.errors.email;
+          passwordError.innerHTML = data.errors.password;
+          userError.innerHTML = data.errors.username;
         }
-        if (data.user) {
+        else if (data) {
           console.log(data.token);
-          onLogIn(form.username.value);
-          // window.location.assign('/');
-          routerToHome();
+          //onLogIn(form.username.value);
+          window.location.assign('/');
         }
     }
     catch (err) {
@@ -60,20 +58,21 @@ export default function SignUp() {
       <form onSubmit={SignUpForm.bind(this)}>
 
         <label htmlFor="username">Username</label>
+        <div className="username error text-danger p1"></div>
         <input id="username" type="text" name="username" placeholder="Enter Your Username" />
-        <div className="username error"></div>
 
         <label htmlFor="email">Email</label>
+        <div className="email error text-danger p-1"></div>
         <input id="email" type="email" name="email" placeholder="Enter Your Email" />
         
-        <div className="email error"></div>
-
         <label htmlFor="password">Password</label>
+        <div className="password error text-danger p-1"></div>
         <input id="password" type="password" name="password" placeholder="Enter Your Password" />
-        <div className="password error"></div>
-
+        
         <input className="button bottom-button" type='submit' value='Sign Up'/>
       </form>
+
+      <center><Link className="forget-password" to='/login'>Already have an account? Log in here!</Link></center>
     </div>
   )
 }

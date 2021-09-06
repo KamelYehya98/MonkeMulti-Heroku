@@ -67,13 +67,13 @@ userSchema.statics.login = async function(username, password){
         if(usere){
             const auth = await bcrypt.compare(password, usere.password);
             if(auth){
+                User.connectPlayer(username);
                 return usere;
             }
             throw Error('incorrect password');
         }
     }
     throw Error('incorrect username');
-    
 };
 
 

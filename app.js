@@ -5,7 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const {checkUser} = require('./middleware/authMiddleware');
 const SERVER_URL = require('./client/src/constants');
-
+console.log("lasjdfkasjdlfjasld fjlasdjflkasd fjlkasj flkasdjf lkasdflkasjdf: " + SERVER_URL);
 const app = express();
 const PORT = process.env.PORT || 3000;
 

@@ -6,15 +6,16 @@ import menu from './img/menu.svg'
 import exit from './img/exit.svg'
 import accountImage from './img/account.svg'
 import Home from "./pages/Home";
-import LogInSignUp from "./pages/LogInSignUp";
 import Forgot from "./pages/LogInSignUp";
 import Reset from "./pages/LogInSignUp";
 import Welcome from "./pages/Welcome";
 import Lobby from "./pages/Lobby";
+import LogOut from "./components/LogOut";
 import PlayerStats from "./components/PlayerStats";
 import {io} from 'socket.io-client';
 import Test from './components/Test'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import LogInSignUp from "./pages/LogInSignUp";
 //import { set } from "mongoose";
 
 
@@ -24,8 +25,12 @@ function App() {
     const socket = io();
     socket.on('connection');
     socket.emit('welcome');
+<<<<<<< Updated upstream
     
     const [user, setUsername] = useState(null);
+=======
+    const [user, setUser] = useState(null);
+>>>>>>> Stashed changes
 
     // Funtion to replace log in and sign up buttons with the account name
 
@@ -77,24 +82,25 @@ function App() {
 
     async function checkUser(){
         try{
-            console.log('Reacccccccccccccccched getting GET requests');
             const res = await fetch('checkuser', {
                 method: 'POST',
                 headers: { 'Content-Type' : 'application/json' },
                 credentials: 'include'
             });
-            setUsername( await res.json() );
-            if(user)
-                console.log("The goddamn use is: " + user.username);
-            else
-                console.log("There is no user token");
+            const data = await res.json();
+            setUser( data.user );
         }catch(err){
             console.log(err);
         }
     }
     useEffect(() => {
         checkUser();
+<<<<<<< Updated upstream
     });
+=======
+    }, );
+    
+>>>>>>> Stashed changes
     return (
         <Router>
             <header className="d-flex justify-content-between">
@@ -110,23 +116,32 @@ function App() {
                         <li><Link to="" className="link">About</Link></li>
                     </ul>
 
-                    <ul className="secondary-nav">
-                        <li><Link to="/login" className="link">Log in</Link></li>
-                        <li><Link to="/signup" className="link sign-up">Sign Up <img src={arrow} alt=''/></Link></li>
-                    </ul>
+                    {user==null &&
+                        (
+                        <ul className="secondary-nav">
+                            <li><Link to="/login" className="link">Log in</Link></li>
+                            <li><Link to="/signup" className="link sign-up">Sign Up <img src={arrow} alt=''/></Link></li>
+                        </ul>
+                        )
+                    }
+
+                    {user!=null &&
+                        (
+                        <ul className="secondary-nav">
+                            <LogOut />
+                        </ul>
+                        )
+                    }       
 
                     <div className="account-nav" onClick={hideShowOptions}>
                         {user!=null && (<div><p>{user.username}</p> <img src={accountImage} alt="Account Image"/></div>)}
                     </div>
 
-                    <ul className="account-options">
+                    {/* <ul className="account-options">
                         <li>
                             <button className="link">Stats</button>
                         </li>
-                        <li>
-                            <button className="link">Log Out</button>
-                        </li>
-                    </ul>
+                    </ul> */}
                     
                 </nav>
             </header>
@@ -138,7 +153,8 @@ function App() {
                         <Welcome username={user!=null ? user.username: null}/>
                     </Route>
                     <Route path='/login' exact component={LogInSignUp} />
-
+                    <Route path='/signup' exact component={LogInSignUp} />
+                    <Route path='/logout' exact component={LogOut} />
                     <Route path='/forgot' exact component={Forgot} />
                     <Route path='/reset/:token' exact component={Reset} />
                     <Route path='/createroom' exact component={Lobby} />

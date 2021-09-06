@@ -6,12 +6,14 @@ import LogIn from '../components/LogIn';
 import SignUp from '../components/SignUp';
 import Forgot from '../components/Forgot';
 import Reset from '../components/Reset';
+import LogOut from '../components/LogOut';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/LogInSignUp.css';
 
 const LogInSignUp = () => {
     return (
         <div className="container d-flex justify-content-center">
+<<<<<<< Updated upstream
                 <div className="content">
                     <img src={cards} className='card-decor' alt="Decor"/>
                     
@@ -26,8 +28,20 @@ const LogInSignUp = () => {
                     <Route path='/forgot' exact component={Forgot}/>
                     <Route path='/reset/:token' exact component={Reset} />
                 </div>
+=======
+            <div className="content">
+                <img src={cards} className='card-decor' alt="Decor"/>
+                
+                <Route path='/login' exact component={LogIn} />          
+                
+                <Route path='/signup' exact component={SignUp} />
+                
+                <Route path='/forgot' exact component={Forgot}/>
+                <Route path='/reset/:token' exact component={Reset} />
+            </div>
+>>>>>>> Stashed changes
         </div>
-    )
+    );
 }
 
 export default LogInSignUp
