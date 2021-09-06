@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Test() {
@@ -20,7 +20,10 @@ export default function Test() {
             console.log(err);
         }
     }
-    khara();
+    
+    useEffect(() => {
+        khara();
+    });
 
     if(data){
         if(data.user){

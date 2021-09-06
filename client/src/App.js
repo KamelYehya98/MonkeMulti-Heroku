@@ -91,7 +91,7 @@ function App() {
     }
     useEffect(() => {
         checkUser();
-    }, );
+    });
     
     return (
         <Router>
