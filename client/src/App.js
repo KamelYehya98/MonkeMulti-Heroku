@@ -92,14 +92,16 @@ function App() {
                 credentials: 'include'
             });
             const data = await res.json();
-            setUser( data.user );
+            if (data !== user)
+            {
+                setUser( data.user );
+            }
+            
         }catch(err){
             console.log(err);
         }
     }
-    useEffect(() => {
-        checkUser();
-    });
+    checkUser();
     
     return (
         <Router>

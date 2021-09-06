@@ -14,16 +14,18 @@ export default function Test() {
                 headers: { 'Content-Type' : 'application/json' },
                 credentials: 'include'
             });
-            setData( await res.json() );
+            const dummy = await res.json();
+            if (dummy !== data)
+            {
+                setData(dummy);
+            }
             console.log(data);
         }catch(err){
             console.log(err);
         }
     }
     
-    useEffect(() => {
-        khara();
-    }, [data]);
+    khara();
 
     if(data){
         if(data.user){
