@@ -5,11 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/Home.css'
 
 const Home = () => {
-<<<<<<< Updated upstream
-    
-=======
 
->>>>>>> Stashed changes
     return (
         <div className="container-fluid fluid-container">
                 <div className="row d-flex flex-no-wrap flex-md-row flex-column">

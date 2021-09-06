@@ -25,12 +25,8 @@ function App() {
     const socket = io();
     socket.on('connection');
     socket.emit('welcome');
-<<<<<<< Updated upstream
-    
-    const [user, setUsername] = useState(null);
-=======
     const [user, setUser] = useState(null);
->>>>>>> Stashed changes
+
 
     // Funtion to replace log in and sign up buttons with the account name
 
@@ -95,12 +91,8 @@ function App() {
     }
     useEffect(() => {
         checkUser();
-<<<<<<< Updated upstream
-    });
-=======
     }, );
     
->>>>>>> Stashed changes
     return (
         <Router>
             <header className="d-flex justify-content-between">
