@@ -13,22 +13,7 @@ import './css/LogInSignUp.css';
 const LogInSignUp = () => {
     return (
         <div className="container d-flex justify-content-center">
-<<<<<<< Updated upstream
-                <div className="content">
-                    <img src={cards} className='card-decor' alt="Decor"/>
-                    
-                    <Route path='/login' exact>
-                        <LogIn />
-                        <center><Link className="forget-password" to='/signup'>Don't have an account? Create one here!</Link></center>
-                    </Route>
-                    <Route path='/signup' exact>
-                        <SignUp />
-                        <center><Link className="forget-password" to='/login'>Already have an account? Log in here!</Link></center>
-                    </Route>
-                    <Route path='/forgot' exact component={Forgot}/>
-                    <Route path='/reset/:token' exact component={Reset} />
-                </div>
-=======
+
             <div className="content">
                 <img src={cards} className='card-decor' alt="Decor"/>
                 
@@ -39,7 +24,6 @@ const LogInSignUp = () => {
                 <Route path='/forgot' exact component={Forgot}/>
                 <Route path='/reset/:token' exact component={Reset} />
             </div>
->>>>>>> Stashed changes
         </div>
     );
 }

@@ -41,18 +41,8 @@ export default function LogIn() {
           }
           if(data.user){
               console.log('user logged in successfully');
-<<<<<<< Updated upstream
-
-              //onLogIn(form.username.value);
-              onLogIn(form.username.value);
-              routerToWelcome();
-          }
-          //window.location.assign('/welcome');
-          
-=======
               window.location.assign('/welcome');
           }          
->>>>>>> Stashed changes
       }catch(err){
           console.log(err);
       }
