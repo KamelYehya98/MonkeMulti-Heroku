@@ -23,13 +23,13 @@ import {socket} from "./services/socket";
 function App() {
     
     // Global state variables
-    useEffect(() =>
-    {
-        if (socket.connected)
-        {
-            socket.emit('welcome');
-        }
-    }, [socket.id]);
+    // useEffect(() =>
+    // {
+    //     if (socket.connected)
+    //     {
+    //         socket.emit('welcome');
+    //     }
+    // }, [socket.id]);
     // socket.on('connection', ()=>{
     //     socket.emit('welcome');
     //   });

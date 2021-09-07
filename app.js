@@ -6,8 +6,8 @@ const cookieParser = require('cookie-parser');
 const {checkUser} = require('./middleware/authMiddleware');
 const SERVER_URL = require('./client/src/constants');
 const app = express();
-const PORT = process.env.PORT || 3000;
 
+const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 console.log('Starting in ' + process.env.NODE_ENV + ' mode');
