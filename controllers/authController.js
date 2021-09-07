@@ -54,11 +54,9 @@ const createToken = (id) =>{
 }
 
 module.exports.signup_get = (req, res) => {
-    res.render('signup');
 }
 
 module.exports.login_get = (req, res) => {
-    res.render('login');
 }
 
 module.exports.login_post = async (req, res) => {
@@ -68,7 +66,7 @@ module.exports.login_post = async (req, res) => {
         const token = createToken(user._id);
         console.log("token: " + token);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
-        res.status(200).json({user: user._id});
+        res.status(200).json({user});
         console.log("logged in");
     }catch(err){
         const errors = handleErrors(err);
@@ -83,16 +81,16 @@ module.exports.signup_post = async (req, res) => {
         const token = createToken(user._id);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
         User.connectPlayer(user.username);
-        res.status(201).json({user: user._id});
+        res.status(201).json({user});
     }catch(err){
         const errors = handleErrors(err, req);
         res.status(400).json({ errors });
     }
 }
 
-module.exports.logout_get = (req, res) => {
-    console.log("User is: " + res.locals.user);
-    res.cookie('jwt', '', {maxAge: 1}); //replace the jwt cookie with an empty cookie with a very short lifespan
+module.exports.logout_post = (req, res) => {
+    console.log("loggin out..........................");
+    res.cookie('jwt', '', {maxAge: 1});
     res.redirect('/');
 }
 
@@ -111,13 +109,14 @@ module.exports.forgot_post = (req, res)=> {
         }
         user.resetToken = token;
         user.expireToken = Date.now() + 3600000;
+        console.log("server url is: " + SERVER_URL);
         user.save().then((result)=>{
             transporter.sendMail({
                 to: user.email,
                 from:"noreply.monke@gmail.com",
                 subject:"Password Reset",
                 // html:`<p>click <a href="http://localhost:${FrontEndPORT}/reset/${token}">here</a> to reset your password</p>`
-                html:`<p>click <a href="${SERVER_URL}/reset/${token}">here</a> to reset your password</p>`
+                html:`<p>click <a href='${SERVER_URL}/reset/${token}'>here</a> to reset your password</p>`
 
             })
             res.json({message:"A link has been sent to your email"})
@@ -177,9 +176,7 @@ module.exports.joinroom_post = async (req, res) => {
 
 module.exports.checkUser = (req, res)=>{
     const token = req.cookies.jwt;
-    console.log("The fucking token is: "+token)
     let user = null;
-
     if(token){
         jwt.verify(token, 'yumeoakirameteshindekure', async(err, decodedToken)=>{
             if(err){
@@ -188,7 +185,6 @@ module.exports.checkUser = (req, res)=>{
                 res.json({user});
                 //next();
             }else{
-                console.log(decodedToken);
                 user = await User.findById(decodedToken.id);
                 res.json({user});
                 //next();

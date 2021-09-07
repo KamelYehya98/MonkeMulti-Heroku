@@ -16,15 +16,15 @@ export default function Reset() {
     const passwordError = document.querySelector('.password.error');
     const password1 = form.password1.value;
     const password2 = form.password2.value;
-    passwordError.textContent = '';
+    passwordError.innerHTML = '';
 
     if(password1 !== password2)
-        passwordError.textContent = "Passwords don't match<br>";
+        passwordError.innerHTML = "Passwords don't match<br>";
     
     if(password1.length < 6)
-        passwordError.textContent += "Minimum Length is 6 Characters";
+        passwordError.innerHTML += "Minimum Length is 6 Characters";
 
-    if(passwordError.textContent !== "")
+    if(passwordError.innerHTML !== "")
       return;
     
 
@@ -38,11 +38,11 @@ export default function Reset() {
         });
         const data = await res.json();  
         if(data) {
-          passwordError.textContent = data.message;
+          passwordError.innerHTML = data.message;
         }
     }
     catch (err) {
-      passwordError.textContent = err.message;
+      passwordError.innerHTML = err.message;
     }
   }
   return (

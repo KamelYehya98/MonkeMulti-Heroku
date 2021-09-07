@@ -25,16 +25,16 @@ export default function PlayerStats({ username }) {
                 credentials: 'include'
             });
             const data = await res.json();
-            console.log("Stats data is:" +  data);
             let err_text = document.getElementById('stats-container');
-            if(data.error){
-                console.log("error in getting stats: " + data.error);
-                err_text.innerHTML = "Your session ended - Please login again";
-            }else{
-                console.log("reached the else condition");
+            // if(data.error != undefined){
+            //     err_text.innerHTML = "Your session ended - Please login again";
+            // }else{
+            if (data.rating !== stats.rating || data.winrate !== stats.winrate || data.roundsPlayed !== stats.roundsPlayed || data.gamesPlayed !== stats.gamesPlayed)
+            {
+                console.log(data.rating + data.winrate);
                 setStats({rating:data.rating, winrate:data.winrate, roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
-                //console.log(gamesPlayed + ", " + roundsPlayed + ", " + rating + ", " + winrate);
             }
+            //}
         }catch(err){
             console.log(err);
         }

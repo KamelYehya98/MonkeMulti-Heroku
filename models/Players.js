@@ -47,13 +47,12 @@ playerSchema.statics.createPlayer = async function(username){
     const gamesPlayed = 0;
     const roundsPlayed = 0;
     const winrate = 0;
-    const rating = 1500.56;
+    const rating = 1500;
     const isConnected = false, inQueue = false, inGame = false;
     try{
         await this.create({username, gamesPlayed, roundsPlayed, winrate, rating, isConnected, inQueue, inGame});
     }catch(err){
         console.log(err);
-        res.status(400).json({ message:"Error creating player" });
     }
 };
 const Player = mongoose.model('player', playerSchema);

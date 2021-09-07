@@ -1,17 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect } from 'react';
+//import {socket} from "../services/socket";
 import io from "socket.io-client";
 
 export default function LobbyRoom() {
     let messages, input;
-    
     var socket = io();
-
+    socket.on('connection');
     useEffect(() => {
         socket.on('join room', (msg) => {
-            console.log('message : ' + msg + ' from : ' + socket.id);   
+            console.log('message : ' + msg + ' from : ' + socket.id + " in Loby");   
             var item = document.createElement('li');
-            item.textContent = msg;
+            item.innerHTML = msg;
             messages = document.getElementById('messages');
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
