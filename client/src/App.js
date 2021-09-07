@@ -13,10 +13,11 @@ import Lobby from "./pages/Lobby";
 import LogOut from "./components/LogOut";
 import PlayerStats from "./components/PlayerStats";
 import {io} from 'socket.io-client';
-import Test from './components/Test'
+import Test from './components/Test';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LogInSignUp from "./pages/LogInSignUp";
-import MatchHistory from "./components/MatchHistory";
+
+
 //import { set } from "mongoose";
 
 
@@ -26,6 +27,16 @@ function App() {
     // const socket = io();
     // socket.on('connection');
     // socket.emit('welcome');
+    // useEffect(() =>
+    // {
+    //     if (socket.connected)
+    //     {
+    //         socket.emit('welcome');
+    //     }
+    // }, [socket.id]);
+    // socket.on('connection', ()=>{
+    //     socket.emit('welcome');
+    //   });
     const [user, setUser] = useState(null);
 
 
@@ -102,7 +113,6 @@ function App() {
             console.log(err);
         }
     }
-
     checkUser();
     
     return (

@@ -39,7 +39,6 @@ export default function PlayerStats({ username }) {
             console.log(err);
         }
     }
-    
     getStats();
     
     return (

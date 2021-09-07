@@ -5,8 +5,8 @@ const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const SERVER_URL = require('./client/src/constants');
 const app = express();
-const PORT = process.env.PORT || 3000;
 
+const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 console.log('Starting in ' + process.env.NODE_ENV + ' mode');
@@ -26,6 +26,7 @@ io.on("connection", socket => {
   console.log("user connected socketid: " + socket.id);
   socket.on("join room", (msg) => {
     socket.emit('join room', msg);
+    console.log("message: " + msg + " from user: " + socket.id + " in app");
     // Add roomId to socket object
     // socket.roomId = roomId;
     // console.log('joined room!', socket.roomId, 'socket.id: ', socket.id);
