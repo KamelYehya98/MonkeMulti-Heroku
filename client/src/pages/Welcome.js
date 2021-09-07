@@ -8,7 +8,7 @@ import CreateRoom from '../components/CreateRoom';
 import JoinRoom from '../components/JoinRoom';
 import PlayerStats from '../components/PlayerStats';
 import Test from '../components/Test';
-
+import MatchHistory from '../components/MatchHistory';
 const Welcome = ({username}) => {
     return (
         //<Router>
@@ -19,7 +19,7 @@ const Welcome = ({username}) => {
                     <CreateRoom />
                     <JoinRoom />
                     <PlayerStats username={username} />
-                    <Test />
+                    {username!=null && (<MatchHistory username={username}/>)}
                 </div>
             </div>
             //<Switch>

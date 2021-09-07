@@ -27,7 +27,7 @@ export default function LogIn() {
   
       try{
         console.log('Reacccccccccccccccched');
-          const res = await fetch(`${SERVER_URL}/login`, {
+          const res = await fetch(`${SERVER_URL}/login_post`, {
               method: 'POST',
               body: JSON.stringify({ username, password }),
               headers: { 'Content-Type' : 'application/json' },

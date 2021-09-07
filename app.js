@@ -3,7 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
-const {checkUser} = require('./middleware/authMiddleware');
 const SERVER_URL = require('./client/src/constants');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -54,8 +53,6 @@ app.use(cookieParser());
 app.use(authRoutes);
 
 // routes
-//app.get('*', checkUser);
-
 //checking if app is running on Heroku
 if (process.env.NODE_ENV === 'production')
 {

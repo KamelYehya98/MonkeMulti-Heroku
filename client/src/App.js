@@ -16,15 +16,16 @@ import {io} from 'socket.io-client';
 import Test from './components/Test'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LogInSignUp from "./pages/LogInSignUp";
+import MatchHistory from "./components/MatchHistory";
 //import { set } from "mongoose";
 
 
 function App() {
     
     // Global state variables
-    const socket = io();
-    socket.on('connection');
-    socket.emit('welcome');
+    // const socket = io();
+    // socket.on('connection');
+    // socket.emit('welcome');
     const [user, setUser] = useState(null);
 
 
@@ -84,14 +85,25 @@ function App() {
                 credentials: 'include'
             });
             const data = await res.json();
-            setUser( data.user );
+            if (user == null || data.user == null || data.user.username !== user.username)
+            {
+                setUser( data.user );
+            }
+            if (user == null)
+            {
+                console.log("User ba3do null");
+            }
+            else
+            {
+                console.log("L user battal null. It's: " + user.username);
+            }
+            
         }catch(err){
             console.log(err);
         }
     }
-    useEffect(() => {
-        checkUser();
-    }, );
+
+    checkUser();
     
     return (
         <Router>
@@ -120,7 +132,7 @@ function App() {
                     {user!=null &&
                         (
                         <ul className="secondary-nav">
-                            <LogOut />
+                            <LogOut checkUser={checkUser}/>
                         </ul>
                         )
                     }       
@@ -146,15 +158,6 @@ function App() {
                     </Route>
                     <Route path='/login' exact component={LogInSignUp} />
                     <Route path='/signup' exact component={LogInSignUp} />
-                    <Route path='/logout' exact component={LogOut} />
-                    <Route path='/forgot' exact component={Forgot} />
-                    <Route path='/reset/:token' exact component={Reset} />
-                    <Route path='/createroom' exact component={Lobby} />
-                    <Route path='/joinroom' exact component={Lobby} />
-                    <Route path='/getstats' exact>
-                        <PlayerStats username={user!=null ? user.username: null} />
-                    </Route>
-                    <Route path='*' exact component={Test} />
                 </Switch>
             </main>
             

@@ -3,15 +3,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import SERVER_URL from "../constants";
 
-export default function LogOut() {
+export default function LogOut({checkUser}) {
 
-    const history = useHistory();
+    //const history = useHistory();
     console.log(`Working URL in LogOut ${SERVER_URL}`);
-    const state = {redirect: '/login'};
+    // const state = {redirect: '/login'};
 
-    const routerToLogin = () => {
-        history.push('/login');
-    }
+    // const routerToLogin = () => {
+    //     history.push('/login');
+    // }
 
     async function logOutCall(){
         try{
@@ -21,7 +21,8 @@ export default function LogOut() {
                 headers: { 'Content-Type' : 'application/json' },
                 credentials: 'include'  
             });
-            routerToLogin();
+            checkUser();
+            //window.location.assign('/loginn');
         }catch(err){
             console.log(err);
         }
