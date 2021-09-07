@@ -21,21 +21,35 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const MAX_PLAYERS = 2;
+let cur_room;
 
 io.on("connection", socket => {
   console.log("user connected socketid: " + socket.id);
-  socket.on("join room", (msg) => {
-    socket.emit('join room', msg);
-    console.log("message: " + msg + " from user: " + socket.id + " in app");
+
+  socket.on("set username", (username) => {
+    socket.username = username;
+  });
+
+  socket.on("join room", (room) => {
+    cur_room = room;
+    socket.join(room);
+    console.log(socket.rooms);
+    console.log("Socket " + socket.id + " joined room " + cur_room);
     // Add roomId to socket object
     // socket.roomId = roomId;
     // console.log('joined room!', socket.roomId, 'socket.id: ', socket.id);
     // // join the room
     // socket.join(roomId);
   });
+
+  socket.on("text", (msg) => {
+    io.to(cur_room).emit('text', msg);
+    console.log("message: " + msg + " from user: " + socket.username + " in app");
+  });
+
   socket.on('welcome', ()=>{
-    console.log("user connected to welcome socket");
-  })
+    console.log(socket.username + " connected to welcome socket");
+  });
 });
 
 // database connection

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import arrow from './img/arrow.svg'
@@ -6,37 +6,18 @@ import menu from './img/menu.svg'
 import exit from './img/exit.svg'
 import accountImage from './img/account.svg'
 import Home from "./pages/Home";
-import Forgot from "./pages/LogInSignUp";
-import Reset from "./pages/LogInSignUp";
 import Welcome from "./pages/Welcome";
-import Lobby from "./pages/Lobby";
 import LogOut from "./components/LogOut";
-import PlayerStats from "./components/PlayerStats";
-import {io} from 'socket.io-client';
-import Test from './components/Test';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LogInSignUp from "./pages/LogInSignUp";
-
-
-//import { set } from "mongoose";
-
+import Lobby from "./pages/Lobby";
+import {socket} from "./services/socket";
 
 function App() {
     
     // Global state variables
-    // const socket = io();
-    // socket.on('connection');
-    // socket.emit('welcome');
-    // useEffect(() =>
-    // {
-    //     if (socket.connected)
-    //     {
-    //         socket.emit('welcome');
-    //     }
-    // }, [socket.id]);
-    // socket.on('connection', ()=>{
-    //     socket.emit('welcome');
-    //   });
+    
+
     const [user, setUser] = useState(null);
 
 
@@ -107,6 +88,11 @@ function App() {
             else
             {
                 console.log("L user battal null. It's: " + user.username);
+                if (socket.connected)
+                {
+                    socket.emit('set username', user.username);
+                    socket.emit('welcome');
+                }
             }
             
         }catch(err){
@@ -168,6 +154,7 @@ function App() {
                     </Route>
                     <Route path='/login' exact component={LogInSignUp} />
                     <Route path='/signup' exact component={LogInSignUp} />
+                    <Route path='/joinroom' exact component={Lobby} />
                 </Switch>
             </main>
             

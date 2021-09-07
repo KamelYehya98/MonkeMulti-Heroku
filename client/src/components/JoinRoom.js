@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SERVER_URL from "../constants";
+import {socket} from "../services/socket";
 
 export default function JoinRoom() {
     const history = useHistory();
@@ -38,6 +39,7 @@ export default function JoinRoom() {
                 err_text.innerHTML = "Room doesn't exist";
                   return;
               }
+              socket.emit('join room', room_id);
               console.log(data);
               //window.location.assign('/joinRoom');
               routerToRoom();

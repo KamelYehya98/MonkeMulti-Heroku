@@ -1,12 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { Link } from "react-router-dom";
 import cards from '../img/DecoratingCards.svg';
 import LogIn from '../components/LogIn';
 import SignUp from '../components/SignUp';
 import Forgot from '../components/Forgot';
 import Reset from '../components/Reset';
-import LogOut from '../components/LogOut';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/LogInSignUp.css';
 
