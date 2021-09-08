@@ -5,6 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const SERVER_URL = require('./client/src/constants');
 const app = express();
+const {addUser, removeUser, getUser, getUsersInRoom} = require('./users');
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
@@ -21,6 +22,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const MAX_PLAYERS = 2;
+var cur_players = 0;
 let cur_room;
 
 io.on("connection", socket => {
@@ -31,24 +33,50 @@ io.on("connection", socket => {
   });
 
   socket.on("join room", (room) => {
-    cur_room = room;
-    socket.join(room);
-    console.log(socket.rooms);
-    console.log("Socket " + socket.id + " joined room " + cur_room);
-    // Add roomId to socket object
-    // socket.roomId = roomId;
-    // console.log('joined room!', socket.roomId, 'socket.id: ', socket.id);
-    // // join the room
-    // socket.join(roomId);
+    cur_players++;
+    socket.players++;
+    console.log(`Player count: ${cur_players}`);
+    if (cur_players <= MAX_PLAYERS)
+    {
+      io.to(socket.id).emit("set username", socket.username);
+      cur_room = room;
+      socket.join(room);
+      console.log(socket.username + " joined room " + cur_room);
+
+      addUser( {id: socket.id, name: socket.username, room: cur_room});
+      if (cur_players === 1)
+      {
+        console.log(socket.username + " is first to enter");
+        io.to(cur_room).emit('pass turn');
+      }
+    }
+    else
+    {
+      console.log("MAX PLAYERS REACHED");
+    }
+  });
+
+  socket.on("pass turn", () => {
+    console.log(socket.username + " passed turn(app)");
+    socket.to(cur_room).emit('pass turn');
   });
 
   socket.on("text", (msg) => {
-    io.to(cur_room).emit('text', msg);
-    console.log("message: " + msg + " from user: " + socket.username + " in app");
+    const user = getUser(socket.id);
+    io.to(user.room).emit('message', {user: user.name, text: msg});
+    console.log("message: " + msg + " from user: " + socket.username + " id: " + socket.id);
   });
 
   socket.on('welcome', ()=>{
-    console.log(socket.username + " connected to welcome socket");
+    console.log(socket.username + " connected to welcome socket with id: " + socket.id);
+  });
+
+  socket.on('disconnect', () => {
+    if (cur_players > 0)
+    {
+      cur_players--;
+      console.log(socket.username + " left the chat with id: " + socket.id);
+    }
   });
 });
 
