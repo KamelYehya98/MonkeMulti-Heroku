@@ -6,10 +6,10 @@ import SERVER_URL from "../constants";
 import {socket} from "../services/socket";
 
 export default function JoinRoom() {
-    // const history = useHistory();
-    // const routerToRoom = () => {
-    //   history.push('/joinRoom');
-    // }
+    const history = useHistory();
+    const routerToRoom = () => {
+      history.push('/joinRoom');
+    }
 
     async function joinRoom(){
         const room_id = document.getElementById('room_id').value;
@@ -46,8 +46,8 @@ export default function JoinRoom() {
                     return;
                 }
                 console.log(data);
-                window.location.assign('/joinRoom');
-                //routerToRoom();
+                //window.location.assign('/joinRoom');
+                routerToRoom();
             });
           }catch(err){
               console.log(err);
