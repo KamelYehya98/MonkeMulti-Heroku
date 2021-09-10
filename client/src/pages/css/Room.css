@@ -1,0 +1,71 @@
+.room-container{
+    padding: 3em 5em;
+}
+
+.room-container img{
+    width: 90%;
+    box-shadow: 2px 2px 8px #000;
+}
+
+.buttons button{
+    width: 100%;
+    height: 3rem;
+    margin-top: 0.75em;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font: 1.2rem 'Baloo 2', 'sans-serif';
+}
+
+.buttons button:hover, .buttons button:active{
+    transition: 100ms;
+}
+
+.lol{
+    bottom: 0;
+}
+
+.throw-card-button{
+    background: #2D9CDB;
+}
+
+.free-throw-button{
+    background: #219653;
+}
+
+.end-turn-button{
+    background: #EB5757;
+}
+
+.activate-special-button{
+    background: #9B51E0;
+}
+
+.monkey-button{
+    background: #F2C94C;
+    color: #333 !important;
+}
+
+.ground-card{
+    margin: 2em 0em;
+}
+
+.ground-card img{
+    width: 25%;
+}
+
+@media only screen and (max-width: 768px){
+
+    .room-container{
+        margin: 2.5rem 1rem;
+        padding: 0;
+    }
+
+    .buttons button{
+        font-size: 1rem;
+    }
+
+    .buttons{
+        margin-top: 2.5em;
+    }
+}
