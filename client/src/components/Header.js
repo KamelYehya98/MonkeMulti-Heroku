@@ -90,7 +90,7 @@ const Header = ({user, checkUser}) => {
                     {user!=null &&
                         (
                             <div className="account-nav" onClick={hideShowOptions}>
-                                <p>{user.username}</p> <img src={accountImage} alt="Account Image"/>
+                                <p>{user}</p> <img src={accountImage} alt="Account Image"/>
                             </div>
                         )
                     }       

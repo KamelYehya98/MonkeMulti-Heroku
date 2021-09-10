@@ -60,7 +60,7 @@ nav{
 }
 
 .account-nav{
-    display: none;
+    display: flex;
     justify-content: space-between;
     align-items: flex-start;
     font-weight: bold;

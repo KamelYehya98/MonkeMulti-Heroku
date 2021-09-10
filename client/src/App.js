@@ -48,12 +48,12 @@ function App() {
     
     return (
         <Router>
-            <Header />
+            <Header user={user==null ? null : user.username} checkUser={checkUser}/>
             <main>
                 <Switch>
                     <Route path='/' exact component={Home} />
                     <Route path="/welcome" exact> 
-                        <Welcome username={user!=null ? user.username: null}/>
+                        <Welcome username={user==null ? null : user.username}/>
                     </Route>
                     <Route path='/login' exact component={LogInSignUp} />
                     <Route path='/signup' exact component={LogInSignUp} />
