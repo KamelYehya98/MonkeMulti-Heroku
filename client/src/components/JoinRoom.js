@@ -39,10 +39,16 @@ export default function JoinRoom() {
                 err_text.innerHTML = "Room doesn't exist";
                   return;
               }
-              socket.emit('join room', room_id);
-              console.log(data);
-              //window.location.assign('/joinRoom');
-              routerToRoom();
+              socket.emit('join room', room_id, (err) => {
+                if (err) {
+                    console.log("What it do error man");
+                    err_text.innerHTML = err;
+                    return;
+                }
+                console.log(data);
+                //window.location.assign('/joinRoom');
+                routerToRoom();
+            });
           }catch(err){
               console.log(err);
           }

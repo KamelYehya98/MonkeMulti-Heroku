@@ -6,35 +6,32 @@ import {useState} from 'react';
 export default function LobbyRoom() {
     console.log("Reached Lobby");
 
-    let messages, input, user;
-    const [but, flipBut] = useState(true);
-    function pass()
-    {
-        console.log(`${user} pressed battoon`);
-        socket.emit('pass turn');
-        flipBut(!but);
-    }
-    
-    socket.on("set username", (username) => {
-        socket.username = username;
-        user = username;
-    });
+    let messages, input, username;
+    // const [but, flipBut] = useState(true);
+    // function pass()
+    // {
+    //     console.log(`${username} pressed battoon`);
+    //     socket.emit('pass turn');
+    //     flipBut(!but);
+    // }
 
     useEffect(() => {
-        socket.on('message', (msg) => {
-            console.log(`${socket.username} or ${user} says ${msg}`);   
+        socket.on('message', (msgObj) => {
+            username = msgObj.user;
+            console.log(`${msgObj.user} or ${username} says ${msgObj.text}`);
+
             var item = document.createElement('li');
-            item.innerHTML = msg;
+            item.innerHTML = msgObj.text;
             messages = document.getElementById('messages');
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
         });
     }, [messages]);
 
-    socket.on('pass turn', () => {
-        console.log(`Socket ${socket.username} passed turn(Lobby)`);
-        flipBut(!but);
-    });
+    // socket.on('pass turn', () => {
+    //     console.log(`Socket ${username} passed turn(${socket.id})`);
+    //     flipBut(!but);
+    // });
 
     socket.on("connect_error", (err) => {
         console.log('connect_error due to ' + err.message);
@@ -54,13 +51,14 @@ export default function LobbyRoom() {
             input.value = '';
         }
     }
+    
     return(
         <div>
             <ul id="messages"></ul>
             <form id="form" onSubmit={SendMessage}>
                 <input id="input" autoComplete="off" /><button>Send</button>
             </form>
-            <button id = "poopsy" onClick={pass} disabled = {but}>Batanzo</button>
+            {/* <button id = "poopsy" onClick={pass} disabled = {but}>Batanzo</button> */}
         </div>
     );
 }

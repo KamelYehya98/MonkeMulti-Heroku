@@ -5,7 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const SERVER_URL = require('./client/src/constants');
 const app = express();
-const {addUser, removeUser, getUser, getUsersInRoom} = require('./users');
+const {addUser, removeUser, getUser, getUsersInRoom, playersInRoom} = require('./users');
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
@@ -21,9 +21,7 @@ app.use(cors({credentials: true}));
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const MAX_PLAYERS = 2;
-var cur_players = 0;
-let cur_room;
+
 
 io.on("connection", socket => {
   console.log("user connected socketid: " + socket.id);
@@ -32,39 +30,38 @@ io.on("connection", socket => {
     socket.username = username;
   });
 
-  socket.on("join room", (room) => {
-    cur_players++;
-    socket.players++;
-    console.log(`Player count: ${cur_players}`);
-    if (cur_players <= MAX_PLAYERS)
-    {
-      io.to(socket.id).emit("set username", socket.username);
-      cur_room = room;
-      socket.join(room);
-      console.log(socket.username + " joined room " + cur_room);
-
-      addUser( {id: socket.id, name: socket.username, room: cur_room});
-      if (cur_players === 1)
-      {
-        console.log(socket.username + " is first to enter");
-        io.to(cur_room).emit('pass turn');
-      }
+  socket.on("join room", (room, callback) => {
+    const {error, user} = addUser( {id: socket.id, name: socket.username, room: room});
+    if (error) {
+      console.log(error);
+      return callback(error);
     }
-    else
-    {
-      console.log("MAX PLAYERS REACHED");
-    }
-  });
+    socket.join(room);
+    console.log(user.name + " joined room " + room);
 
-  socket.on("pass turn", () => {
-    console.log(socket.username + " passed turn(app)");
-    socket.to(cur_room).emit('pass turn');
+    io.to(room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) })
+    //First player enters
+    // if (playersInRoom(room) === 1)
+    // {
+    //   console.log(user.name + " is first to enter");
+    //   io.to(room).emit('pass turn');
+    // }
+    callback();
   });
+  //Passing turns
+  // socket.on("pass turn", () => {
+  //   const user = getUser(socket.id);
+  //   console.log(user.name + " passed turn(app)");
+  //   socket.to(user.room).emit('pass turn');
+  // });
 
   socket.on("text", (msg) => {
     const user = getUser(socket.id);
-    io.to(user.room).emit('message', {user: user.name, text: msg});
-    console.log("message: " + msg + " from user: " + socket.username + " id: " + socket.id);
+    if (user)
+    {
+      io.to(user.room).emit('message', {user: user.name, text: msg});
+      console.log("message: " + msg + " from user: " + user.name + " id: " + socket.id);
+    }
   });
 
   socket.on('welcome', ()=>{
@@ -72,11 +69,9 @@ io.on("connection", socket => {
   });
 
   socket.on('disconnect', () => {
-    if (cur_players > 0)
-    {
-      cur_players--;
-      console.log(socket.username + " left the chat with id: " + socket.id);
-    }
+    const user = removeUser(socket.id);
+
+    if (user) console.log(user.name + " left the chat with id: " + socket.id);
   });
 });
 

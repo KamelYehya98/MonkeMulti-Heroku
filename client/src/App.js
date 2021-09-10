@@ -88,7 +88,7 @@ function App() {
             else
             {
                 console.log("L user battal null. It's: " + user.username);
-                if (socket.connected)
+                if (socket.connected && user.username !== null)
                 {
                     socket.emit('set username', user.username);
                     socket.emit('welcome');
