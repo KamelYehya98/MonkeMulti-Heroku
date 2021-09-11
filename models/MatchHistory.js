@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Players = require('./Players');
 
 const MatchHistorySchema = new mongoose.Schema({
     user1:{
@@ -48,6 +49,16 @@ MatchHistorySchema.statics.createMatchHistory = async function(user1, user2, sco
     }
     try{
         await this.create({user1, user2, score1, score2, status1, status2});
+
+        //Update Player 1 stats
+        let player1 = await Players.findOne({username: user1});
+        let roundsPlayed = player1.roundsPlayed + 1;
+        await Players.findOneAndUpdate({"username": user1}, {roundsPlayed});
+
+        //Update Player 1 stats
+        let player2 = await Players.findOne({username: user2});
+        roundsPlayed = player2.roundsPlayed + 1;
+        await Players.findOneAndUpdate({"username": user2}, {roundsPlayed});
     }catch(err){
         console.log(err);
     }

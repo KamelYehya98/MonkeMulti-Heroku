@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/Welcome.css';
 import CreateRoom from '../components/CreateRoom';
@@ -13,6 +14,7 @@ const Welcome = ({username}) => {
                 <CreateRoom />
                 <JoinRoom />
                 <PlayerStats username={username} />
+                <Link to='/room'>To the fucking room</Link>
                 {username!=null && (<MatchHistory username={username}/>)}
             </div>
         </div>

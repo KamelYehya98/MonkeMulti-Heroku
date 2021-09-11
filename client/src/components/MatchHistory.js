@@ -6,8 +6,6 @@ import React from 'react';
 
 
 export default function MatchHistory({ username }) {
-
-    //const [matchhistory, setMatchHistory] = useState([]);
     
     function createRow(user1, user2, score1, score2, status1, status2, matchdate)
     {
@@ -44,6 +42,7 @@ export default function MatchHistory({ username }) {
                 credentials: 'include'
             });
             const data = await res.json();
+            console.log(data);
             if(data.err){
                 console.log("an error has been caught in matchhistory: " + data.err);
             }
@@ -56,9 +55,6 @@ export default function MatchHistory({ username }) {
             console.log(err);
         }
     }
-    // useEffect(() => {
-    //     getMatchHistory();
-    // }, );
 
     getMatchHistory();
 

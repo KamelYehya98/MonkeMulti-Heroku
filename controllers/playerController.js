@@ -29,7 +29,7 @@ module.exports.getStats = async (req, res) => {
 module.exports.getMatchHistory = async (req, res) => {
     const { username } = req.body;
     try{
-        await MatchHistory.find({ user1:username }, (err, matches) =>{
+        await MatchHistory.find({$or:[{ user1:username }, {user2: username}]}, (err, matches) =>{
             if(err){
                 console.log(err);
                 res.json({err});

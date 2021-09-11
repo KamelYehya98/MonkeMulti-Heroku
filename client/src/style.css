@@ -1,0 +1,299 @@
+@media only screen and (min-width: 768px){
+    .vertical-line {
+        border-left: solid #050505;
+        box-shadow: 10px 5px 5px #050505;
+    }
+    body{
+        background-image: url("./img/in-game/background.jpg");
+    }
+    #themaincontainer{
+        height: 100vh;
+    }
+}
+@media only screen and (min-width: 1400px){
+    #monkeydiv{
+        font-size: 18em;
+    }
+    body{
+        background-image: url("./img/in-game/background.jpg");
+    }
+}
+
+@media only screen and (min-width: 1201px) and (max-width: 1399px) {
+    #monkeydiv{
+        font-size: 15em;
+    }
+    body{
+        background-image: url("./img/in-game/background.jpg");
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+      #monkeydiv{
+          font-size: 13em;
+      }
+      body{
+        background-image:url("./img/in-game/background.jpg");
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+      #monkeydiv{
+          font-size: 10em;
+      }
+      body{
+        background-image: url("./img/in-game/background.jpg");
+    }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+    #monkeydiv{
+        font-size: 5em;
+    }
+    body{
+        background-image:url("./img/in-game/backgroundsmall.jpg");
+    }
+}
+
+audio{
+    display: none;
+}
+
+button{
+    box-shadow: 10px 5px 5px #2b2626;
+}
+
+body{
+    background-size: 100vw 100vh;
+    background-attachment: fixed;
+}
+#special :disabled{
+    display: none;
+}
+
+.image-player1{
+    animation-name: fadeInDown;
+    animation-duration: 1s;
+}
+
+.burned-image{
+    animation-name: burnImage !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    border-radius: 0.5rem;
+}
+
+.opacityformonkey{
+    animation-name: burnImage;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.img-border{
+    border: 3px solid rgb(18, 189, 46);
+    border-radius: 10%;
+}
+
+.finish-swap-cards{
+    animation-name: finishSwapCards;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.image-player2{
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+}
+
+.image-player2-select{
+    animation-name: player2SelectSeven;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.image-player1-select{
+    animation-name: player1SelectSeven;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.flip-image {
+    transform: rotateX(180deg) rotateY(180deg);
+    transition: all 1s;
+    transform-style: preserve-3d;
+}
+
+.unflip-image{
+    transform: rotateX(0deg) rotateY(0deg);
+    transition: all 1s;
+    transform-style: preserve-3d;
+}
+
+.addAnimation{
+    animation-name: burnImage;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.removeAnimation{
+    animation-name: restoreImage;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.pick-card-player1{
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+}
+
+.pick-card-player2{
+    animation-name: fadeInDown;
+    animation-duration: 1s;
+}
+
+.remove-animation {
+    animation: none !important;
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translate3d(0,20vh,0);
+        opacity: 0
+    }
+    to {
+        transform: translate3d(0,0,0);
+        opacity: 1
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        transform: translate3d(0,-20vh,0);
+        opacity: 0
+    }
+    to {
+        transform: translate3d(0,0,0);
+        opacity: 1
+    }
+}
+
+@keyframes player1SelectSeven {
+    from {
+        transform: translate3d(0,0,0);
+        opacity: 0
+    }
+    to {
+        transform: translate3d(0,8vh,0);
+        opacity: 1
+    }
+}
+
+@keyframes player2SelectSeven {
+    from {
+        transform: translate3d(0,0,0);
+        opacity: 0
+    }
+    to {
+        transform: translate3d(0,-8vh,0);
+        opacity: 1
+    }
+}
+
+@keyframes burnImage {
+    from {
+        opacity: 1
+    }
+    to {
+        opacity: 0.3
+    }
+}
+
+@keyframes restoreImage {
+    from {
+        opacity: 0.1
+    }
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes finishSwapCards{
+    from{
+        transform: scale(0)
+    }
+    to{
+        transform: scale(1)
+    }
+}
+
+.disableformonkey{
+    display: none !important;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
+
+.disappear{
+    display: none !important;
+}
+#monkeydiv {
+    color: yellow;
+    text-shadow: 0 0.1em 20px rgba(0, 0, 0, 1), 0.05em -0.03em 0 rgba(0, 0, 0, 1),
+      0.05em 0.005em 0 rgba(0, 0, 0, 1), 0em 0.08em 0 rgba(0, 0, 0, 1),
+      0.05em 0.08em 0 rgba(0, 0, 0, 1), 0px -0.03em 0 rgba(0, 0, 0, 1),
+      -0.03em -0.03em 0 rgba(0, 0, 0, 1), -0.03em 0.08em 0 rgba(0, 0, 0, 1), -0.03em 0 0 rgba(0, 0, 0, 1);
+    font-family: "Luckiest Guy", cursive;
+}
+
+span {
+    transform: scale(0.9);
+    display: inline-block;
+}
+span:first-child {
+    animation: bop 3s cubic-bezier(0.175, 0.885, 0.32, 1.275)  infinite;
+}
+span:last-child {
+    animation: bopB 3s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+}
+
+@keyframes bop {
+    0% {
+        transform: scale(0.9);
+    }
+    99% {
+        text-shadow: 0 0 40px whitesmoke;
+      }
+      to {
+        transform:
+          translate3d(15rem,-8rem,0)
+          rotate(-40deg)
+          skewX(70deg)
+          scale(1.5);
+        text-shadow: 0 0 20px whitesmoke;
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes bopB {
+    0% {
+        transform: scale(0.9);
+    }
+    99% {
+        text-shadow: 0 0 40px whitesmoke;
+      }
+      to {
+        transform:
+          translate3d(15rem,-8rem,0)
+          rotate(-40deg)
+          skewX(70deg)
+          scale(1.5);
+        text-shadow: 0 0 20px whitesmoke;
+        opacity: 0;
+      }
+    100% {
+        transform: scale(1) rotateZ(-3deg);
+    }
+}
+
