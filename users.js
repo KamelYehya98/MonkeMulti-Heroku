@@ -27,5 +27,8 @@ const playersInRoom = (room) => {
     const usersInRoom = getUsersInRoom(room);
     return usersInRoom.length;
 }
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max) +1;
+}
 
-module.exports = {addUser, removeUser, getUser, getUsersInRoom, playersInRoom};
+module.exports = {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt};

@@ -28,7 +28,7 @@ const Header = ({user, checkUser}) => {
     }
 
     function showAccountOptions(){
-        document.querySelector(".account-options").style.display="block";
+        //document.querySelector(".account-options").style.display="block";
         document.querySelector('main').addEventListener('click', hideAccountOptions);
     }
 
@@ -41,7 +41,16 @@ const Header = ({user, checkUser}) => {
         if(window.innerWidth>1000){
             var e = document.querySelector(".account-options");
             if (e.style.display){
-                e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+                if (e.style.display != 'none')
+                {
+                    e.style.display = 'none';
+                }
+                else
+                {
+                    e.style.display = 'block';
+                    showAccountOptions();
+                }
+                //e.style.display = ((e.style.display!='none') ? 'none' : 'block');
             }
             else {
                 e.style.display='block';

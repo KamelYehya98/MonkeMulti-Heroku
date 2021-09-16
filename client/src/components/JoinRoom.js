@@ -8,7 +8,8 @@ import {socket} from "../services/socket";
 export default function JoinRoom() {
     const history = useHistory();
     const routerToRoom = () => {
-      history.push('/joinRoom');
+      //history.push('/joinRoom');
+      history.push('/room');
     }
 
     async function joinRoom(){

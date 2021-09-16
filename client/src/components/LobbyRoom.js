@@ -7,18 +7,17 @@ export default function LobbyRoom() {
     console.log("Reached Lobby");
 
     let messages, input, username;
-    // const [but, flipBut] = useState(true);
-    // function pass()
-    // {
-    //     console.log(`${username} pressed battoon`);
-    //     socket.emit('pass turn');
-    //     flipBut(!but);
-    // }
+    const [turn, flipTurn] = useState(true);
+    function pass()
+    {
+        console.log(`${username} pressed battoon`);
+        socket.emit('pass turn');
+        flipTurn(!turn);
+    }
 
     useEffect(() => {
         socket.on('message', (msgObj) => {
-            username = msgObj.user;
-            console.log(`${msgObj.user} or ${username} says ${msgObj.text}`);
+            console.log(`${msgObj.user} says ${msgObj.text}`);
 
             var item = document.createElement('li');
             item.innerHTML = msgObj.text;
@@ -28,10 +27,15 @@ export default function LobbyRoom() {
         });
     }, [messages]);
 
-    // socket.on('pass turn', () => {
-    //     console.log(`Socket ${username} passed turn(${socket.id})`);
-    //     flipBut(!but);
-    // });
+    socket.on('pass turn', (passedFrom) => {
+        console.log(`Socket ${passedFrom} passed turn(${socket.id})`);
+        flipTurn(!turn);
+    });
+
+    socket.on('first', () => {
+        console.log("What it do, I'm first");
+        flipTurn(false);
+    })
 
     socket.on("connect_error", (err) => {
         console.log('connect_error due to ' + err.message);
@@ -58,7 +62,8 @@ export default function LobbyRoom() {
             <form id="form" onSubmit={SendMessage}>
                 <input id="input" autoComplete="off" /><button>Send</button>
             </form>
-            {/* <button id = "poopsy" onClick={pass} disabled = {but}>Batanzo</button> */}
+            <h1 disabled = {turn}>Firsto</h1>
+            <button id = "poopsy" onClick={pass} disabled = {turn}>Pass Turn</button>
         </div>
     );
 }

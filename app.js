@@ -5,7 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const SERVER_URL = require('./client/src/constants');
 const app = express();
-const {addUser, removeUser, getUser, getUsersInRoom, playersInRoom} = require('./users');
+const {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt} = require('./users');
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
@@ -20,6 +20,8 @@ app.use(cors({credentials: true}));
 //relative path to work on different OSes
 const path = require('path');
 const bodyParser = require('body-parser');
+const first = getRandomInt(2);
+console.log(`Player ${first} is starting first`);
 
 
 
@@ -39,21 +41,25 @@ io.on("connection", socket => {
     socket.join(room);
     console.log(user.name + " joined room " + room);
 
-    io.to(room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) })
-    //First player enters
-    // if (playersInRoom(room) === 1)
-    // {
-    //   console.log(user.name + " is first to enter");
-    //   io.to(room).emit('pass turn');
-    // }
+    //io.to(room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) })
+    
     callback();
+    //First player enters
+    if (playersInRoom(room) === first) {
+      console.log(user.name + " is first to start in " + room);
+      io.to(socket.id).emit('first');
+    }
+    else {
+      console.log("Game starting");
+      io.to(room).emit('start game');
+    }
   });
   //Passing turns
-  // socket.on("pass turn", () => {
-  //   const user = getUser(socket.id);
-  //   console.log(user.name + " passed turn(app)");
-  //   socket.to(user.room).emit('pass turn');
-  // });
+  socket.on("pass turn", () => {
+    const user = getUser(socket.id);
+    console.log(user.name + " passed turn(app)");
+    socket.to(user.room).emit('pass turn', user.name);
+  });
 
   socket.on("text", (msg) => {
     const user = getUser(socket.id);
