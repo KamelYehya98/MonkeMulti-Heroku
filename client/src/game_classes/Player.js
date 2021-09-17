@@ -1,9 +1,9 @@
 import game from './Monke';
 import Images from './Images';
 
+
 class Player {
     constructor() {
-
         this.Cards = [];
         this.Monkey = false;
         this.Turn = false;
@@ -13,8 +13,9 @@ class Player {
         this.FreeThrow = false;
         this.ThrowCard = false;
         this.ThrewCard = false;
+        this.CantDoAnything = false;
         this.SwapCard = null;
-        // this.ViewedCards = 0;
+        this.ViewedCards = 0;
         // this.NbCardsView = 2;
     }
 
@@ -44,6 +45,7 @@ class Player {
     nothingToDo () {
         document.getElementById("endturnplayer1").disabled = false;
         document.getElementById("monkeplayer1").disabled = false;
+        this.CantDoAnything = true;
         this.flipButtons(false);
     }
 
@@ -63,8 +65,9 @@ class Player {
     removeDrawImage () {
         let element = document.getElementById("player1pick");
         element.setAttribute("src", "");
+        game.socket.emit('removeDrawImage', game.Player1);
     }
-    
+
     isOppDiv (element) {
         return element.getAttribute("player") == 2;
     }
@@ -108,7 +111,8 @@ class Player {
             game.calculateResult();
             return;
         }
-        game.Player2.playerTurn();
+        
+        game.socket.emit('pass turn');
     }
 
     async monke() {
@@ -156,6 +160,7 @@ class Player {
     playerTurn () {
 
         this.Turn = true;
+        this.CantDoAnything = false;
         game.Player2.Turn = false;
         this.DrawCard = game.Deck.Cards.pop();
         let playerdiv = document.getElementById("player1pick");
@@ -170,6 +175,8 @@ class Player {
             this.specialplayerDiv();
             document.getElementById("specialplayer1").disabled = false;
         }
+
+        game.socket.emit('setDrawCard', this);
     }
 
     async throwCard () {
@@ -190,7 +197,7 @@ class Player {
             }
         } else {
             this.ThrowCard = true;
-            game.addAnimation("throwcard", this);
+            game.addAnimation("throwcard");
             document.getElementById("throwcardplayer1").innerHTML = "CANCEL THROWCARD";
         }
     }
@@ -208,7 +215,7 @@ class Player {
             document.getElementById("freethrowplayer1").innerHTML = "FREE THROW";
         } else {
             this.FreeThrow = true;
-            game.addAnimation("freethrow", this);
+            game.addAnimation("freethrow");
             document.getElementById("freethrowplayer1").innerHTML = "CANCEL FREETHROW";
         }
     }
@@ -222,21 +229,21 @@ class Player {
             this.SpecialEnabled = true;
             document.getElementById("specialplayer1").innerHTML = "CANCEL SPECIAL";
             if (this.DrawCard.cardValue() == 6)
-                game.addAnimation("six", this);
+                game.addAnimation("six");
             else if (this.DrawCard.cardValue() == 7)
-                game.addAnimation("seven", this);
+                game.addAnimation("seven");
             else if (this.DrawCard.cardValue() == 8)
-                game.addAnimation("eight", this);
+                game.addAnimation("eight");
         }
         else {
             this.SpecialEnabled = false;
             document.getElementById("specialplayer1").innerHTML = "ACTIVATE SPECIAL";
             if (this.DrawCard.cardValue() == 6)
-                await game.removeAnimation("six", this);
+                await game.removeAnimation("six");
             else if (this.DrawCard.cardValue() == 7)
-                await game.removeAnimation("seven", this);
+                await game.removeAnimation("seven");
             else if (this.DrawCard.cardValue() == 8)
-                await game.removeAnimation("eight", this);
+                await game.removeAnimation("eight");
         }
     }
 

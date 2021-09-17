@@ -30,8 +30,7 @@ function Room() {
           }
     }
     function playerAction(e){
-        let plyr = Monke.Player1.Turn == true ? Monke.Player1 : Monke.Player2;
-        Monke.playerAction(e.target, plyr);
+        Monke.playerAction(e.target);
     }
 
     function CallButtons(e){

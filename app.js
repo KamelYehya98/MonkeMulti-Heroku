@@ -62,7 +62,7 @@ io.on("connection", socket => {
   socket.on("pass turn", () => {
     const user = getUser(socket.id);
     console.log(user.name + " passed turn(app)");
-    socket.to(user.room).emit('pass turn', user.name);
+    socket.to(user.room).emit('pass turn');
   });
 
   socket.on("text", (msg) => {
@@ -93,6 +93,23 @@ io.on("connection", socket => {
     const user = getUser(socket.id);
     socket.to(user.room).emit('oppPlayer', (plyr2));
   });
+
+  socket.on('setDrawCard', (plyr2)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('setDrawCard', (plyr2));
+  });
+
+  socket.on('removeDrawImage', (plyr2)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('removeDrawImage', (plyr2));
+  });
+
+  socket.on('setGroundCard', (card)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('setGroundCard', (card));
+  });
+
+
 });
 
 // database connection
