@@ -1,31 +1,28 @@
 import game from './Monke';
 import Images from './Images';
 
-function Player() {
+class Player {
+    constructor() {
 
-    this.Cards = [];
-    this.Identifier = null; //To distinguish between player1 and player2
-    this.Monkey = false;
-    this.Turn = false;
-    this.Special = false;
-    this.SpecialEnabled = false;
-    this.DrawCard = null;
-    this.FreeThrow = false;
-    this.ThrowCard = false;
-    this.ThrewCard = false;
-    this.SwapCard = null;
-    this.ViewedCards = 0;
-    this.NbCardsView = 2;
-
-    this.didViewCards = function(){
-        return (this.ViewdCards >= this.NbCardsView);
+        this.Cards = [];
+        this.Monkey = false;
+        this.Turn = false;
+        this.Special = false;
+        this.SpecialEnabled = false;
+        this.DrawCard = null;
+        this.FreeThrow = false;
+        this.ThrowCard = false;
+        this.ThrewCard = false;
+        this.SwapCard = null;
+        // this.ViewedCards = 0;
+        // this.NbCardsView = 2;
     }
 
-    this.isPlayerDiv = function(element){
-        return this.Identifier == element.getAttribute("player");
+    isPlayerDiv (element) {
+        return element.getAttribute("player") == 1;
     }
 
-    this.isBurntImage = function(element) { 
+    isBurntImage (element) {
         if (this.isPlayerDiv(element)) {
             let card = this.Cards[parseInt(element.getAttribute("index"))];
             //console.log(card);
@@ -35,94 +32,88 @@ function Player() {
         }
     }
 
-    this.cardsLeft = function() {
+    cardsLeft () {
         let count = 0;
         for (var i = 0; i < this.Cards.length; i++)
-            if (this.Cards[i].isActive()){
+            if (this.Cards[i].isActive()) {
                 count++;
             }
         return count;
     }
 
-    this.nothingToDo = function() {
-        console.log(this.Identifier);
-        document.getElementById("endturnplayer" + (this).Identifier).disabled = false;
-        document.getElementById("monkeplayer" + (this).Identifier).disabled = false;
-        (this).flipButtons(false);
+    nothingToDo () {
+        document.getElementById("endturnplayer1").disabled = false;
+        document.getElementById("monkeplayer1").disabled = false;
+        this.flipButtons(false);
     }
 
-    this.flipButtons = function(type) {
-        document.getElementById("throwcardplayer" + this.Identifier).disabled = !type;
-        document.getElementById("specialplayer" + this.Identifier).disabled = true;
-        document.getElementById("specialplayer" + this.Identifier).innerHTML = "ACTIVATE SPECIAL";
+    flipButtons (type) {
+        document.getElementById("throwcardplayer1").disabled = !type;
+        document.getElementById("specialplayer1").disabled = true;
+        document.getElementById("specialplayer1").innerHTML = "ACTIVATE SPECIAL";
     }
 
-    this.removeClassFromAllElements = function(name) {
+    removeClassFromAllElements (name) {
         var elems = document.querySelectorAll("." + name);
         [].forEach.call(elems, function (el) {
             el.classList.remove(name);
         });
     }
 
-    this.removeDrawImage = function(){
-        let element = document.getElementById("player" + this.Identifier + "pick");
+    removeDrawImage () {
+        let element = document.getElementById("player1pick");
         element.setAttribute("src", "");
     }
-
-    this.isOppDiv = function(element){
-        let id = this.Identifier == 1 ? 2: 1;
-        return id == parseInt(element.getAttribute("player"));
+    
+    isOppDiv (element) {
+        return element.getAttribute("player") == 2;
     }
-
-    this.removeCard = function(ind){
+    
+    removeCard (ind) {
         let index = parseInt(ind);
-        let element = game.getElement("image-player" + this.Identifier, index);
+        let element = game.getElement("image-player1", index);
         this.Cards[index].deActivate();
         element.parentElement.remove();
         element.remove();
     }
-
-    this.endTurn = function() {
-        console.log("asdkfjlasjfdlasdf: " + this);
-        let target = (this).Identifier === 1 ? game.Player2 : game.Player1;
-        if(this.cardsLeft() == 0){
+    
+    endTurn () {
+        if (this.cardsLeft() == 0) {
             this.monke();
         }
         // if (game.NbViewedCardsplayer1 != game.viewedCardsplayer1) {
         //     window.alert("SELECT YOUR GODDAMN CARDS MAN.....TF");
         //     return;
         // }
-        let element = document.getElementById("player"+ this.Identifier + "pick");
+        let element = document.getElementById("player1pick");
         this.flipButtons(false);
-        document.getElementById("endturnplayer" + this.Identifier).disabled = true;
-        document.getElementById("monkeplayer" + this.Identifier).disabled = true;
-        (this).ThrowCard = false;
-        document.getElementById("throwcardplayer" + this.Identifier).innerHTML = "THROW CARD";
-        (this).FreeThrow = false;
-        document.getElementById("freethrowplayer" + this.Identifier).innerHTML = "FREE THROW";
-        (this).SpecialEnabled = false;
-        (this).Special = false;
-        document.getElementById("specialplayer" + this.Identifier).innerHTML = "ACTIVATE SPECIAL";
-        (this).Turn = false;
-        target.Turn = true;
+        document.getElementById("endturnplayer1").disabled = true;
+        document.getElementById("monkeplayer1").disabled = true;
+        this.ThrowCard = false;
+        document.getElementById("throwcardplayer1").innerHTML = "THROW CARD";
+        this.FreeThrow = false;
+        document.getElementById("freethrowplayer1").innerHTML = "FREE THROW";
+        this.SpecialEnabled = false;
+        this.Special = false;
+        document.getElementById("specialplayer1").innerHTML = "ACTIVATE SPECIAL";
+        this.Turn = false;
+        game.Player2.Turn = true;
         if (element.getAttribute("src") != "") {
             game.setGroundCard(this.DrawCard);
             this.removeDrawImage();
         }
-        document.getElementById("specialtextplayer" + this.Identifier).innerHTML = "";
-        document.getElementById("specialimgplayer" + this.Identifier).setAttribute("src", "");
-        if(target.Monkey){
+        document.getElementById("specialtextplayer1").innerHTML = "";
+        document.getElementById("specialimgplayer1").setAttribute("src", "");
+        if (game.Player2.Monkey) {
             game.calculateResult();
             return;
         }
-        target.playerTurn();
+        game.Player2.playerTurn();
     }
 
-    this.monke = async function() {
-        let target = this.Identifier == 1 ? game.Player2 : game.Player1;
-        if(!target.Monkey)
-        {
-            document.getElementById("monkeplayer"+this.Identifier).disabled = true;
+    async monke() {
+        if (!game.Player2.Monkey) {
+            document.getElementById("monkeplayer1").disabled = true;
             this.Monkey = true;
             //document.getElementById("monkeyaudio").play();
             game.monkeyOpacityEnable();
@@ -134,7 +125,9 @@ function Player() {
         }
     }
 
-    this.burn = function(element) {
+    
+
+    burn (element) {
         let card = null;
 
         if (this.isPlayerDiv(element))
@@ -146,8 +139,8 @@ function Player() {
         }
     }
 
-    this.specialplayerDiv = function() {
-        let text = document.getElementById("specialtextplayer" + this.Identifier);
+    specialplayerDiv () {
+        let text = document.getElementById("specialtextplayer1");
         let str;
         if (this.DrawCard.cardValue() == 6) {
             str = "SELECT A CARD OF YOUR OWN TO VIEW<br>(ENDS TURN)";
@@ -160,124 +153,122 @@ function Player() {
         return;
     }
 
-    this.playerTurn = function() {
-        let target = this.Identifier == 1 ? game.Player2 : game.Player1;
-        console.log("Player " + target.Identifier + " Turn: " + false);
-        console.log("Player " + this.Identifier + " Turn: " + true);
-        (this).Turn = true;
-        target.Turn = false;
-        (this).DrawCard = game.Deck.Cards.pop();
-        let playerdiv = document.getElementById("player" + this.Identifier + "pick");
-        document.getElementById("monkeplayer" + this.Identifier).disabled = false;
+    playerTurn () {
+
+        this.Turn = true;
+        game.Player2.Turn = false;
+        this.DrawCard = game.Deck.Cards.pop();
+        let playerdiv = document.getElementById("player1pick");
+        document.getElementById("monkeplayer1").disabled = false;
         this.addPickCardClass(playerdiv);
-        playerdiv.setAttribute("src", Images[""+this.DrawCard.Value + this.DrawCard.Suit]);
+        playerdiv.setAttribute("src", Images["" + this.DrawCard.Value + this.DrawCard.Suit]);
         this.flipButtons(true);
-        if(this.cardsLeft() == 0)
+        if (this.cardsLeft() == 0)
             return;
         if (this.DrawCard.cardValue() >= 6 && this.DrawCard.cardValue() <= 8) {
-            (this).Special = true;
+            this.Special = true;
             this.specialplayerDiv();
-            document.getElementById("specialplayer" + this.Identifier).disabled = false;
+            document.getElementById("specialplayer1").disabled = false;
         }
     }
- 
-    this.throwCard = async function() {
+
+    async throwCard () {
         game.disableSevenEffects();
-        (this).FreeThrow = false;
-        document.getElementById("freethrowplayer" + this.Identifier).innerHTML = "FREE THROW";
+        this.FreeThrow = false;
+        document.getElementById("freethrowplayer1").innerHTML = "FREE THROW";
         game.removeAnimation("freethrow", this);
         document.getElementById("specialplayer" + this.Identifier).innerHTML = "ACTIVATE SPECIAL";
-        (this).SpecialEnabled = false;
-        if ((this).ThrowCard == true) {
-            (this).ThrowCard = false;
+        this.SpecialEnabled = false;
+        if (this.ThrowCard == true) {
+            this.ThrowCard = false;
             game.removeAnimation("throwcard", this);
-            document.getElementById("throwcardplayer" + this.Identifier).innerHTML = "THROW CARD";
-            if ((this).ThrewCard) {
-                (this).ThrewCard = false;
+            document.getElementById("throwcardplayer1").innerHTML = "THROW CARD";
+            if (this.ThrewCard) {
+                this.ThrewCard = false;
                 game.setGroundCard(this.DrawCard);
                 this.playerTurn();
             }
         } else {
-            (this).ThrowCard = true;
+            this.ThrowCard = true;
             game.addAnimation("throwcard", this);
-            document.getElementById("throwcardplayer" + this.Identifier).innerHTML = "CANCEL THROWCARD";
+            document.getElementById("throwcardplayer1").innerHTML = "CANCEL THROWCARD";
         }
     }
 
-    this.freeThrow = function() {
-        console.log("in freethrow and player is: " + this.Identifier);
+    freeThrow () {
         game.disableSevenEffects();
-        (this).ThrowCard = false;
-        document.getElementById("throwcardplayer" + this.Identifier).innerHTML = "THROW CARD";
-        game.removeAnimation("throwcard" + this.Identifier, this);
-        document.getElementById("specialplayer" + this.Identifier).innerHTML = "ACTIVATE SPECIAL";
-        (this).SpecialEnabled = false;
+        this.ThrowCard = false;
+        document.getElementById("throwcardplayer1").innerHTML = "THROW CARD";
+        game.removeAnimation("throwcard1", this);
+        document.getElementById("specialplayer1").innerHTML = "ACTIVATE SPECIAL";
+        this.SpecialEnabled = false;
         if (this.FreeThrow == true) {
-            (this).FreeThrow = false;
+            this.FreeThrow = false;
             game.removeAnimation("freethrow", this);
-            document.getElementById("freethrowplayer" + this.Identifier).innerHTML = "FREE THROW";
+            document.getElementById("freethrowplayer1").innerHTML = "FREE THROW";
         } else {
-            (this).FreeThrow = true;
+            this.FreeThrow = true;
             game.addAnimation("freethrow", this);
-            document.getElementById("freethrowplayer" + this.Identifier).innerHTML = "CANCEL FREETHROW";
+            document.getElementById("freethrowplayer1").innerHTML = "CANCEL FREETHROW";
         }
     }
 
-    this.specialplayer = async function() {
-        (this).ThrowCard = false;
-        document.getElementById("throwcardplayer" + this.Identifier).innerHTML = "THROW CARD";
-        (this).FreeThrow = false;
-        document.getElementById("freethrowplayer" + this.Identifier).innerHTML = "FREE THROW";
-        if ((this).SpecialEnabled == false) {
-            (this).SpecialEnabled = true;
-            document.getElementById("specialplayer" + this.Identifier).innerHTML = "CANCEL SPECIAL";
-            if ((this).DrawCard.cardValue() == 6)
+    async specialplayer () {
+        this.ThrowCard = false;
+        document.getElementById("throwcardplayer1").innerHTML = "THROW CARD";
+        this.FreeThrow = false;
+        document.getElementById("freethrowplayer1").innerHTML = "FREE THROW";
+        if (this.SpecialEnabled == false) {
+            this.SpecialEnabled = true;
+            document.getElementById("specialplayer1").innerHTML = "CANCEL SPECIAL";
+            if (this.DrawCard.cardValue() == 6)
                 game.addAnimation("six", this);
-            else if ((this).DrawCard.cardValue() == 7)
+            else if (this.DrawCard.cardValue() == 7)
                 game.addAnimation("seven", this);
-            else if ((this).DrawCard.cardValue() == 8)
+            else if (this.DrawCard.cardValue() == 8)
                 game.addAnimation("eight", this);
         }
         else {
-            (this).SpecialEnabled = false;
-            document.getElementById("specialplayer" + this.Identifier).innerHTML = "ACTIVATE SPECIAL";
-            if ((this).DrawCard.cardValue() == 6)
+            this.SpecialEnabled = false;
+            document.getElementById("specialplayer1").innerHTML = "ACTIVATE SPECIAL";
+            if (this.DrawCard.cardValue() == 6)
                 await game.removeAnimation("six", this);
-            else if ((this).DrawCard.cardValue() == 7)
+            else if (this.DrawCard.cardValue() == 7)
                 await game.removeAnimation("seven", this);
-            else if ((this).DrawCard.cardValue() == 8)
+            else if (this.DrawCard.cardValue() == 8)
                 await game.removeAnimation("eight", this);
         }
     }
 
-    this.addPickCardClass = function(element) {
+    addPickCardClass (element) {
         return new Promise(resolve => {
-            element.classList.add("pick-card-player" + this.Identifier);
+            element.classList.add("pick-card-player1");
             setTimeout(() => {
-                element.classList.remove("pick-card-player" + this.Identifier);
+                element.classList.remove("pick-card-player1");
                 resolve();
             }, 1000);
         });
     }
 
-    this.showCards = function(){
-        let els = document.querySelectorAll(".image-player" + this.Identifier);
-        for(var i=0; i<els.length; i++){
+    showCards () {
+        let els = document.querySelectorAll(".image-player1");
+        for (var i = 0; i < els.length; i++) {
             let index = parseInt(els[i].getAttribute('index'));
-            els[i].setAttribute("src", Images[""+this.Cards[index].Value + this.Cards[index].Suit]);
+            els[i].setAttribute("src", Images["" + this.Cards[index].Value + this.Cards[index].Suit]);
         }
     }
 
-    this.calculateScore = function() {
+    calculateScore () {
         let sum = 0;
         for (var i = 0; i < this.Cards.length; i++)
             sum += this.Cards[i].cardValue();
         return sum;
     }
 
-
-    
-    
 }
+
+// didViewCards () {
+//     return (this.ViewdCards >= this.NbCardsView);
+// };
 
 export default Player;

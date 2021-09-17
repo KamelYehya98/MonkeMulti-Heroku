@@ -7,9 +7,10 @@ import LogInSignUp from "./pages/LogInSignUp";
 import Lobby from "./pages/Lobby";
 import Room from "./pages/Room";
 import Header from "./components/Header";
-import {socket} from "./services/socket";
+import sok from "./services/socket";
 
 function App() {
+    let socket = null;
         
     const [user, setUser] = useState(null);
 
@@ -33,7 +34,8 @@ function App() {
             else
             {
                 console.log("L user battal null. It's: " + user.username);
-                if (socket.connected && user.username !== null)
+                socket = sok.getSocket();
+                if (user.username !== null)
                 {
                     socket.emit('set username', user.username);
                     socket.emit('welcome');

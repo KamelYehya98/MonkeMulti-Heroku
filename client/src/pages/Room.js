@@ -55,8 +55,6 @@ function Room() {
         }
     }
 
-    setTimeout(Monke.startGame, 1000);
-
     return (
         <Router>
             <div className="d-flex justify-content-center align-items-center w-100" id="themaincontainer">

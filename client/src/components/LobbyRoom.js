@@ -1,9 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect } from 'react';
-import {socket} from "../services/socket";
+import sok from "../services/socket";
 import {useState} from 'react';
 
 export default function LobbyRoom() {
+    var socket = sok.getSocket();
     console.log("Reached Lobby");
 
     let messages, input, username;

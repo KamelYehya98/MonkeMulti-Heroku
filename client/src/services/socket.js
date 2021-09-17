@@ -1,5 +1,15 @@
 import io from "socket.io-client";
-export var socket = io();
-socket.on('connect', function() {
-    console.log('connected socket in socket.js ', socket.connected);
-});
+function Sok () {
+    this.socket = 0;
+    
+    this.getSocket = function () {
+        if ( this.socket == 0) {
+            this.socket = io();
+            return  this.socket;
+        }
+        else
+            return  this.socket;
+    }
+}
+let sok = new Sok();
+export default sok;

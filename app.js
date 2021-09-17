@@ -48,8 +48,12 @@ io.on("connection", socket => {
     if (playersInRoom(room) === first) {
       console.log(user.name + " is first to start in " + room);
       io.to(socket.id).emit('first');
+      if (playersInRoom(room) === 2) {
+      console.log("Game starting");
+      io.to(room).emit('start game');
+      }
     }
-    else {
+    else if (playersInRoom(room) === 2) {
       console.log("Game starting");
       io.to(room).emit('start game');
     }
@@ -78,6 +82,16 @@ io.on("connection", socket => {
     const user = removeUser(socket.id);
 
     if (user) console.log(user.name + " left the chat with id: " + socket.id);
+  });
+
+  socket.on('deal', (dealObj) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('deal', {plyr: dealObj.plyr, deck: dealObj.deck});
+  });
+
+  socket.on('oppPlayer', (plyr2) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('oppPlayer', (plyr2));
   });
 });
 
