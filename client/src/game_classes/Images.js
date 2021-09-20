@@ -65,6 +65,7 @@ import _AS from '../img/in-game/AS.png';
 
 import _BackCard from '../img/in-game/backcard.png';
 import _Transparent from '../img/in-game/transparent.png';
+import _White from '../img/in-game/white.png'; 
 
 let Images = new Object();
 Images['2C'] = _2C;
@@ -120,6 +121,8 @@ Images['AD'] = _AD;
 Images['AH'] = _AH;
 Images['AS'] = _AS;
 
+
+Images['white'] = _White;
 Images['backcard'] = _BackCard;
 Images['transparent'] = _Transparent;
 

@@ -13,43 +13,51 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function Room() {
 
     async function submitToDatabase(e){
-        e.preventDefault();
-        let user1 = 'taftaf', user2 = 'hasagi';
-        let score1 = Monke.Player1.calculateScore();
-        let score2 = Monke.Player2.calculateScore();
-        try{
-            console.log('Reacccccccccccccccched submitting scores to db');
-              const res = await fetch(`${SERVER_URL}/creatematchhistory`, {
-                  method: 'POST',
-                  body: JSON.stringify({ user1, user2, score1, score2 }),
-                  headers: { 'Content-Type' : 'application/json' },
-                  credentials: 'include'
-              });          
-          }catch(err){
-              console.log(err);
-          }
+        // e.preventDefault();
+        // let user1 = 'taftaf', user2 = 'hasagi';
+        // let score1 = Monke.Player1.calculateScore();
+        // let score2 = Monke.Player2.calculateScore();
+        // try{
+        //     console.log('Reacccccccccccccccched submitting scores to db');
+        //       const res = await fetch(`${SERVER_URL}/creatematchhistory`, {
+        //           method: 'POST',
+        //           body: JSON.stringify({ user1, user2, score1, score2 }),
+        //           headers: { 'Content-Type' : 'application/json' },
+        //           credentials: 'include'
+        //       });          
+        //   }catch(err){
+        //       console.log(err);
+        //   }
     }
     function playerAction(e){
         Monke.playerAction(e.target);
     }
 
     function CallButtons(e){
-        let Identifier = e.target.getAttribute("id")[e.target.getAttribute("id").length - 1];
-        let player = Identifier == "1" ? Monke.Player1 : Monke.Player2;
+        
+        console.log("Entered Call Buttons Before Return.......");
+        let id = e.target.getAttribute("id")[e.target.getAttribute("id").length - 1];
+        console.log("Att id is: " + id);
 
-        let turn = Monke.Player1.Turn === true ? 1 : 2;
-        if(turn != Identifier) //Might change it for FreeThrow when it's online (Free throw stops registering when it's not your turen {makes no sense})
+        if(Monke.Player1.BlockAction)
             return;
-        //possible fix: 
-        //add && e.target.getAttribute("id")[0] != 'f' to check that the action isn't free throw
-        //then make a condition on card selected (should be opp card if (turn != Identifier))
+        if(Monke.Player1.Turn && id !== '1')
+            return;
+        if(Monke.Player1.Turn==false && e.target.getAttribute("id")[0] == 'f' && id !== "1")
+            return;
+
+        console.log("Entered Call Buttons.......");
+
         switch(e.target.getAttribute("id")[0])
         {
-            case "t": player.throwCard(); break;
-            case "f": player.freeThrow(); break;
-            case "s": player.specialplayer(); break;
-            case "m": player.monke(); break;
-            case "e": player.endTurn(); break;
+            case "t": Monke.throwCard(); break;
+            case "f": Monke.freeThrow(); break;
+            case "s": Monke.specialplayer(); break;
+            case "m": Monke.monke(); break;
+            case "e": 
+                    console.log("Executing EndTurn........");
+                    Monke.endTurn();
+                    break;
             default: console.log("Aklna khara.............."); break;
         }
     }

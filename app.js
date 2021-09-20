@@ -59,10 +59,44 @@ io.on("connection", socket => {
     }
   });
   //Passing turns
-  socket.on("pass turn", () => {
+  socket.on("pass turn", (plyr2) => {
     const user = getUser(socket.id);
-    console.log(user.name + " passed turn(app)");
-    socket.to(user.room).emit('pass turn');
+    // console.log(user.name + " passed turn(app)");
+    socket.to(user.room).emit('pass turn', (plyr2));
+  });
+
+  socket.on("removeCard", (obj) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('removeCard', {index: obj.index, id:obj.id, plyr: obj.plyr});
+  });
+
+  socket.on('burnImage', (ind) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('burnImage', (ind));
+  });
+
+  socket.on('addAnimation', (str) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('addAnimation', (str));
+  });
+  socket.on('removeAnimation', (str) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('removeAnimation', (str));
+  });
+
+  socket.on('freeThrowButton', (str) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('freeThrowButton', (str));
+  });
+
+  socket.on('throwCardButton', (str) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('throwCardButton', (str));
+  });
+
+  socket.on('specialButton', (str) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('specialButton',(str));
   });
 
   socket.on("text", (msg) => {
@@ -104,12 +138,20 @@ io.on("connection", socket => {
     socket.to(user.room).emit('removeDrawImage', (plyr2));
   });
 
-  socket.on('setGroundCard', (card)=>{
+  socket.on('setGroundCard', (obj)=>{
     const user = getUser(socket.id);
-    socket.to(user.room).emit('setGroundCard', (card));
+    socket.to(user.room).emit('setGroundCard', {card: obj.card, plyr: obj.plyr});
   });
 
+  socket.on('addPickCardClassOpponent', ()=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('addPickCardClassOpponent');
+  });
 
+  socket.on('flipCardBackOpponent', (obj)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('flipCardBackOpponent', {el: obj.el, index: obj.index});
+  });
 });
 
 // database connection

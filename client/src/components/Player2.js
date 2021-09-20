@@ -16,11 +16,11 @@ return (
             <img alt="" src="" className="img-fluid" id="specialimgplayer2" />
         </div>
         <div className="col-md-3 col-4 d-flex flex-column justify-content-center m-1 p-0 order-md-2" id="player2buttons">
-            <button className="btn btn-primary mt-2 btn-sm" id="throwcardplayer2" onClick={CallButtons}>THROW CARD</button>
-            <button className="btn btn-success mt-2 btn-sm" id="freethrowplayer2" onClick={CallButtons}>FREE THROW</button>
-            <button className="btn btn-warning mt-2 btn-sm" id="monkeplayer2" onClick={CallButtons}>MONKE</button>
-            <button className="btn btn-danger mt-2 btn-sm" id="endturnplayer2" onClick={CallButtons}>END TURN</button>
-            <button className="btn btn-dark mt-2 btn-sm" id="specialplayer2" onClick={CallButtons}>ACTIVATE SPECIAL</button>
+            <button className="btn btn-primary mt-2 btn-sm" id="throwcardplayer2">THROW CARD</button>
+            <button className="btn btn-success mt-2 btn-sm" id="freethrowplayer2">FREE THROW</button>
+            <button className="btn btn-warning mt-2 btn-sm" id="monkeplayer2">MONKE</button>
+            <button className="btn btn-danger mt-2 btn-sm" id="endturnplayer2">END TURN</button>
+            <button className="btn btn-dark mt-2 btn-sm" id="specialplayer2">ACTIVATE SPECIAL</button>
         </div>
         <div className="order-md-0 vertical-line rounded"></div>
     </div>
