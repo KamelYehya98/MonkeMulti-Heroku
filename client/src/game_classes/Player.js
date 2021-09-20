@@ -19,7 +19,11 @@ class Player {
 
     }
 
+
+
+
 }
+
 // didViewCards () {
 //     return (this.ViewdCards >= this.NbCardsView);
 // };
