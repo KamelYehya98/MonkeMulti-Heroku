@@ -49,7 +49,7 @@ class Monke {
     this.socket.on('setDrawCard', (plyr2)=>{
         console.log("entered setDrawCard..............");
         this.Player2 = plyr2;
-        if(plyr2.DrawCard != null){
+        if(plyr2.DrawCard !== null){
             document.getElementById('player2pick').setAttribute("src", Images['backcard']);
         }
     });
@@ -78,7 +78,7 @@ class Monke {
         console.log("burn emit...............");
         let card = this.Player2.Cards[parseInt(ind)];
         let element = this.getElement("image-player2", parseInt(ind));
-        if (card != null) {
+        if (card !== null) {
             this.burnCard(card);
             element.classList.add("burned-image");
         }
@@ -112,7 +112,7 @@ class Monke {
     }
 
     startGame() {
-        if (this.Started == false) {
+        if (this.Started === false) {
             console.log("Starto");
             this.Started = true;
             if (this.isFirst) {
@@ -150,7 +150,7 @@ class Monke {
         let i = parseInt(element.getAttribute("index"));
         this.Player1.BlockAction = true;
         setTimeout(()=>{
-            if(special == 8)
+            if(special === 8)
                 element.setAttribute("src", Images[""+this.Player2.Cards[i].Value + this.Player2.Cards[i].Suit]);
             else{
                 element.setAttribute("src", Images[""+this.Player1.Cards[i].Value + this.Player1.Cards[i].Suit]);
@@ -178,7 +178,7 @@ class Monke {
     flipCardBackOpponent (i, index) {
         console.log("index is: " + i);
         let element = null;
-        if(index == 6)
+        if(index === 6)
             element = this.getElement("image-player2", parseInt(i));
         else
             element = this.getElement("image-player1", parseInt(i));
@@ -215,7 +215,7 @@ class Monke {
         for (var i = 0; i < this.Player1.Cards.length; i++) {
             this.getElement("image-player1", i).setAttribute("src", Images['' + this.Player1.Cards[i].Value + this.Player1.Cards[i].Suit]);
         }
-        for (var i = 0; i < this.Player2.Cards.length; i++) {
+        for (i = 0; i < this.Player2.Cards.length; i++) {
             this.getElement("image-player2", i).setAttribute("src", Images['' + this.Player2.Cards[i].Value + this.Player2.Cards[i].Suit]);
         }
     }
@@ -231,12 +231,12 @@ class Monke {
     removeAnimation(specialtype) {
         // return new Promise(resolve => {
             this.removeClassFromAllElements("addAnimation");
-            if (specialtype !== "six" && specialtype != "seven" && specialtype != "eight") {
+            if (specialtype !== "six" && specialtype !== "seven" && specialtype !== "eight") {
                 document.getElementById("specialdivplayer1").classList.add("removeAnimation");
                 document.getElementById("specialplayer1").classList.add("removeAnimation");
                 document.getElementById("player1pick").classList.add("removeAnimation");
             }
-            if (specialtype !== "seven" && specialtype != "eight") {
+            if (specialtype !== "seven" && specialtype !== "eight") {
                 document.getElementById("cards-container-player2").classList.add("removeAnimation");
             }
             if (specialtype === "eight") {
@@ -262,21 +262,21 @@ class Monke {
     removeAnimationOpponent(specialtype) {
         // return new Promise(resolve => {
             this.removeClassFromAllElements("addAnimation");
-            if (specialtype != "six" && specialtype != "seven" && specialtype != "eight") {
+            if (specialtype !== "six" && specialtype !== "seven" && specialtype !== "eight") {
                 document.getElementById("specialdivplayer2").classList.add("removeAnimation");
                 document.getElementById("specialplayer2").classList.add("removeAnimation");
                 document.getElementById("player2pick").classList.add("removeAnimation");
             }
-            if (specialtype != "seven" && specialtype != "eight") {
+            if (specialtype !== "seven" && specialtype !== "eight") {
                 document.getElementById("cards-container-player1").classList.add("removeAnimation");
             }
-            if (specialtype == "eight") {
+            if (specialtype === "eight") {
                 document.getElementById("cards-container-player2").classList.add("removeAnimation");
             }
-            if (specialtype != "freethrow") {
+            if (specialtype !== "freethrow") {
                 document.getElementById("freethrowplayer2").classList.add("removeAnimation");
             }
-            if (specialtype != "throwcard") {
+            if (specialtype !== "throwcard") {
                 document.getElementById("throwcardplayer2").classList.add("removeAnimation");
             }
             document.getElementById("assets-container-player1").classList.add("removeAnimation");
@@ -292,22 +292,22 @@ class Monke {
     
     addAnimation (specialtype) {
         this.removeClassFromAllElements("removeAnimation");
-        if (specialtype != "six" && specialtype != "seven" && specialtype != "eight") {
+        if (specialtype !== "six" && specialtype !== "seven" && specialtype !== "eight") {
             document.getElementById("specialdivplayer1").classList.add("addAnimation");
             document.getElementById("specialplayer1").classList.add("addAnimation");
-            if(specialtype == "freethrow")
+            if(specialtype === "freethrow")
                 document.getElementById("player1pick").classList.add("addAnimation");
         }
-        if (specialtype != "seven" && specialtype != "eight") {
+        if (specialtype !== "seven" && specialtype !== "eight") {
             document.getElementById("cards-container-player2").classList.add("addAnimation");
         }
-        if (specialtype == "eight") {
+        if (specialtype === "eight") {
             document.getElementById("cards-container-player1").classList.add("addAnimation");
         }
-        if (specialtype != "freethrow") {
+        if (specialtype !== "freethrow") {
             document.getElementById("freethrowplayer1").classList.add("addAnimation");
         }
-        if (specialtype != "throwcard") {
+        if (specialtype !== "throwcard") {
             document.getElementById("throwcardplayer1").classList.add("addAnimation");
         }
         document.getElementById("assets-container-player2").classList.add("addAnimation");
@@ -317,22 +317,22 @@ class Monke {
 
     addAnimationOpponent(specialtype) {
         this.removeClassFromAllElements("removeAnimation");
-        if (specialtype != "six" && specialtype != "seven" && specialtype != "eight") {
+        if (specialtype !== "six" && specialtype !== "seven" && specialtype !== "eight") {
             document.getElementById("specialdivplayer2").classList.add("addAnimation");
             document.getElementById("specialplayer2").classList.add("addAnimation");
-            if(specialtype == "freethrow")
+            if(specialtype === "freethrow")
                 document.getElementById("player2pick").classList.add("addAnimation");
         }
-        if (specialtype != "seven" && specialtype != "eight") {
+        if (specialtype !== "seven" && specialtype !== "eight") {
             document.getElementById("cards-container-player1").classList.add("addAnimation");
         }
-        if (specialtype == "eight") {
+        if (specialtype === "eight") {
             document.getElementById("cards-container-player2").classList.add("addAnimation");
         }
-        if (specialtype != "freethrow") {
+        if (specialtype !== "freethrow") {
             document.getElementById("freethrowplayer2").classList.add("addAnimation");
         }
-        if (specialtype != "throwcard") {
+        if (specialtype !== "throwcard") {
             document.getElementById("throwcardplayer2").classList.add("addAnimation");
         }
         document.getElementById("assets-container-player1").classList.add("addAnimation");
@@ -460,7 +460,7 @@ class Monke {
     }
 
     async playerAction (element) {
-        if(this.Player1.BlockAction == false)
+        if(this.Player1.BlockAction === false)
         {
 
             
@@ -501,8 +501,8 @@ class Monke {
             // return;
             // }
             if (!this.isBurntImage(element)) {
-                if (this.Player1.Special && this.Player1.SpecialEnabled && this.Player1.Turn && this.cardsLeft() != 0 && !this.Player1.CantDoAnything) {
-                    if (this.cardValue(this.Player1.DrawCard) == 6) {
+                if (this.Player1.Special && this.Player1.SpecialEnabled && this.Player1.Turn && this.cardsLeft() !== 0 && !this.Player1.CantDoAnything) {
+                    if (this.cardValue(this.Player1.DrawCard) === 6) {
                         if (this.isPlayerDiv(element)) {
                             let card = this.Player1.Cards[this.getIndexValue(element)];
                             element.setAttribute("src", Images["" + card.Value + card.Suit]);
@@ -554,17 +554,17 @@ class Monke {
                             }
                         }
                         else if (this.NbCardsPickedSeven === 1) {
-                            if (this.isOppDiv(element) && this.Player2.SwapCard != null) {
+                            if (this.isOppDiv(element) && this.Player2.SwapCard !== null) {
                                 this.Player2.SwapCard = element;
                                 this.removeClassFromAllElements("image-player1-select");
                                 this.Player2.SwapCard.classList.add("image-player1-select");
-                            } else if (this.isPlayerDiv(element) && this.Player1.SwapCard != null) {
+                            } else if (this.isPlayerDiv(element) && this.Player1.SwapCard !== null) {
                                 this.Player1.SwapCard = element;
                                 this.removeClassFromAllElements("image-player2-select");
                                 this.Player1.SwapCard.classList.add("image-player2-select");
                             } else {
                                 this.NbCardsPickedSeven++;
-                                if (this.Player2.SwapCard == null) {
+                                if (this.Player2.SwapCard === null) {
                                     this.Player2.SwapCard = element;
                                     this.Player2.SwapCard.classList.add("image-player1-select");
                                 } else {
@@ -581,8 +581,8 @@ class Monke {
                             this.removeAnimation("seven");
                             this.socket.emit('removeAnimation', 'seven');
 
-                            if (this.GroundCards == undefined || this.GroundCards == null)
-                                this.GroundCards = new Array();
+                            if (this.GroundCards === undefined || this.GroundCards === null)
+                                this.GroundCards = [];
                             //this.GroundCards.push(Object.assign({}, this.Player1.DrawCard));
                             this.setGroundCard(this.Player1.DrawCard);
                             setTimeout(()=>{this.socket.emit('setGroundCard', {card:this.Player1.DrawCard, plyr:this.Player1})}, 1005);
@@ -602,7 +602,7 @@ class Monke {
                 else if (!this.isOppDiv(element)) {
                     let index = this.getIndexValue(element);
                     let pickedcard = this.Player1.Cards[index];
-                    if (element.getAttribute("id") == "groundcard" && this.Player1.Turn && !this.Player1.CantDoAnything) {
+                    if (element.getAttribute("id") === "groundcard" && this.Player1.Turn && !this.Player1.CantDoAnything) {
                         this.removeDrawImage();
                         this.socket.emit('removeDrawImage', (this.Player1));
                         this.setGroundCard(this.Player1.DrawCard);
@@ -611,13 +611,13 @@ class Monke {
                         return;
                     }
                     else if (this.Player1.ThrowCard && this.Player1.Turn && !this.Player1.CantDoAnything && this.isPlayerDiv(element)) {
-                        if (this.cardValue(pickedcard) == this.cardValue(this.Player1.DrawCard)) {
+                        if (this.cardValue(pickedcard) === this.cardValue(this.Player1.DrawCard)) {
                             this.setGroundCard(pickedcard);
                             this.socket.emit('setGroundCard', {card:pickedcard, plyr:this.Player1});
                             this.removeCard(this.getIndexValue(element), 1);
                             this.socket.emit('removeCard', {index:this.getIndexValue(element), id:2, plyr:this.Player1});
                             this.Player1.ThrewCard = true;
-                            if (this.cardsLeft() == 0) {
+                            if (this.cardsLeft() === 0) {
                                 await this.monke();
                                 return;
                             }
@@ -628,12 +628,12 @@ class Monke {
                             this.socket.emit('burnImage', (element.getAttribute("index")));
                         }
                     } else if (this.Player1.FreeThrow && this.isPlayerDiv(element)) {
-                        if (this.cardValue(pickedcard) == this.cardValue(this.GroundCard)) {
+                        if (this.cardValue(pickedcard) === this.cardValue(this.GroundCard)) {
                             this.setGroundCard(pickedcard);
                             this.socket.emit('setGroundCard', {card:pickedcard, plyr:this.Player1});
                             this.removeCard(index, 1);
                             this.socket.emit('removeCard', {index:index, id:2, plyr:this.Player1});
-                            if (this.cardsLeft() == 0) {
+                            if (this.cardsLeft() === 0) {
                                 await this.monke();
                                 return;
                             }
@@ -646,10 +646,10 @@ class Monke {
                     } else if (!this.Player1.FreeThrow && !this.Player1.ThrowCards && this.Player1.Turn && !this.Player1.CantDoAnything && this.isPlayerDiv(element)) {
                         this.setGroundCard(pickedcard);
                         this.socket.emit('setGroundCard', {card:pickedcard, plyr:this.Player1});
-                        if (this.cardValue(this.Player1.DrawCard) == this.cardValue(pickedcard)) {
+                        if (this.cardValue(this.Player1.DrawCard) === this.cardValue(pickedcard)) {
                             this.removeCard(element.getAttribute("index"), 1);
                             this.socket.emit('removeCard', {index:element.getAttribute("index"), id:2, plyr:this.Player1});
-                            if (this.cardsLeft() == 0) {
+                            if (this.cardsLeft() === 0) {
                                 await this.monke();
                                 return;
                             }
@@ -712,14 +712,14 @@ class Monke {
 
     
     isPlayerDiv (element) {
-        return element.getAttribute("player") == 1;
+        return element.getAttribute("player") === 1;
     }
 
     isBurntImage (element) {
         if (this.isPlayerDiv(element)) {
             let card = this.Player1.Cards[parseInt(element.getAttribute("index"))];
             //console.log(card);
-            if (this.isBurned(card) == true)
+            if (this.isBurned(card) === true)
                 return true;
             return false;
         }
@@ -728,7 +728,7 @@ class Monke {
     cardsLeft() {
         let count = 0;
         for (var i = 0; i < this.Player1.Cards.length; i++)
-            if (this.Player1.Cards[i].Value != false) {
+            if (this.Player1.Cards[i].Value !== false) {
                 count++;
             }
         return count;
@@ -753,7 +753,7 @@ class Monke {
     }
 
     isOppDiv(element) {
-        return element.getAttribute("player") == 2;
+        return element.getAttribute("player") === 2;
     }
     
     removeCard(ind, identifier) {
@@ -792,7 +792,7 @@ class Monke {
         this.socket.emit('addPickCardClassOpponent');
         playerdiv.setAttribute("src", Images["" + this.Player1.DrawCard.Value + this.Player1.DrawCard.Suit]);
         this.flipButtons(true);
-        if (this.cardsLeft() == 0){
+        if (this.cardsLeft() === 0){
             console.log("Nb of cards is 0");
             return;
         }
@@ -807,10 +807,10 @@ class Monke {
 
     endTurn() {
         console.log("Inside EndTurn function........");
-        if (this.cardsLeft() == 0) {
+        if (this.cardsLeft() === 0) {
             this.monke();
         }
-        // if (game.NbViewedCardsplayer1 != game.viewedCardsplayer1) {
+        // if (game.NbViewedCardsplayer1 !== game.viewedCardsplayer1) {
         //     window.alert("SELECT YOUR GODDAMN CARDS MAN.....TF");
         //     return;
         // }
@@ -833,7 +833,7 @@ class Monke {
 
         this.Player1.Turn = false;
         this.Player2.Turn = true;
-        if (element.getAttribute("src") != "") {
+        if (element.getAttribute("src") !== "") {
             this.setGroundCard(this.Player1.DrawCard);
             this.socket.emit('setGroundCard', {card:this.Player1.DrawCard, plyr:this.Player1});
             this.removeDrawImage();
@@ -868,17 +868,17 @@ class Monke {
         
         let card = null;
         console.log("burn function........ id: " + id);
-        if (id == 1)
+        if (id === 1)
             card = this.Player1.Cards[parseInt(element.getAttribute("index"))];
         console.log("passed id 1 check............");
-        if(id == 2){
+        if(id === 2){
             console.log("inside burn function id = 2");
             card = this.Player2.Cards[parseInt(element.getAttribute("index"))];
             console.log("before get Element..........");
             element = this.getElement("image-player2", parseInt(element.getAttribute("index")));
             console.log("after get Element..........");
         }
-        if (card != null) {
+        if (card !== null) {
             this.burnCard(card);
             element.classList.add("burned-image");
         }
@@ -888,11 +888,11 @@ class Monke {
     specialplayerDiv() {
         let text = document.getElementById("specialtextplayer1");
         let str;
-        if (this.cardValue(this.Player1.DrawCard) == 6) {
+        if (this.cardValue(this.Player1.DrawCard) === 6) {
             str = "SELECT A CARD OF YOUR OWN TO VIEW<br>(ENDS TURN)";
-        } else if (this.cardValue(this.Player1.DrawCard) == 7) {
+        } else if (this.cardValue(this.Player1.DrawCard) === 7) {
             str = "SELECT TWO CARDS<br>(YOUR'S & OPPONENT'S) TO SWAP<br>(ENDS TURN)";
-        } else if (this.cardValue(this.Player1.DrawCard) == 8) {
+        } else if (this.cardValue(this.Player1.DrawCard) === 8) {
             str = "SELECT A CARD FROM YOUR OPPONENT TO VIEW<br>(ENDS TURN)";
         }
         text.innerHTML = str;
@@ -915,7 +915,7 @@ class Monke {
 
         this.Player1.SpecialEnabled = false;
         
-        if (this.Player1.ThrowCard == true) {
+        if (this.Player1.ThrowCard === true) {
             this.Player1.ThrowCard = false;
             this.removeAnimation("throwcard");
             this.socket.emit('removeAnimation', 'throwcard');
@@ -950,7 +950,7 @@ class Monke {
         this.socket.emit("specialButton", "ACTIVATE SPECIAL");
 
         this.Player1.SpecialEnabled = false;
-        if (this.Player1.FreeThrow == true) {
+        if (this.Player1.FreeThrow === true) {
             this.Player1.FreeThrow = false;
             this.removeAnimation("freethrow");
             this.socket.emit('removeAnimation', 'freethrow');
@@ -977,20 +977,20 @@ class Monke {
         this.Player1.FreeThrow = false;
         document.getElementById("freethrowplayer1").innerHTML = "FREE THROW";
         this.socket.emit("freeThrowButton", "FREE THROW");
-        if (this.Player1.SpecialEnabled == false) {
+        if (this.Player1.SpecialEnabled === false) {
             this.Player1.SpecialEnabled = true;
             document.getElementById("specialplayer1").innerHTML = "CANCEL SPECIAL";
             this.socket.emit("specialButton", "CANCEL SPECIAL");
 
-            if (this.cardValue(this.Player1.DrawCard) == 6){
+            if (this.cardValue(this.Player1.DrawCard) === 6){
                 this.addAnimation("six");
                 this.socket.emit('addAnimation', 'six');
             }
-            else if (this.cardValue(this.Player1.DrawCard) == 7){
+            else if (this.cardValue(this.Player1.DrawCard) === 7){
                 this.addAnimation("seven");
                 this.socket.emit('addAnimation', 'seven');
             }
-            else if (this.cardValue(this.Player1.DrawCard) == 8){
+            else if (this.cardValue(this.Player1.DrawCard) === 8){
                 this.addAnimation("eight");
                 this.socket.emit('addAnimation', 'eight');
 
@@ -1001,15 +1001,15 @@ class Monke {
             document.getElementById("specialplayer1").innerHTML = "ACTIVATE SPECIAL";
             this.socket.emit("specialButton", "ACTIVATE SPECIAL");
 
-            if (this.cardValue(this.Player1.DrawCard) == 6){
+            if (this.cardValue(this.Player1.DrawCard) === 6){
                 this.removeAnimation("six");
                 this.socket.emit('removeAnimation', 'six');
             }
-            else if (this.cardValue(this.Player1.DrawCard) == 7){
+            else if (this.cardValue(this.Player1.DrawCard) === 7){
                 this.removeAnimation("seven");
                 this.socket.emit('removeAnimation', 'seven');
             }
-            else if (this.cardValue(this.Player1.DrawCard) == 8){
+            else if (this.cardValue(this.Player1.DrawCard) === 8){
                 this.removeAnimation("eight");
                 this.socket.emit('removeAnimation', 'eight');
             }
