@@ -1,26 +1,44 @@
 import React from 'react';
+import sok from '../services/socket';
 import "../pages/css/Chat.css";
 
 export default function ChatBox(){
+    const socket = sok.getSocket();
 
-    function sendMessage(){
+    socket.on('message', (mesObj) => {
         var list = document.getElementById("messageList");
         var entryText = document.createElement("p");
-        entryText.textContent = document.getElementById("messageInput").value;
+        //get user that sent it using mesObj.user
+        entryText.textContent = mesObj.text;
         var entry = document.createElement("li");
         entry.appendChild(entryText);
         list.appendChild(entry);
         document.getElementById("messageInput").value = '';
-        entry.classList.add("me");
+        entry.classList.add("you");
+    });
+
+    function sendMessage(){
+        var list = document.getElementById("messageList");
+        var entryText = document.createElement("p");
+        var message = document.getElementById("messageInput").value;
+        if (message)
+        {
+            entryText.textContent = message;
+            var entry = document.createElement("li");
+            entry.appendChild(entryText);
+            list.appendChild(entry);
+            document.getElementById("messageInput").value = '';
+            entry.classList.add("me");
+            entry.scrollIntoView();
+            socket.emit('text', message);
+        }
     }
 
     return (
-        <div className="chat">
+        <div className="chat" id = "chatBox">
             <div className="messages-wrapper">
                 <div className="messages">
                     <ul id="messageList">
-                        <li className="me"><p>Hi</p></li>
-                        <li className="you"><p>What's up?</p></li>
                     </ul>
                 </div>
             </div>
@@ -28,7 +46,7 @@ export default function ChatBox(){
             <div className="send-message">
                 <input type="text" placeholder="Message" id="messageInput"/>
                 <div>
-                    <button onClick={sendMessage} onKeyPress="">Send</button>
+                    <button onClick={sendMessage}>Send</button>
                 </div>
             </div>
         </div>
