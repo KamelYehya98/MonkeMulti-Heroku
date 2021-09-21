@@ -2,17 +2,19 @@
     position: fixed;
     top: 15%;
     right: 1%;
-    width: 5rem;
-    height: 5rem;
+    width: 5rem !important;
+    height: 5rem !important;
     padding: 1rem;
-    border: 3px solid seagreen;
-    background: #2c2f38;
-    border-radius: 50%;
+    /* border: 3px solid white !important; */
+    background: #0fc473;
+    border-radius: 50% !important;
     z-index: 5;
+    margin: 0;
+    transition: 0.25s;
 }
 
 #showHideChat img{
-    width: 100%;
+    width: 100% !important;
 }
 
 .chat{

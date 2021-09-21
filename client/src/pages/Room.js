@@ -8,7 +8,7 @@ import SERVER_URL from "../constants";
 import { useHistory } from "react-router-dom";
 import sok from "../services/socket";
 import ChatBox from '../components/ChatBox';
-import chatIcon from '../img/chat_icon.svg';
+import chatIcon from '../img/chat_icon_new.svg';
 import './css/Chat.css';
 //import './css/Game.css';
 

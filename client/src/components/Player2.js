@@ -16,15 +16,15 @@ return (
             <img alt="" src="" className="img-fluid" id="specialimgplayer2" />
         </div>
         <div className="col-md-3 col-4 d-flex flex-column justify-content-center m-1 p-0 order-md-2" id="player2buttons">
-            <button className="btn btn-primary mt-2 btn-sm" id="throwcardplayer2">THROW CARD</button>
-            <button className="btn btn-success mt-2 btn-sm" id="freethrowplayer2">FREE THROW</button>
-            <button className="btn btn-warning mt-2 btn-sm" id="monkeplayer2">MONKE</button>
-            <button className="btn btn-danger mt-2 btn-sm" id="endturnplayer2">END TURN</button>
-            <button className="btn btn-dark mt-2 btn-sm" id="specialplayer2">ACTIVATE SPECIAL</button>
+            <button className="btn mt-2 btn-sm throw-card-button" id="throwcardplayer2">THROW CARD</button>
+            <button className="btn mt-2 btn-sm free-throw-button" id="freethrowplayer2">FREE THROW</button>
+            <button className="btn mt-2 btn-sm monkey-button" id="monkeplayer2">MONKE</button>
+            <button className="btn mt-2 btn-sm end-turn-button" id="endturnplayer2">END TURN</button>
+            <button className="btn mt-2 btn-sm activate-special-button" id="specialplayer2">ACTIVATE SPECIAL</button>
         </div>
         <div className="order-md-0 vertical-line rounded"></div>
     </div>
-    <div className="col-md-6 d-flex flex-row justify-content-around col-12 m-md-1 m-2 p-0 order-md-0" id="cards-container-player2">
+    <div className="col-md-6 d-flex flex-row justify-content-around col-12 m-md-1 m-2 p-0 order-md-0 gap-1" id="cards-container-player2">
         <div className="col-md-3 col-2 d-flex justify-content-center flex-column">
             <img alt="" src="" className="img-fluid image-player2" index="0" player="2" onClick={playerAction}/>
         </div>

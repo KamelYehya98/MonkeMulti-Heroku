@@ -261,6 +261,60 @@ footer p::before{
         cursor: pointer;
     }
 
+    .account-options{
+        display: block;
+    }
+
+    .account-nav{
+        display: none;
+    }
+
+    header li{
+        margin: 1em;
+    }
+
+    header li img{
+        display: none;
+    }
+
+    .account-name-img{
+        justify-content: end;
+        align-items: flex-end;
+        padding-top: 0.5em;
+        cursor: default;
+    }
+
+    .account-name-img img{
+        display: none;
+    }
+
+    .account-name-img .mobile-text{
+        display: unset;
+        font-weight: normal;
+    }
+
+    .account-options{
+        display: block !important;
+        position: unset;
+        top: unset;
+        right: unset;
+        background: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .account-options .link{
+        margin-top: 0;
+        padding: 0;
+        font-weight: normal;
+        font-size: 1.5rem;
+    }
+
+    .account-options::before{
+        display: none;
+    }
+
+
 }
 
 @media only screen and (max-width: 768px) {

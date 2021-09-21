@@ -1,73 +1,68 @@
-@media only screen and (min-width: 768px){
-    .vertical-line {
-        border-left: solid #050505;
-        box-shadow: 10px 5px 5px #050505;
-    }
-    body{
-        background-image: url("./img/in-game/background.jpg");
-    }
-    #themaincontainer{
-        height: 100vh;
-    }
-}
-@media only screen and (min-width: 1400px){
-    #monkeydiv{
-        font-size: 18em;
-    }
-    body{
-        background-image: url("./img/in-game/background.jpg");
-    }
-}
-
-@media only screen and (min-width: 1201px) and (max-width: 1399px) {
-    #monkeydiv{
-        font-size: 15em;
-    }
-    body{
-        background-image: url("./img/in-game/background.jpg");
-    }
-}
-
-@media only screen and (min-width: 992px) and (max-width: 1200px) {
-      #monkeydiv{
-          font-size: 13em;
-      }
-      body{
-        background-image:url("./img/in-game/background.jpg");
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-      #monkeydiv{
-          font-size: 10em;
-      }
-      body{
-        background-image: url("./img/in-game/background.jpg");
-    }
-}
-
-@media only screen and (min-width: 0px) and (max-width: 767px) {
-    #monkeydiv{
-        font-size: 5em;
-    }
-    body{
-        background-image:url("./img/in-game/backgroundsmall.jpg");
-    }
-}
+@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
 
 audio{
     display: none;
 }
 
-button{
-    box-shadow: 10px 5px 5px #2b2626;
+#themaincontainer, #themaincontainertutorial{
+    padding-top: 4rem;
 }
 
-body{
-    background-size: 100vw 100vh;
-    background-attachment: fixed;
+#themaincontainer button, #themaincontainertutorial button{
+    width: 100%;
+    min-height: 2.1rem;
+    margin-top: 0.75em;
+    border: none;
+    border-radius: 8px;
+    font: 0.9rem 'Baloo 2', 'sans-serif';
+    color: white;
+    transition: 0.25s;
+    word-wrap: break-word;
 }
-#special :disabled{
+
+.throw-card-button{
+    background: #2D9CDB;
+}
+
+.free-throw-button{
+    background: #219653;
+}
+
+.end-turn-button{
+    background: #EB5757;
+}
+
+.activate-special-button{
+    background: #9B51E0;
+}
+
+.monkey-button{
+    background: #F2C94C;
+    color: #333 !important;
+}
+
+.throw-card-button:hover{
+    background: #21658b;
+}
+
+.free-throw-button:hover{
+    background: #1b693d;
+}
+
+.end-turn-button:hover{
+    background: #b14545;
+}
+
+.activate-special-button:hover{
+    background: #6a3c96;
+}
+
+.monkey-button:hover{
+    background: #b6983f;
+    color: #333 !important;
+}
+
+#special :disabled, #specialtutorial :disabled{
     display: none;
 }
 
@@ -155,6 +150,159 @@ body{
     animation: none !important;
 }
 
+.disableformonkey{
+    display: none !important;
+}
+
+#monkeydiv, #monkeydivtutorial {
+    color: yellow;
+    text-shadow: 0 0.1em 20px rgba(0, 0, 0, 1), 0.05em -0.03em 0 rgba(0, 0, 0, 1),
+    0.05em 0.005em 0 rgba(0, 0, 0, 1), 0em 0.08em 0 rgba(0, 0, 0, 1),
+    0.05em 0.08em 0 rgba(0, 0, 0, 1), 0px -0.03em 0 rgba(0, 0, 0, 1),
+    -0.03em -0.03em 0 rgba(0, 0, 0, 1), -0.03em 0.08em 0 rgba(0, 0, 0, 1), -0.03em 0 0 rgba(0, 0, 0, 1);
+    font-family: "Luckiest Guy", cursive;
+}
+
+#monkeydivtutorial{
+    opacity: 1;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    width: 80%;
+    transform: translate(-50%, -50%);
+}
+
+#themaincontainer span, #themaincontainertutorial span {
+    transform: scale(0.9);
+    display: inline-block;
+}
+
+#themaincontainer span:first-child, #themaincontainertutorial span:first-child {
+    animation: bop 3s cubic-bezier(0.175, 0.885, 0.32, 1.275)  infinite;
+}
+
+#themaincontainer span:last-child, #themaincontainertutorial span:last-child {
+    animation: bopB 3s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+}
+
+#player2pick, #player1pick{
+    border: 2px solid #0fc473;
+    border-radius: 12px;
+}
+
+#player2pick{
+    margin-bottom: 1.5rem;
+}
+
+#player1pick{
+    margin-top: 1.5rem;
+}
+
+/* ---------------
+    Media Queries
+--------------- */
+
+@media only screen and (min-width: 768px){
+    .vertical-line {
+        margin-left: 0.425rem;
+        border-left: solid #0fc473;
+    }
+    
+    #themaincontainer, #themaincontainertutorial{
+        height: 100vh;
+    }
+}
+
+@media only screen and (min-width: 1400px){
+
+    #monkeydiv, #monkeydivtutorial{
+        font-size: 18em;
+    }
+
+    #themaincontainer button, #themaincontainertutorial button{
+        font-size: 0.715rem;
+    }
+    
+}
+
+@media only screen and (min-width: 1201px) and (max-width: 1399px) {
+    #monkeydiv, #monkeydivtutorial{
+        font-size: 15em;
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    #monkeydiv, #monkeydivtutorial{
+        font-size: 13em;
+    }
+
+    #themaincontainer button, #themaincontainertutorial button{
+        font-size: 0.715rem;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    #monkeydiv, #monkeydivtutorial{
+        font-size: 10em;
+    }
+
+    #themaincontainer button, #themaincontainertutorial button{
+        font-size: 0.715rem;
+    }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 767px) {    
+    #monkeydiv, #monkeydivtutorial{
+        font-size: 5em;
+    }
+}
+
+/* ---------------
+    Animations
+--------------- */
+
+@keyframes bop {
+    0% {
+        transform: scale(0.9);
+    }
+    99% {
+        text-shadow: 0 0 40px whitesmoke;
+    }
+    to {
+        transform:
+        translate3d(15rem,-8rem,0)
+        rotate(-40deg)
+        skewX(70deg)
+        scale(1.5);
+        text-shadow: 0 0 20px whitesmoke;
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes bopB {
+    0% {
+        transform: scale(0.9);
+    }
+    99% {
+        text-shadow: 0 0 40px whitesmoke;
+    }
+    to {
+        transform:
+        translate3d(15rem,-8rem,0)
+        rotate(-40deg)
+        skewX(70deg)
+        scale(1.5);
+        text-shadow: 0 0 20px whitesmoke;
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) rotateZ(-3deg);
+    }
+}
+
 @keyframes fadeInUp {
     from {
         transform: translate3d(0,20vh,0);
@@ -225,75 +373,3 @@ body{
         transform: scale(1)
     }
 }
-
-.disableformonkey{
-    display: none !important;
-}
-
-@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
-
-.disappear{
-    display: none !important;
-}
-#monkeydiv {
-    color: yellow;
-    text-shadow: 0 0.1em 20px rgba(0, 0, 0, 1), 0.05em -0.03em 0 rgba(0, 0, 0, 1),
-      0.05em 0.005em 0 rgba(0, 0, 0, 1), 0em 0.08em 0 rgba(0, 0, 0, 1),
-      0.05em 0.08em 0 rgba(0, 0, 0, 1), 0px -0.03em 0 rgba(0, 0, 0, 1),
-      -0.03em -0.03em 0 rgba(0, 0, 0, 1), -0.03em 0.08em 0 rgba(0, 0, 0, 1), -0.03em 0 0 rgba(0, 0, 0, 1);
-    font-family: "Luckiest Guy", cursive;
-}
-
-span {
-    transform: scale(0.9);
-    display: inline-block;
-}
-span:first-child {
-    animation: bop 3s cubic-bezier(0.175, 0.885, 0.32, 1.275)  infinite;
-}
-span:last-child {
-    animation: bopB 3s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
-}
-
-@keyframes bop {
-    0% {
-        transform: scale(0.9);
-    }
-    99% {
-        text-shadow: 0 0 40px whitesmoke;
-      }
-      to {
-        transform:
-          translate3d(15rem,-8rem,0)
-          rotate(-40deg)
-          skewX(70deg)
-          scale(1.5);
-        text-shadow: 0 0 20px whitesmoke;
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes bopB {
-    0% {
-        transform: scale(0.9);
-    }
-    99% {
-        text-shadow: 0 0 40px whitesmoke;
-      }
-      to {
-        transform:
-          translate3d(15rem,-8rem,0)
-          rotate(-40deg)
-          skewX(70deg)
-          scale(1.5);
-        text-shadow: 0 0 20px whitesmoke;
-        opacity: 0;
-      }
-    100% {
-        transform: scale(1) rotateZ(-3deg);
-    }
-}
-

@@ -6,7 +6,7 @@ export default function Player1({playerAction, CallButtons}) {
 
 return (
     <div className="row d-md-flex flex-md-row justify-content-md-between flex-md-nowrap d-flex flex-column align-content-around addopacitymonkey">
-    <div className="col-md-6 d-flex flex-row justify-content-around col-12 m-1 p-0 order-md-0" id="cards-container-player1">
+    <div className="col-md-6 d-flex flex-row justify-content-around col-12 m-1 p-0 order-md-0 gap-1" id="cards-container-player1">
         <div className="col-md-3 col-2 d-flex justify-content-center flex-column image">
             <img alt="" src="" className="img-fluid image-player1" index="0" player="1" onClick={playerAction}/>
         </div>
@@ -22,11 +22,11 @@ return (
     </div>
     <div className="col-md-6 col-12 col-sm-12 d-flex justify-content-start justify-content-md-start order-md-1 m-1 p-0" id="assets-container-player1">
         <div className="col-md-3 col-4 d-flex flex-column justify-content-center m-1 p-0 order-md-2" id="player1buttons">
-            <button className="btn btn-primary mt-2 btn-sm" id="throwcardplayer1" onClick={CallButtons}>THROW CARD</button>
-            <button className="btn btn-success mt-2 btn-sm" id="freethrowplayer1" onClick={CallButtons}>FREE THROW</button>
-            <button className="btn btn-warning mt-2 btn-sm" id="monkeplayer1" onClick={CallButtons}>MONKE</button>
-            <button className="btn btn-danger mt-2 btn-sm" id="endturnplayer1" onClick={CallButtons}>END TURN</button>
-            <button className="btn btn-dark mt-2 btn-sm" id="specialplayer1" onClick={CallButtons}>ACTIVATE SPECIAL</button>
+            <button className="btn mt-2 btn-sm throw-card-button" id="throwcardplayer1" onClick={CallButtons}>THROW CARD</button>
+            <button className="btn mt-2 btn-sm free-throw-button" id="freethrowplayer1" onClick={CallButtons}>FREE THROW</button>
+            <button className="btn mt-2 btn-sm monkey-button" id="monkeplayer1" onClick={CallButtons}>MONKE</button>
+            <button className="btn mt-2 btn-sm end-turn-button" id="endturnplayer1" onClick={CallButtons}>END TURN</button>
+            <button className="btn mt-2 btn-sm activate-special-button" id="specialplayer1" onClick={CallButtons}>ACTIVATE SPECIAL</button>
         </div>
         <div className="col-md-5 col-3 m-2 p-0 d-flex align-items-center order-md-1" id="specialdivplayer1">
             <p className="text-center font-bold text-white" id="specialtextplayer1"></p>
