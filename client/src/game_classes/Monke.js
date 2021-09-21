@@ -2,6 +2,7 @@ import Deck from './Deck';
 import Player from './Player';
 import Images from './Images';
 import sok from "../services/socket";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Monke {
     constructor() {
@@ -18,6 +19,11 @@ class Monke {
 
     this.socket.on('start game', () => {
         console.log("Game started");
+        document.getElementById("assets-container-player2").parentNode.classList.remove("d-none");
+        document.getElementById("assets-container-player2").parentNode.classList.add("d-flex");
+        document.getElementById("assets-container-player2").parentNode.classList.add("d-md-flex");
+
+        document.getElementById("wait").classList.add("d-none");
         this.startGame();
     });
     this.socket.on('first', () => {
@@ -107,6 +113,10 @@ class Monke {
 
     this.socket.on('flipCardBackOpponent', (obj)=>{
         this.flipCardBackOpponent(obj.el, obj.index);
+    });
+
+    this.socket.on('userDisconnected', (name) => {
+        console.log(`${name} has diconnected`);
     });
 
     }
@@ -1109,6 +1119,13 @@ class Monke {
             default:
                 return parseInt(card.Value);
         }
+    }
+
+    remPlayer2Comp() {
+        console.log("Removed PLayer 2 components");
+        document.getElementById("assets-container-player2").parentNode.classList.add("d-none");
+        document.getElementById("assets-container-player2").parentNode.classList.remove("d-flex");
+        document.getElementById("assets-container-player2").parentNode.classList.remove("d-md-flex");
     }
 
 }

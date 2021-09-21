@@ -5,12 +5,15 @@ import Player2 from '../components/Player2';
 import Ground from '../components/Ground';
 import MonkeEffect from '../components/MonkeEffect';
 import SERVER_URL from "../constants";
-
+import { useHistory } from "react-router-dom";
+import sok from "../services/socket";
 
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function Room() {
+    const socket = sok.getSocket();
+    const history = useHistory();
 
     async function submitToDatabase(e){
         // e.preventDefault();
@@ -29,6 +32,12 @@ function Room() {
         //       console.log(err);
         //   }
     }
+
+    const unlisten = history.listen (location => {
+        console.log("Dahar mnil room");
+        socket.emit('exitRoom');
+        unlisten();
+    });
     function playerAction(e){
         Monke.playerAction(e.target);
     }
@@ -69,8 +78,10 @@ function Room() {
                     <form onSubmit={submitToDatabase} hidden>
                         <input type='submit' id='formBtn'/>
                     </form>
-            
                     <Route exact>
+                        <div>
+                            <center><h1 className="w-100" id="wait">WAITING FOR PLAYRE 2</h1></center>
+                        </div>
                         <Player2 playerAction={playerAction} CallButtons={CallButtons}/>
                     </Route>
 

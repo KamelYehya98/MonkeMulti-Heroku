@@ -6,6 +6,10 @@ const addUser =({ id, name, room }) => {
     {
         return {error: 'Max players reached'};
     }
+    if (playersInRoom(room) === 1 && getUsersInRoom(room)[0].name === name)
+    {
+        return {error: 'User already in room'};
+    }
     const user = {id, name, room};
     users.push(user);
     console.log(`Players in room ${room}: ${playersInRoom(room)}`);

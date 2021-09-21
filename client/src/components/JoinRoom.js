@@ -4,6 +4,7 @@ import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SERVER_URL from "../constants";
 import sok from "../services/socket";
+import Monke from "../game_classes/Monke";
 
 export default function JoinRoom() {
     const history = useHistory();
@@ -50,6 +51,7 @@ export default function JoinRoom() {
                 console.log(data);
                 //window.location.assign('/joinRoom');
                 routerToRoom();
+                Monke.remPlayer2Comp();
             });
           }catch(err){
               console.log(err);

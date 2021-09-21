@@ -115,7 +115,7 @@ io.on("connection", socket => {
   socket.on('disconnect', () => {
     const user = removeUser(socket.id);
 
-    if (user) console.log(user.name + " left the chat with id: " + socket.id);
+    if (user) console.log(user.name + " left the room with id: " + socket.id);
   });
 
   socket.on('deal', (dealObj) => {
@@ -151,6 +151,17 @@ io.on("connection", socket => {
   socket.on('flipCardBackOpponent', (obj)=>{
     const user = getUser(socket.id);
     socket.to(user.room).emit('flipCardBackOpponent', {el: obj.el, index: obj.index});
+  });
+
+  socket.on('exitRoom', () => {
+    console.log("Entered exit room emit");
+    const user = removeUser(socket.id);
+
+    if (user) {
+      console.log(user.name + " left the room with id: " + socket.id);
+      socket.leave(user.room);
+      socket.to(user.room).emit('userDisconnected', (user.name));
+    }
   });
 });
 
