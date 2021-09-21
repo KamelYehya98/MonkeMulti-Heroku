@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SERVER_URL from "../constants";
 import sok from "../services/socket";
 import Monke from "../game_classes/Monke";
+import '../pages/css/Welcome.css';
 
 export default function JoinRoom() {
     const history = useHistory();
@@ -58,13 +59,12 @@ export default function JoinRoom() {
           }
     }
     return (
-        <div className="">
+        <div className="w-100">
             <div>
-                <span htmlFor="room_id" className="text-light">Enter Room ID: </span>
                 <div id='error_div' className="bg-light"></div>
-                <input type="text" id="room_id" name="room_id" />
+                <input type="text" id="room_id" name="room_id" className="join-room-input" placeholder="Enter Room ID"/>
             </div>
-            <button onClick={joinRoom} className="btn btn-success mt-1">JOIN ROOM</button>
+            <button onClick={joinRoom} className="join-room-button">Join Room</button>
         </div>
     );
 }

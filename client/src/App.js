@@ -8,6 +8,8 @@ import Lobby from "./pages/Lobby";
 import Room from "./pages/Room";
 import Header from "./components/Header";
 import sok from "./services/socket";
+import HowToPlay from "./pages/HowToPlay";
+import Footer from "./components/Footer";
 
 function App() {
     let socket = null;
@@ -61,8 +63,10 @@ function App() {
                     <Route path='/signup' exact component={LogInSignUp} />
                     <Route path='/joinroom' exact component={Lobby} />
                     <Route path='/room' exact  component={Room} />
+                    <Route path='/howtoplay' exact component={HowToPlay} />
                 </Switch>
             </main>
+            <Footer/>
         </Router>
     );
 }

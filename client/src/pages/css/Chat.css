@@ -1,0 +1,116 @@
+#showHideChat{
+    position: fixed;
+    top: 15%;
+    right: 1%;
+    width: 5rem;
+    height: 5rem;
+    padding: 1rem;
+    border: 3px solid seagreen;
+    background: #2c2f38;
+    border-radius: 50%;
+    z-index: 5;
+}
+
+#showHideChat img{
+    width: 100%;
+}
+
+.chat{
+    position: fixed;
+    float: right;
+    top: 17.5%;
+    right: 8%;
+    background: white;
+    box-shadow: 2px 2px 4px black;
+    border-radius: 5px;
+    max-height: 20rem;
+    max-width: 30rem;
+    padding: 1rem;
+    z-index: 5;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #47cf73 #ffffff;
+}
+
+.messages-wrapper{
+    max-height: 15rem;
+    max-width: 29rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.messages ul{
+    padding: 0;
+    margin-right: 0.25rem;
+}
+
+.messages li{
+    display: flex;
+    text-decoration: none
+}
+
+.messages p{
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    min-width: 4rem;
+    max-width: 18rem;
+    border-radius: 10px;
+}
+
+.messages .me{
+    justify-content: right;
+}
+
+.messages .me p{
+    float: right;
+    background: seagreen;
+    color: white;
+}
+
+.messages .you p{
+    float: left;
+    background: #ddd;
+    color: black;
+}
+
+.send-message{
+    margin-top: 0.25rem;
+}
+
+.send-message input[type="text"]{
+    width: 78%;
+    border-radius: 10px;
+    border: 2px solid #2c2f38;
+    padding: 0.25rem;
+}
+
+.send-message div{
+    display: inline-block;
+    width: 20%;
+    margin-left: 2%;
+}
+
+.send-message button{
+    width: 100%;
+    background: #2c2f38;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem;
+    color: white;
+}
+
+/* Chrome, Edge, and Safari */
+chat::-webkit-scrollbar {
+    width: 16px;
+}
+
+chat::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+chat::-webkit-scrollbar-thumb {
+    background-color: #47cf73;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+}

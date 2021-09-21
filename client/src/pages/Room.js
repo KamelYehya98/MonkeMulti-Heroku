@@ -7,7 +7,10 @@ import MonkeEffect from '../components/MonkeEffect';
 import SERVER_URL from "../constants";
 import { useHistory } from "react-router-dom";
 import sok from "../services/socket";
-
+import ChatBox from '../components/ChatBox';
+import chatIcon from '../img/chat_icon.svg';
+import './css/Chat.css';
+//import './css/Game.css';
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -69,12 +72,17 @@ function Room() {
                     break;
             default: console.log("Aklna khara.............."); break;
         }
+        
     }
 
     return (
         <Router>
             <div className="d-flex justify-content-center align-items-center w-100" id="themaincontainer">
-                <div className="container w-100">  
+                <button id="showHideChat">
+                    <img src={chatIcon} alt="chat" />
+                </button>
+                <ChatBox/>  
+                <div className="container w-100">
                     <form onSubmit={submitToDatabase} hidden>
                         <input type='submit' id='formBtn'/>
                     </form>

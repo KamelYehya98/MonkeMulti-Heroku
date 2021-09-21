@@ -1,0 +1,130 @@
+:root{
+    --lighter-green: #46f1ad;
+    --light-green: #0fc473;
+    --dark-green: #198a68;
+    --input-background-green: #0e8556;
+    --input-selected-green: #095537;
+    --text-gray: #203141;
+    --background-gray: #2c2f38;
+}
+
+.welcome-container{
+    padding: 5em 0;
+    max-width: 700px;
+}
+
+.welcome-container p{
+    text-align: center;
+    text-decoration: underline;
+    text-decoration-thickness: 0.25rem;
+    text-decoration-color: var(--light-green);
+    font-family: "Baloo 2", sans-serif;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.join-create-container, #stats-container, .history-container{
+    margin: 1em 0em;
+    padding: 4rem;
+    border-radius: 15px;
+    background: var(--background-gray);
+    width: 55vw;
+    box-shadow: 0rem 1rem 2rem black;
+    transition: 0.5s;
+    border: 2px solid var(--light-green);
+}
+
+.join-create-container{
+    margin-top: 0;
+    border: 2px solid var(--light-green);
+}
+
+.welcome-card:not(:first-child):hover{
+    transform: scale(1.1);
+    box-shadow: 0rem -0.5em 3rem black !important;
+    z-index: 2;
+}
+
+.join-room-input{
+    color: var(--text-gray);
+    padding-left: 1em;
+    background: white;
+    border: 2px solid var(--light-green);
+    border-radius: 8px;
+    min-height: 3em;
+    transition: 250ms;
+}
+
+.join-room-input:focus {
+    box-shadow: 0px 6px 12px black;
+}
+
+.welcome-container ::placeholder{
+    color: var(--text-gray);
+}
+
+.join-room-button, .create-room-button{
+    font-size: 1.2rem;
+    min-height: 2.5em;
+    font-family: 'Baloo 2', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 1rem;
+    color: white;
+    background: #0C643D;
+    box-shadow: 0px 2px 4px black;
+    transition: 250ms;
+}
+
+.create-room-button:hover, .join-room-button:hover{
+    box-shadow: 0px 6px 12px black;
+}
+
+.or{
+    font-size: 1.4rem !important;
+    text-decoration: none !important;
+    font-family: "Baloo 2", sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+#stats-container, .history-container{
+    padding: 2rem;
+}
+
+.stats-table {
+    border-collapse: collapse;
+    width: 100%;
+    color: white;
+    text-align: center;
+}
+
+.stats-table th {
+    padding: 1rem 0.5rem 0.75rem;
+    font-size: 1.25rem;
+}
+
+.stats-table td {
+    padding: 0.5rem 0.5rem;
+    font-size: 1.2rem;
+}
+
+.stats-table tr:nth-child(even), thead{
+    border-bottom: 0.5px solid var(--light-green);
+}
+
+.stats-table tr:last-child{
+    border-bottom: 0px !important;
+}
+
+@media only screen and (min-width: 1900px) {
+    .welcome-container{
+        max-width: 1000px;
+    }
+}

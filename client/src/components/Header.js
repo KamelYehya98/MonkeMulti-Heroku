@@ -82,9 +82,9 @@ const Header = ({user, checkUser}) => {
                 <nav>
                     <img className="exit-button" src={exit} alt="Close Navigation" onClick={hideNav}/>
                     <ul className="primary-nav">
-                        <li><Link to="" className="link">Play</Link></li>
-                        <li><Link to="" className="link">How To Play</Link></li>
-                        <li><Link to="" className="link">About</Link></li>
+                        <li><Link to="/welcome" className="link">Play</Link></li>
+                        <li><Link to="/howtoplay" className="link">How To Play</Link></li>
+                        <li><Link to="/about" className="link">About</Link></li>
                     </ul>
 
                     {user==null &&

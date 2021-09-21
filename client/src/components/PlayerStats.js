@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-
+import '../pages/css/Welcome.css';
 import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SERVER_URL from "../constants";
@@ -42,9 +42,10 @@ export default function PlayerStats({ username }) {
     getStats();
     
     return (
-        <div id='stats-container' className="text-danger w-100">
-            <table className="table table-dark table-striped text-light">
-                <tr className="text-light">
+        <div id='stats-container' className="welcome-card w-100">
+            <p>{username}'s stats</p>
+            <table className="stats-table">
+                <tr>
                     <th>Rating</th>
                     <th>Winrate</th>
                     <th>Games Played</th>

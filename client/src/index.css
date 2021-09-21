@@ -161,6 +161,25 @@ li{
     display: none;
 }
 
+footer{
+    margin-top: 4.5rem;
+    padding-left: 1rem;
+}
+
+footer p{
+    color: white;
+    display: none;
+}
+
+footer p::before{
+    content: "";
+    margin-bottom: 1rem;
+    margin-left: -1rem;
+    background-image: linear-gradient(to right, var(--light-green), rgba(0, 0, 0, 0));
+    height: 2px;
+    display: block;
+}
+
 @media only screen and (max-width: 1000px){
     
     nav{

@@ -21,7 +21,7 @@ export default function CreateRoom() {
     }
     return (
     <div>
-        <button onClick={createRoom} className="btn btn-primary w-100">CREATE ROOM</button>
+        <button onClick={createRoom} className="create-room-button">CREATE A ROOM</button>
     </div>
     )
 }

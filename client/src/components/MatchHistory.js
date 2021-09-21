@@ -77,8 +77,9 @@ export default function MatchHistory({ username }) {
     }
     
     return (
-        <div>
-            <table className="table table-dark table-striped text-light" id="matchTable">
+        <div className="history-container  welcome-card w-100">
+            <p>{username}'s match history</p>
+            <table className="stats-table" id="matchTable">
                 <tr className="text-light">
                     <th>Username</th>
                     <th>Score</th>
@@ -86,7 +87,6 @@ export default function MatchHistory({ username }) {
                     <th>Date</th>
                 </tr>
             </table>
-
             <button onClick={createMatchHistory}>Create Fake Match</button>
         </div>
     );
