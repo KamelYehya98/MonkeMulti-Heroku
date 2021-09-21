@@ -63,8 +63,6 @@ export default function LobbyRoom() {
             <form id="form" onSubmit={SendMessage}>
                 <input id="input" autoComplete="off" /><button>Send</button>
             </form>
-            <h1 disabled = {turn}>Firsto</h1>
-            <button id = "poopsy" onClick={pass} disabled = {turn}>Pass Turn</button>
         </div>
     );
 }

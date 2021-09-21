@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function Room() {
     const socket = sok.getSocket();
     const history = useHistory();
+    let chatDisabled = false;
 
     async function submitToDatabase(e){
         // e.preventDefault();
@@ -37,7 +38,7 @@ function Room() {
     }
 
     const unlisten = history.listen (location => {
-        console.log("Dahar mnil room");
+        console.log("Exited room");
         socket.emit('exitRoom');
         unlisten();
     });
@@ -75,10 +76,21 @@ function Room() {
         
     }
 
+    function showHide() {
+        if (!chatDisabled) {
+            chatDisabled = true;
+            document.getElementById("chatBox").classList.add("d-none");
+        }
+        else {
+            chatDisabled = false;
+            document.getElementById("chatBox").classList.remove("d-none");
+        }
+    }
+
     return (
         <Router>
             <div className="d-flex justify-content-center align-items-center w-100" id="themaincontainer">
-                <button id="showHideChat">
+                <button id="showHideChat" onClick={showHide}>
                     <img src={chatIcon} alt="chat" />
                 </button>
                 <ChatBox/>  

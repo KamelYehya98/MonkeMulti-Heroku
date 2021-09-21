@@ -103,7 +103,7 @@ io.on("connection", socket => {
     const user = getUser(socket.id);
     if (user)
     {
-      io.to(user.room).emit('message', {user: user.name, text: msg});
+      socket.to(user.room).emit('message', {user: user.name, text: msg});
       console.log("message: " + msg + " from user: " + user.name + " id: " + socket.id);
     }
   });
@@ -112,10 +112,10 @@ io.on("connection", socket => {
     console.log(socket.username + " connected to welcome socket with id: " + socket.id);
   });
 
-  socket.on('disconnect', () => {
+  socket.on('disconnect', (reason) => {
     const user = removeUser(socket.id);
 
-    if (user) console.log(user.name + " left the room with id: " + socket.id);
+    if (user) console.log(user.name + " left the room with id: " + socket.id + "because of " + reason);
   });
 
   socket.on('deal', (dealObj) => {
@@ -154,7 +154,6 @@ io.on("connection", socket => {
   });
 
   socket.on('exitRoom', () => {
-    console.log("Entered exit room emit");
     const user = removeUser(socket.id);
 
     if (user) {
