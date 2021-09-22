@@ -59,10 +59,10 @@ export default function MatchHistory({ username }) {
     getMatchHistory();
 
     async function createMatchHistory(){
-        const user1 = 'hasagi';
+        const user1 = 'bioloitz';
         const user2 = 'taftaf';
-        const score1 = 1;
-        const score2 = 20;
+        const score1 = 25;
+        const score2 = 8;
         try{
             console.log('Reacccccccccccccccched creating match history');
             const res = await fetch(`${SERVER_URL}/creatematchhistory`, {

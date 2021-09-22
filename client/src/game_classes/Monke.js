@@ -24,13 +24,14 @@ class Monke {
         // document.getElementById("assets-container-player2").parentNode.classList.add("d-md-flex");
 
         // document.getElementById("wait").classList.add("d-none");
+        //console.log("Game started");
         this.startGame();
     });
     this.socket.on('first', () => {
         this.isFirst = true;
     });
     this.socket.on('deal', (dealObj) => {
-        console.log(dealObj.deck);
+        //console.log(dealObj.deck);
         let img, card, i;
         let groundcard = document.getElementById('groundcard');
         groundcard.setAttribute("src", Images['transparent']);
@@ -38,12 +39,14 @@ class Monke {
         this.Deck = dealObj.deck;
         for (i = 1; i <= 4; i++) {
             card = this.Deck.Cards.pop();
-            console.log('' + card.Value + card.Suit);
+            ////console.log('' + card.Value + card.Suit);
             this.Player1.Cards.push(Object.assign({}, card));
             img = this.getElement("image-player1", i - 1);
             img.setAttribute("src", Images['' + card.Value + card.Suit]);
-            console.log("" + card.Value + card.Suit);
+            ////console.log("" + card.Value + card.Suit);
         }
+        this.socket.emit('setDeck', this.Deck);
+        this.printDeck();
         this.socket.emit('oppPlayer', (this.Player1));
     });
 
@@ -53,7 +56,7 @@ class Monke {
     });
 
     this.socket.on('setDrawCard', (plyr2)=>{
-        console.log("entered setDrawCard..............");
+        //console.log("entered setDrawCard..............");
         this.Player2 = plyr2;
         if(plyr2.DrawCard != null){
             document.getElementById('player2pick').setAttribute("src", Images['backcard']);
@@ -61,7 +64,7 @@ class Monke {
     });
 
     this.socket.on('removeDrawImage', (plyr2)=>{
-        console.log("entering the fucker.....................");
+        //console.log("entering the fucker.....................");
         plyr2.DrawCard = null;
         this.Player2 = plyr2;
         document.getElementById("player2pick").setAttribute("src", "");
@@ -81,14 +84,14 @@ class Monke {
         this.removeCard(obj.index, obj.id);
     });
     this.socket.on('burnImage', (ind)=>{
-        console.log("burn emit...............");
+        //console.log("burn emit...............");
         let card = this.Player2.Cards[parseInt(ind)];
         let element = this.getElement("image-player2", parseInt(ind));
         if (card != null) {
             this.burnCard(card);
             element.classList.add("burned-image");
         }
-        console.log("reached end.............");
+        //console.log("reached end.............");
     });
     this.socket.on('freeThrowButton', (str)=>{
         document.getElementById("freethrowplayer2").innerHTML = ""+str;
@@ -119,11 +122,75 @@ class Monke {
         console.log(`${name} has diconnected`);
     });
 
-    }
+    this.socket.on('addClassSeven', (obj)=>{
+        //console.log("object element and player: "+ obj.el + ", " + obj.plyr);
+        let element = this.getElement("image-player"+obj.plyr, parseInt(obj.el));
+        let num = obj.plyr == 2 ? 1: 2;
+        element.classList.add("image-player" + num + "-select");
+    });
+    this.socket.on('removeClassFromAllElements', (str)=>{
+        //console.log("string is: " + str);
+        this.removeClassFromAllElements(str);
+    });
+
+    this.socket.on('removeAnimationSeven', (str)=>{
+        //console.log("string is: " + str);
+        this.removeAnimationSeven(str);
+    });
+
+    this.socket.on('setPlayerOpp', (plyr)=>{
+        this.Player2 = plyr;
+        this.printCards();
+    });
+
+    this.socket.on('setDeck', (deck)=>{
+        this.Deck = deck;
+    });
+    this.socket.on('setOppImage', ()=>{
+        this.showCards();
+    });
+
+    this.socket.on('setOppDeck', (deck)=>{
+        this.Player2.Cards = Object.assign({}, deck);
+        console.log("opponent deck set................................");
+    });
+
+    this.socket.on("swapCards", (obj)=>{
+        let cardone = this.Player1.Cards[obj.ind2];
+        let cardtwo = this.Player2.Cards[obj.ind1];
+        let aux = Object.assign({}, cardone);
+    
+        cardone.Value = cardtwo.Value;
+        cardone.Suit = cardtwo.Suit;
+    
+        cardtwo.Value = aux.Value;
+        cardtwo.Suit = aux.Suit;
+        this.showCards();
+
+        this.getElement('image-player1', parseInt(obj.ind2)).setAttribute("src", Images[''+cardone.Value+cardone.Suit]);
+    });
+
+    this.socket.on('monke', ()=>{
+        console.log("MOOOOOOOONKKKKKKKEEEEEEEEEEEEE");
+        this.Player1.BlockAction = true;
+        document.getElementById("monkeplayer1").disabled = true;
+        this.Player2.Monkey = true;
+        //document.getElementById("monkeyaudio").play();
+        this.monkeyOpacityEnable();
+        this.monkeyEnable();
+        setTimeout(()=>{
+            this.monkeyDisable();
+            this.monkeyOpacityDisable();
+            this.Player1.BlockAction = false;
+        }, 3000);
+    });
+
+
+}
 
     startGame() {
         if (this.Started == false) {
-            console.log("Starto");
+            //console.log("Starto");
             this.Started = true;
             if (this.isFirst) {
                 this.Deck.shuffleCards();
@@ -137,18 +204,20 @@ class Monke {
         let img, card, i;
         let groundcard = document.getElementById('groundcard');
         groundcard.setAttribute("src", Images['transparent']);
-        console.log(this.Deck.Cards);
-        console.log("player1 cards: ");
+        //console.log(this.Deck.Cards);
+        ////console.log("player1 cards: ");
         for (i = 1; i <= 4; i++) {
             card = this.Deck.Cards.pop();
-            console.log('' + card.Value + card.Suit);
+            ////console.log('' + card.Value + card.Suit);
             this.Player1.Cards.push(Object.assign({}, card));
             img = this.getElement("image-player1", i - 1);
             img.setAttribute("src", Images['' + card.Value + card.Suit]);
-            console.log("" + card.Value + card.Suit);
+            ////console.log("" + card.Value + card.Suit);
         }
         this.playerTurn();
         this.socket.emit('oppPlayer', (this.Player1));
+        this.socket.emit('setDeck', this.Deck);
+        this.printDeck();
     }
 
     getIndexValue (element) {
@@ -186,14 +255,14 @@ class Monke {
 
 
     flipCardBackOpponent (i, index) {
-        console.log("index is: " + i);
+        //console.log("index is: " + i);
         let element = null;
         if(index == 6)
             element = this.getElement("image-player2", parseInt(i));
         else
             element = this.getElement("image-player1", parseInt(i));
 
-        console.log("element is: " + element);
+        //console.log("element is: " + element);
         element.classList.add("flip-image");
         setTimeout(()=>{
             element.setAttribute("src", Images["white"]);
@@ -221,7 +290,7 @@ class Monke {
     }
 
     getImage () {
-        console.log(this.Player1.Cards.length);
+        //console.log(this.Player1.Cards.length);
         for (var i = 0; i < this.Player1.Cards.length; i++) {
             this.getElement("image-player1", i).setAttribute("src", Images['' + this.Player1.Cards[i].Value + this.Player1.Cards[i].Suit]);
         }
@@ -230,12 +299,12 @@ class Monke {
         }
     }
 
-    setGroundCard (card) {
+    setGroundCard(card) {
         this.GroundCard = Object.assign({}, card);
         this.GroundCards.push(this.GroundCard);
         let img = document.getElementById("groundcard");
+        console.log("" + this.GroundCard.Value + this.GroundCard.Suit);
         img.setAttribute("src", Images["" + this.GroundCard.Value + this.GroundCard.Suit]);
-        
     }
     
     removeAnimation(specialtype) {
@@ -355,6 +424,7 @@ class Monke {
         player1index = this.getIndexValue(this.Player1.SwapCard);
         player2index = this.getIndexValue(this.Player2.SwapCard);
     
+        this.socket.emit('swapCards', {ind1: player1index, ind2: player2index});
         cardone = this.Player1.Cards[player1index];
         cardtwo = this.Player2.Cards[player2index];
         aux = Object.assign({}, cardone);
@@ -367,14 +437,13 @@ class Monke {
         cardtwo.Suit = aux.Suit;
         cardtwo.Viewed = false;
     
-    
-        // let element;
-        // element = this.getElement("image-player2", player2index);
-        // element = this.getElement("image-player1", player1index);
-    
         this.Player1.SwapCard = null;
         this.Player2.SwapCard = null;
-        //this.NbCardsPickedSeven = 0;
+        this.NbCardsPickedSeven = 0;
+
+        this.getElement('image-player1', parseInt(player1index)).setAttribute("src", Images[''+cardone.Value+cardone.Suit]);
+        this.getElement('image-player2', parseInt(player2index)).setAttribute("src", Images[''+cardtwo.Value+cardtwo.Suit]);
+
         return;
     }
     
@@ -386,18 +455,24 @@ class Monke {
         });
     }
     
-    removeAnimationSeven  () {
-        this.removeClassFromAllElements("image-player2-select");
-        this.removeClassFromAllElements("image-player1-select");
+    removeAnimationSeven() {
+        var elems = document.querySelectorAll(".image-player2-select");
+        [].forEach.call(elems, function (el) {
+            el.classList.remove("image-player2-select");
+        });
+        elems = document.querySelectorAll(".image-player1-select");
+        [].forEach.call(elems, function (el) {
+            el.classList.remove("image-player1-select");
+        });
     }
     
     resetSevenSpecial () {
-        this.Player1.BlockAction = false;
-        this.removeAnimationSeven();
-        this.socket.emit('removeAnimationSeven');
         this.Player1.SwapCard = null;
         this.Player2.SwapCard = null;
         this.NbCardsPickedSeven = 0;
+        this.Player1.BlockAction = false;
+        this.removeAnimationSeven();
+        this.socket.emit('removeAnimationSeven');
     }
     
     monkeyOpacityEnable () {
@@ -470,7 +545,7 @@ class Monke {
     }
 
     async playerAction (element) {
-        if(this.Player1.BlockAction == false)
+        if(this.Player1.BlockAction === false)
         {
 
             
@@ -484,7 +559,7 @@ class Monke {
             //         element.setAttribute("src", Images[''+this.Player1.Cards[i].Value + this.Player1.Cards[i].Suit]);
             //     }, 100);
             //     setTimeout(function(){
-            //         //console.log("OK babe");
+            //         ////console.log("OK babe");
             //         element.classList.remove("flip-image");
             //         element.classList.add("unflip-image");
             //         element.setAttribute("src", Images['backcard']);
@@ -524,6 +599,7 @@ class Monke {
                             this.socket.emit('setGroundCard', {card:this.Player1.DrawCard, plyr:this.Player1});
                             this.removeAnimation("six");
                             this.socket.emit('removeAnimation', 'six');
+                            this.printCards();
                             this.nothingToDo();
                             return;
                         }
@@ -543,6 +619,8 @@ class Monke {
                             this.removeAnimation("eight");
                             this.socket.emit('removeAnimation', 'eight');
 
+                            //this.socket.emit('setPlayerOpp', (this.Player1));
+                            this.printCards();
                             this.nothingToDo();
                             return;
                         }
@@ -554,11 +632,17 @@ class Monke {
                             this.NbCardsPickedSeven++;
                             if (this.isPlayerDiv(element) || this.isOppDiv(element)) {
                                 if (this.isPlayerDiv(element)) {
+
                                     element.classList.add("image-player2-select");
+                                    this.socket.emit("addClassSeven", {el:element.getAttribute("index"), plyr: 2});
+
                                     this.Player1.SwapCard = element;
                                 }
                                 if (this.isOppDiv(element)) {
+
                                     element.classList.add("image-player1-select");
+                                    this.socket.emit("addClassSeven", {el:element.getAttribute("index"), plyr: 1});
+
                                     this.Player2.SwapCard = element;
                                 }
                             }
@@ -566,20 +650,36 @@ class Monke {
                         else if (this.NbCardsPickedSeven === 1) {
                             if (this.isOppDiv(element) && this.Player2.SwapCard != null) {
                                 this.Player2.SwapCard = element;
+
                                 this.removeClassFromAllElements("image-player1-select");
+                                this.socket.emit('removeClassFromAllElements', "image-player2-select");
+
                                 this.Player2.SwapCard.classList.add("image-player1-select");
+                                this.socket.emit("addClassSeven", {el:element.getAttribute("index"), plyr:1});
+
                             } else if (this.isPlayerDiv(element) && this.Player1.SwapCard != null) {
                                 this.Player1.SwapCard = element;
+
                                 this.removeClassFromAllElements("image-player2-select");
+                                this.socket.emit('removeClassFromAllElements', "image-player1-select");
+
                                 this.Player1.SwapCard.classList.add("image-player2-select");
+                                this.socket.emit("addClassSeven", {el:element.getAttribute("index"), plyr:2});
+
                             } else {
                                 this.NbCardsPickedSeven++;
                                 if (this.Player2.SwapCard == null) {
                                     this.Player2.SwapCard = element;
+
                                     this.Player2.SwapCard.classList.add("image-player1-select");
+                                    this.socket.emit("addClassSeven", {el:element.getAttribute("index"), plyr:1});
+
                                 } else {
                                     this.Player1.SwapCard = element;
+
                                     this.Player1.SwapCard.classList.add("image-player2-select");
+                                    this.socket.emit("addClassSeven", {el:element.getAttribute("index"), plyr:2});
+
                                 }
                             }
                         }
@@ -591,18 +691,28 @@ class Monke {
                             this.removeAnimation("seven");
                             this.socket.emit('removeAnimation', 'seven');
 
-                            if (this.GroundCards == undefined || this.GroundCards == null)
-                                this.GroundCards = new Array();
+                            if (this.GroundCards === undefined || this.GroundCards == null)
+                                this.GroundCards = [];
                             //this.GroundCards.push(Object.assign({}, this.Player1.DrawCard));
                             this.setGroundCard(this.Player1.DrawCard);
                             setTimeout(()=>{this.socket.emit('setGroundCard', {card:this.Player1.DrawCard, plyr:this.Player1})}, 1005);
                             this.removeDrawImage();
                             this.socket.emit('removeDrawImage', (this.Player1));
+
                             setTimeout(this.removeAnimationSeven, 1000);
                             setTimeout(()=>{
                                 this.socket.emit('removeAnimationSeven');
                             }, 1005);
-                            setTimeout(this.resetSevenSpecial, 1000);
+
+                            setTimeout(()=>{
+                                this.Player1.SwapCard = null;
+                                this.Player2.SwapCard = null;
+                                this.NbCardsPickedSeven = 0;
+                                this.Player1.BlockAction = false;
+                                this.removeAnimationSeven();
+                                this.socket.emit('removeAnimationSeven');
+                                this.printCards();
+                            }, 1200);
                             this.nothingToDo();
                             return;
                         }
@@ -626,16 +736,32 @@ class Monke {
                             this.socket.emit('setGroundCard', {card:pickedcard, plyr:this.Player1});
                             this.removeCard(this.getIndexValue(element), 1);
                             this.socket.emit('removeCard', {index:this.getIndexValue(element), id:2, plyr:this.Player1});
+                            this.printCards();
                             this.Player1.ThrewCard = true;
+
+                            this.socket.emit('setOppDeck', (this.Player1.Cards));
+
                             if (this.cardsLeft() == 0) {
-                                await this.monke();
+                                //this.socket.emit('setPlayerOpp', (this.Player1));
+                                this.printCards();
+                                                            
+                                this.socket.emit('setOppDeck', (this.Player1.Cards));
+
+                                this.monke();
+                                this.socket.emit('monke');
                                 return;
                             }
+                            //this.socket.emit('setPlayerOpp', (this.Player1));
                             return;
                         } else {
                             this.burn(element, 1);
                             console.trace();
                             this.socket.emit('burnImage', (element.getAttribute("index")));
+
+                            this.socket.emit('setOppDeck', (this.Player1.Cards));
+
+                            //this.socket.emit('setPlayerOpp', (this.Player1));
+                            this.printCards();
                         }
                     } else if (this.Player1.FreeThrow && this.isPlayerDiv(element)) {
                         if (this.cardValue(pickedcard) == this.cardValue(this.GroundCard)) {
@@ -643,15 +769,33 @@ class Monke {
                             this.socket.emit('setGroundCard', {card:pickedcard, plyr:this.Player1});
                             this.removeCard(index, 1);
                             this.socket.emit('removeCard', {index:index, id:2, plyr:this.Player1});
+
+                                                        
+                            this.socket.emit('setOppDeck', (this.Player1.Cards));
+
                             if (this.cardsLeft() == 0) {
-                                await this.monke();
+                                this.monke();
+                                this.socket.emit('monke');
+
+                                //this.socket.emit('setPlayerOpp', (this.Player1));
+                                                            
+                                this.socket.emit('setOppDeck', (this.Player1.Cards));
+
+                                this.printCards();
                                 return;
                             }
+                            //this.socket.emit('setPlayerOpp', (this.Player1));
+                            this.printCards();
                             return;
                         } else {
                             this.burn(element, 1);
                             console.trace();
                             this.socket.emit('burnImage', (element.getAttribute("index")));
+                                                        
+                            this.socket.emit('setOppDeck', (this.Player1.Cards));
+
+                            //this.socket.emit('setPlayerOpp', (this.Player1));
+                            this.printCards();
                         }
                     } else if (!this.Player1.FreeThrow && !this.Player1.ThrowCards && this.Player1.Turn && !this.Player1.CantDoAnything && this.isPlayerDiv(element)) {
                         this.setGroundCard(pickedcard);
@@ -659,22 +803,39 @@ class Monke {
                         if (this.cardValue(this.Player1.DrawCard) == this.cardValue(pickedcard)) {
                             this.removeCard(element.getAttribute("index"), 1);
                             this.socket.emit('removeCard', {index:element.getAttribute("index"), id:2, plyr:this.Player1});
+                                                        
                             if (this.cardsLeft() == 0) {
-                                await this.monke();
+                                this.monke();
+                                this.socket.emit('monke');
+
+                                //this.socket.emit('setPlayerOpp', (this.Player1));
+                                this.socket.emit('setOppDeck', (this.Player1.Cards));
+
+                                this.printCards();
                                 return;
                             }
+
+                            this.socket.emit('setOppDeck', (this.Player1.Cards));
+
                         } else {
                             pickedcard.Value = this.Player1.DrawCard.Value;
                             pickedcard.Suit = this.Player1.DrawCard.Suit;
                             element.setAttribute("src", Images["" + pickedcard.Value + pickedcard.Suit]);
+
+                            this.socket.emit('setOppDeck', (this.Player1.Cards));
+
+                            //this.socket.emit('setPlayerOpp', (this.Player1));
                             //element.setAttribute("src", Images['backcard']);
                         }
                         this.removeDrawImage();
                         this.socket.emit('removeDrawImage', (this.Player1));
+                        //this.socket.emit('setPlayerOpp', (this.Player1));
+                        this.printCards();
+                        this.socket.emit('setOppImage');
                         this.nothingToDo();
                         return;
                     } else {
-                        console.log("Its doing nothing.....................");
+                        //console.log("Its doing nothing.....................");
                     }
                 }
                 return;
@@ -728,7 +889,7 @@ class Monke {
     isBurntImage (element) {
         if (this.isPlayerDiv(element)) {
             let card = this.Player1.Cards[parseInt(element.getAttribute("index"))];
-            //console.log(card);
+            ////console.log(card);
             if (this.isBurned(card) == true)
                 return true;
             return false;
@@ -769,25 +930,26 @@ class Monke {
     removeCard(ind, identifier) {
         this.printCards();
         let index = parseInt(ind);
-        console.log("index is: " + ind);
+        //console.log("index is: " + ind);
         let element = this.getElement("image-player" + identifier, index);
-        console.log(this.Player1.Cards[index]);
-        this.deActivate(this.Player1.Cards[index]);
+        //console.log(this.Player1.Cards[index]);
+        if(identifier == 1)
+            this.deActivate(this.Player1.Cards[index]);
         element.parentElement.remove();
         element.remove();
     }
 
     printCards(){
-        console.log("player1 cards: ");
-        for(let i=0; i<4; i++){
-            if(this.isActive(this.Player1.Cards[i]))
-                console.log(""+this.Player1.Cards[i].Value+this.Player1.Cards[i].Suit);
-        }
-        console.log("player2 cards: ");
-        for(let i=0; i<4; i++){
-            if(this.isActive(this.Player1.Cards[i]))
-                console.log(""+this.Player2.Cards[i].Value+this.Player2.Cards[i].Suit);
-        }
+        // //console.log("player1 cards: ");
+        // for(let i=0; i<4; i++){
+        //     if(this.isActive(this.Player1.Cards[i]))
+        //         //console.log(""+this.Player1.Cards[i].Value+this.Player1.Cards[i].Suit);
+        // }
+        // //console.log("player2 cards: ");
+        // for(let i=0; i<4; i++){
+        //     if(this.isActive(this.Player1.Cards[i]))
+        //         //console.log(""+this.Player2.Cards[i].Value+this.Player2.Cards[i].Suit);
+        // }
     }
     
     playerTurn() {
@@ -803,7 +965,7 @@ class Monke {
         playerdiv.setAttribute("src", Images["" + this.Player1.DrawCard.Value + this.Player1.DrawCard.Suit]);
         this.flipButtons(true);
         if (this.cardsLeft() == 0){
-            console.log("Nb of cards is 0");
+            //console.log("Nb of cards is 0");
             return;
         }
         if (this.cardValue(this.Player1.DrawCard) >= 6 && this.cardValue(this.Player1.DrawCard) <= 8) {
@@ -813,12 +975,22 @@ class Monke {
         }
 
         this.socket.emit('setDrawCard', (this.Player1));
+        this.socket.emit('setDeck', this.Deck);
+        this.socket.emit('setOppImage');
+        this.printDeck();
+    }
+
+    printDeck(){
+        console.log({d:this.Deck.Cards});
+        this.printCards();
     }
 
     endTurn() {
-        console.log("Inside EndTurn function........");
+        //console.log("Inside EndTurn function........");
         if (this.cardsLeft() == 0) {
             this.monke();
+            this.socket.emit('monke');
+
         }
         // if (game.NbViewedCardsplayer1 != game.viewedCardsplayer1) {
         //     window.alert("SELECT YOUR GODDAMN CARDS MAN.....TF");
@@ -854,21 +1026,25 @@ class Monke {
             this.calculateResult();
             return;
         }
-        console.log("Emmiting Pass Turn Socket........");
+        //console.log("Emmiting Pass Turn Socket........");
         this.socket.emit('pass turn', this.Player1);
     }
 
-    async monke() {
+    monke() {
         if (!this.Player2.Monkey) {
+            this.socket.emit('monke');
+            this.Player1.BlockAction = true;
             document.getElementById("monkeplayer1").disabled = true;
             this.Player1.Monkey = true;
             //document.getElementById("monkeyaudio").play();
             this.monkeyOpacityEnable();
             this.monkeyEnable();
-            await this.timerFunction(3000);
-            this.monkeyDisable();
-            this.monkeyOpacityDisable();
-            this.endTurn();
+            setTimeout(()=>{
+                this.monkeyDisable();
+                this.monkeyOpacityDisable();
+                this.endTurn();
+                this.Player1.BlockAction = false;
+            }, 3000);
         }
     }
 
@@ -877,22 +1053,22 @@ class Monke {
     burn(element, id) {
         
         let card = null;
-        console.log("burn function........ id: " + id);
+        //console.log("burn function........ id: " + id);
         if (id == 1)
             card = this.Player1.Cards[parseInt(element.getAttribute("index"))];
-        console.log("passed id 1 check............");
+        //console.log("passed id 1 check............");
         if(id == 2){
-            console.log("inside burn function id = 2");
+            //console.log("inside burn function id = 2");
             card = this.Player2.Cards[parseInt(element.getAttribute("index"))];
-            console.log("before get Element..........");
+            //console.log("before get Element..........");
             element = this.getElement("image-player2", parseInt(element.getAttribute("index")));
-            console.log("after get Element..........");
+            //console.log("after get Element..........");
         }
         if (card != null) {
             this.burnCard(card);
             element.classList.add("burned-image");
         }
-        console.log("reached end.............");
+        //console.log("reached end.............");
     }
 
     specialplayerDiv() {
@@ -1037,7 +1213,7 @@ class Monke {
     }
 
     addPickCardClassOpponent() {
-        console.log("hasagi motherfucker...........");
+        //console.log("hasagi motherfucker...........");
         document.getElementById("player2pick").classList.add("pick-card-player2");
         setTimeout(() => {
             document.getElementById("player2pick").classList.remove("pick-card-player2");
@@ -1046,15 +1222,16 @@ class Monke {
 
     showCards() {
         let els = document.querySelectorAll(".image-player1");
-        console.log("player1 cards: " + this.Player1);
+        //console.log("player1 cards: " + this.Player1);
         // for (var i = 0; i < els.length; i++) {
         //     let index = parseInt(els[i].getAttribute('index'));
         //     els[i].setAttribute("src", Images["" + this.Player1.Cards[index].Value + this.Player1.Cards[index].Suit]);
         // }
-        console.log("player2 cards: " + this.Player2.Cards);
         els = document.querySelectorAll(".image-player2");
+        console.log("player 2 cards....");
         for (var i = 0; i < els.length; i++) {
             let index = parseInt(els[i].getAttribute('index'));
+            console.log({c:this.Player2.Cards[index]});
             els[i].setAttribute("src", Images["" + this.Player2.Cards[index].Value + this.Player2.Cards[index].Suit]);
         }
     }

@@ -9,7 +9,9 @@ const {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt
 const Players = require('./models/Players');
 
 const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+const server = app.listen(PORT, () =>{
+   console.log(`Listening on ${PORT}`)
+});
 
 console.log('Starting in ' + process.env.NODE_ENV + ' mode');
 
@@ -118,6 +120,8 @@ io.on("connection", socket => {
     const user = removeUser(socket.id);
 
     if (user) console.log(user.name + " left the room with id: " + socket.id + "because of " + reason);
+
+    //if (user) console.log(user.name + " left the chat with id: " + socket.id);
   });
 
   socket.on('deal', (dealObj) => {
@@ -169,6 +173,52 @@ io.on("connection", socket => {
     const plyr = Players.findOne({username: socket.username});
     const user = addToQ(socket.id, socket.username, plyr.rating);
   });
+
+  socket.on('removeClassFromAllElements', (str)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('removeClassFromAllElements', (str));
+  });
+  socket.on('addClassSeven', (obj)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('addClassSeven', {el: obj.el, plyr: obj.plyr});
+  });
+
+  socket.on('removeAnimationSeven', (str)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('removeAnimationSeven', (str));
+  });
+
+  socket.on('setPlayerOpp', (plyr)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('setPlayerOpp', (plyr));
+  });
+
+  socket.on('setDeck', (deck)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('setDeck', (deck));
+  });
+
+
+  socket.on('setOppImage', ()=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('setOppImage');
+  });
+
+  socket.on('setOppDeck', ()=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('setOppDeck');
+  });
+
+  socket.on('swapCards', (obj)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('swapCards', {ind1: obj.ind1, ind2: obj.ind2});
+  });
+
+  socket.on('monke', ()=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('monke');
+  });
+  
 });
 
 // database connection
@@ -178,8 +228,10 @@ mongoose.connect(dbURI,{
    useUnifiedTopology: true,
    useCreateIndex:true
 })
-.then(()=> console.log('Connected to the database.'))
-.catch((err)=>console.log('Failed to connect to Database error:' + err));
+.then(()=> {console.log('Connected to the database.')
+})
+.catch((err)=>{console.log('Failed to connect to Database error:' + err)
+});
 
 // middleware
 app.use(express.json());

@@ -20,6 +20,13 @@ function Deck() {
             this.Cards[j] = temp;
         }
     }
+
+    this.printCards = function() {
+        console.log("Deck is: ");
+        for(var i=0; i<this.Cards.length; i++){
+            console.log(""+this.Cards[i].Value+this.Cards[i].Suit);
+        }
+    }
 }
 let deck = new Deck();
 export default deck;
