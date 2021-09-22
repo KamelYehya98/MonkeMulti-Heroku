@@ -469,11 +469,11 @@ const HowToPlay = () => {
                             <img alt="" src="" className="img-fluid" id="specialimgplayer2" />
                         </div>
                         <div className="col-md-3 col-4 d-none m-1 p-0 order-md-2" id="player2buttons">
-                            <button className="btn mt-2 btn-sm throw-card-button" id="throwcardplayer2" >THROW CARD</button>
-                            <button className="btn mt-2 btn-sm free-throw-button" id="freethrowplayer2" >FREE THROW</button>
-                            <button className="btn mt-2 btn-sm monkey-button" id="monkeplayer2" >MONKE</button>
-                            <button className="btn mt-2 btn-sm end-turn-button" id="endturnplayer2" >END TURN</button>
-                            <button className="btn mt-2 btn-sm activate-special-button" id="specialplayer2" >ACTIVATE SPECIAL</button>
+                            <button className="btn mt-2 btn-sm btn-primary" id="throwcardplayer2" >THROW CARD</button>
+                            <button className="btn mt-2 btn-sm btn-success" id="freethrowplayer2" >FREE THROW</button>
+                            <button className="btn mt-2 btn-sm btn-warning" id="monkeplayer2" >MONKE</button>
+                            <button className="btn mt-2 btn-sm btn-danger" id="endturnplayer2" >END TURN</button>
+                            <button className="btn mt-2 btn-sm btn-dark" id="specialplayer2" >ACTIVATE SPECIAL</button>
                         </div>
                         <div className="order-md-0 vertical-line rounded"></div>
                     </div>
@@ -526,11 +526,11 @@ const HowToPlay = () => {
                     </div>
                     <div className="col-md-6 col-12 col-sm-12 d-flex justify-content-start justify-content-md-start order-md-1 m-1 p-0" id="assets-container-player1">
                         <div className="col-md-3 col-4 d-flex flex-column justify-content-center m-1 p-0 order-md-2" id="player1buttons">
-                            <button className="btn mt-2 btn-sm throw-card-button opaque" id="throwcardplayer1" >THROW CARD</button>
-                            <button className="btn mt-2 btn-sm free-throw-button opaque" id="freethrowplayer1" >FREE THROW</button>
-                            <button className="btn mt-2 btn-sm monkey-button opaque" id="monkeplayer1" >MONKE</button>
-                            <button className="btn mt-2 btn-sm end-turn-button opaque" id="endturnplayer1" >END TURN</button>
-                            <button className="btn mt-2 btn-sm activate-special-button opaque" id="specialplayer1" >ACTIVATE SPECIAL</button>
+                            <button className="btn mt-2 btn-sm btn-primary opaque" id="throwcardplayer1" >THROW CARD</button>
+                            <button className="btn mt-2 btn-sm btn-success opaque" id="freethrowplayer1" >FREE THROW</button>
+                            <button className="btn mt-2 btn-sm btn-warning opaque" id="monkeplayer1" >MONKE</button>
+                            <button className="btn mt-2 btn-sm btn-danger opaque" id="endturnplayer1" >END TURN</button>
+                            <button className="btn mt-2 btn-sm btn-dark opaque" id="specialplayer1" >ACTIVATE SPECIAL</button>
                         </div>
                         <div className="col-md-5 col-3 m-2 p-0 d-flex align-items-center order-md-1" id="specialdivplayer1">
                             <p className="text-center fw-bold text-white" id="specialtextplayer1"></p>
