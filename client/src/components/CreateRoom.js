@@ -21,7 +21,6 @@ export default function CreateRoom() {
               });
               data = await res.json();
               console.log(`New room data is ${data.roomID}`);
-              //window.location.assign('/createroom');
               var socket = sok.getSocket();
               socket.emit('join room', data.roomID, (err) => {
                 routerToRoom();

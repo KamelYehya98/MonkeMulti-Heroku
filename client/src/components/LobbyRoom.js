@@ -3,14 +3,24 @@ import React from 'react';
 import sok from "../services/socket";
 import { useHistory } from "react-router-dom";
 import "./dots.css";
+import audio from '../audio/Waiting_Music.mp3';
 
 export default function LobbyRoom({roomID}) {
+    const music = new Audio(audio);
+    music.play();
     var socket = sok.getSocket();
 
     const history = useHistory();
     const routerToRoom = () => {
         history.push('/room');
     }
+
+    const unlisten = history.listen (location => {
+        music.pause();
+        console.log("Exited room");
+        socket.emit('exitRoom');
+        unlisten();
+    });
 
     socket.on('goToRoom', () => {
         console.log("Going to join now");
