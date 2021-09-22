@@ -1,4 +1,5 @@
 const users =[];
+const q = [];
 const MAX_PLAYERS = 2;
 
 const addUser =({ id, name, room }) => {
@@ -13,6 +14,11 @@ const addUser =({ id, name, room }) => {
     const user = {id, name, room};
     users.push(user);
     console.log(`Players in room ${room}: ${playersInRoom(room)}`);
+    return {user};
+}
+
+const addToQ = ({ id, name, rating}) => {
+    const user = {id, name, rating};
     return {user};
 }
 
@@ -35,4 +41,4 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max) +1;
 }
 
-module.exports = {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt};
+module.exports = {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt, addToQ};

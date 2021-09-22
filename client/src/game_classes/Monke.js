@@ -19,11 +19,11 @@ class Monke {
 
     this.socket.on('start game', () => {
         console.log("Game started");
-        document.getElementById("assets-container-player2").parentNode.classList.remove("d-none");
-        document.getElementById("assets-container-player2").parentNode.classList.add("d-flex");
-        document.getElementById("assets-container-player2").parentNode.classList.add("d-md-flex");
+        // document.getElementById("assets-container-player2").parentNode.classList.remove("d-none");
+        // document.getElementById("assets-container-player2").parentNode.classList.add("d-flex");
+        // document.getElementById("assets-container-player2").parentNode.classList.add("d-md-flex");
 
-        document.getElementById("wait").classList.add("d-none");
+        // document.getElementById("wait").classList.add("d-none");
         this.startGame();
     });
     this.socket.on('first', () => {

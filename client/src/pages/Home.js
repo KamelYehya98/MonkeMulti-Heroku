@@ -18,7 +18,7 @@ const Home = () => {
                             <h1>Welcome To Monke!</h1>
                             <p>Challenge your friends and other people online in this exciting card game that is fit for all ages!</p>
                             <Link to='/welcome' className="play-now-btn">PLAY NOW!</Link>
-                            <Link className="learn-to-play">Learn to play.</Link>
+                            <Link to = '/howtoplay' className="learn-to-play">Learn to play.</Link>
                         </div>
                     </div>
                 </div>

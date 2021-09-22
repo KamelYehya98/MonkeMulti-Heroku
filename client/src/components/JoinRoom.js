@@ -50,9 +50,8 @@ export default function JoinRoom() {
                     return;
                 }
                 console.log(data);
-                //window.location.assign('/joinRoom');
                 routerToRoom();
-                Monke.remPlayer2Comp();
+                //Monke.remPlayer2Comp();
             });
           }catch(err){
               console.log(err);

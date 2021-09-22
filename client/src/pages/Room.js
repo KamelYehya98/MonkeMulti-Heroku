@@ -99,9 +99,9 @@ function Room() {
                         <input type='submit' id='formBtn'/>
                     </form>
                     <Route exact>
-                        <div>
+                        {/* <div>
                             <center><h1 className="w-100" id="wait">WAITING FOR PLAYRE 2</h1></center>
-                        </div>
+                        </div> */}
                         <Player2 playerAction={playerAction} CallButtons={CallButtons}/>
                     </Route>
 

@@ -35,6 +35,7 @@ roomSchema.statics.createRoom = async function(){
         }while(roomId != null);        
         let users = [];
         await this.create({ code , users });
+        return code;
     }catch(err){
         console.log(err);
     }

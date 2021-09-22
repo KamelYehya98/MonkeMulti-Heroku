@@ -13,8 +13,8 @@ export default function ChatBox(){
         var entry = document.createElement("li");
         entry.appendChild(entryText);
         list.appendChild(entry);
-        document.getElementById("messageInput").value = '';
         entry.classList.add("you");
+        entry.scrollIntoView();
     });
 
     function sendMessage(){

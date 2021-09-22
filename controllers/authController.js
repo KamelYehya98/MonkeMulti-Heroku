@@ -148,8 +148,8 @@ module.exports.reset_post = async(req, res) => {
 
 module.exports.createroom_post = async (req, res) => {
     try{
-        await Room.createRoom();
-        res.status(200).json({});
+        const roomID = await Room.createRoom();
+        res.status(200).json({roomID});
     }catch(err){
         const errors = handleErrors(err);
         res.status(400).json({ errors });

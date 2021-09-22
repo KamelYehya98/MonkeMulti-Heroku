@@ -5,7 +5,7 @@ import CreateRoom from '../components/CreateRoom';
 import JoinRoom from '../components/JoinRoom';
 import PlayerStats from '../components/PlayerStats';
 import MatchHistory from '../components/MatchHistory';
-import './css/Welcome.css';
+import RandomMatch from '../components/RandomMatch';
 
 const Welcome = ({username}) => {
     return (
@@ -16,6 +16,8 @@ const Welcome = ({username}) => {
                     <JoinRoom />
                     <p className="or">OR</p>
                     <CreateRoom />
+                    <p className="or">OR</p>
+                    <RandomMatch/>
                 </div>
                 <PlayerStats username={username} />
                 {username!=null && (<MatchHistory username={username}/>)}
