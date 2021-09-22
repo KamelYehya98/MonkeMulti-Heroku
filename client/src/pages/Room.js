@@ -10,14 +10,13 @@ import sok from "../services/socket";
 import ChatBox from '../components/ChatBox';
 import chatIcon from '../img/chat_icon_new.svg';
 import './css/Chat.css';
-//import './css/Game.css';
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function Room() {
     const socket = sok.getSocket();
     const history = useHistory();
-    let chatDisabled = false;
+    let chatDisabled = true;
 
     async function submitToDatabase(e){
         // e.preventDefault();

@@ -35,7 +35,7 @@ export default function ChatBox(){
     }
 
     return (
-        <div className="chat" id = "chatBox">
+        <div className="chat d-none" id = "chatBox">
             <div className="messages-wrapper">
                 <div className="messages">
                     <ul id="messageList">
@@ -43,7 +43,7 @@ export default function ChatBox(){
                 </div>
             </div>
             
-            <div className="send-message">
+            <div className="send-message d-flex align-items-end">
                 <input type="text" placeholder="Message" id="messageInput"/>
                 <div>
                     <button onClick={sendMessage}>Send</button>
