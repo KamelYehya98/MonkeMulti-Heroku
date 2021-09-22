@@ -17,6 +17,6 @@ export default function LobbyRoom({roomID}) {
     });
     console.log(`Room ID at lobby room ${roomID}`);
     return(
-        <div><h1>Waiting for Player 2</h1><br/><p>Room ID: {roomID}</p></div>
+        <div><h1>Waiting for Opponent...</h1><br/><p>Room ID: {roomID}</p></div>
     );
 }
