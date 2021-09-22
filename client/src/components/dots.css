@@ -1,0 +1,56 @@
+.snippet{
+    margin-left: 1.3rem;
+}
+
+.dot-typing {
+    position: relative;
+    left: -9999px;
+    width: 7.5px;
+    height: 7.5px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #fff;
+    box-shadow: 9984px 0 0 0 #fff, 9999px 0 0 0 #fff, 10014px 0 0 0 #fff;
+    animation: dotTyping 1.5s infinite linear;
+}
+
+@keyframes dotTyping {
+    0% {
+    box-shadow: 9984px 0 0 0 #fff, 9999px 0 0 0 #fff, 10014px 0 0 0 #fff;
+    }
+    16.667% {
+    box-shadow: 9984px -10px 0 0 #fff, 9999px 0 0 0 #fff, 10014px 0 0 0 #fff;
+    }
+    33.333% {
+    box-shadow: 9984px 0 0 0 #fff, 9999px 0 0 0 #fff, 10014px 0 0 0 #fff;
+    }
+    50% {
+    box-shadow: 9984px 0 0 0 #fff, 9999px -10px 0 0 #fff, 10014px 0 0 0 #fff;
+    }
+    66.667% {
+    box-shadow: 9984px 0 0 0 #fff, 9999px 0 0 0 #fff, 10014px 0 0 0 #fff;
+    }
+    83.333% {
+    box-shadow: 9984px 0 0 0 #fff, 9999px 0 0 0 #fff, 10014px -10px 0 0 #fff;
+    }
+    100% {
+    box-shadow: 9984px 0 0 0 #fff, 9999px 0 0 0 #fff, 10014px 0 0 0 #fff;
+    }
+}
+
+@media only screen and (min-width: 1900px) {
+    .snippet{
+        margin-left: 1rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .snippet{
+        margin-left: 1.6rem;
+    }
+
+    .dot-typing{
+        width: 5px;
+        height: 5px;
+    }
+}
