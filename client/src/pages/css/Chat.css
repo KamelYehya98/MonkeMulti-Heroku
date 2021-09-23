@@ -5,7 +5,7 @@
     width: 5rem !important;
     height: 5rem !important;
     padding: 1rem;
-    /* border: 3px solid white !important; */
+    border: none;
     background: #0fc473;
     border-radius: 50% !important;
     z-index: 5;
@@ -127,6 +127,11 @@ chat::-webkit-scrollbar-thumb {
 
 @media only screen and (max-width: 768px) {
     #showHideChat{
-        top: 8%;
+        top: 10%;
+    }
+
+    .chat{
+        top: 20%;
+        max-width: 25rem;
     }
 }
