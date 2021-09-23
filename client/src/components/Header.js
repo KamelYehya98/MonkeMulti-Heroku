@@ -104,11 +104,13 @@ const Header = ({user, checkUser}) => {
                         )
                     }       
 
-                    <ul className="account-options">
-                        <li>
-                            <button className="link" onClick={logOutCall}>Log Out</button>
-                        </li>
-                    </ul>
+                    {user !=null && 
+                        (<ul className="account-options">
+                            <li>
+                                <button className="link" onClick={logOutCall}>Log Out</button>
+                            </li>
+                        </ul>)
+                    }
                     
                 </nav>
             </header>

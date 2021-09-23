@@ -1,0 +1,24 @@
+.about-container{
+    margin-top: 5em;
+}
+
+.about-container h1{
+    font-size: 4rem;
+    text-decoration: underline;
+    text-decoration-color: #0fc473;
+    margin-bottom: 3rem;
+}
+
+.about-container img{
+    width: 100%;
+}
+
+.name{
+    font-size: 1.5rem;
+    margin-bottom: .5rem;
+}
+
+.role{
+    font-size: 1rem;
+    color: #0fc473;
+}

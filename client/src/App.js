@@ -9,6 +9,7 @@ import Room from "./pages/Room";
 import Header from "./components/Header";
 import sok from "./services/socket";
 import HowToPlay from "./pages/HowToPlay";
+import About from "./pages/About";
 import Footer from "./components/Footer";
 import CreateRoom from "./pages/Lobby";
 
@@ -65,6 +66,7 @@ function App() {
                     <Route path='/joinroom' exact component={Lobby} />
                     <Route path='/room' exact  component={Room} />
                     <Route path='/howtoplay' exact component={HowToPlay} />
+                    <Route path='/about' exact component={About} />
                     <Route path='/lobby/:roomID' exact  component={Lobby} />
                 </Switch>
             </main>
