@@ -19,8 +19,25 @@ const addUser =({ id, name, room }) => {
 
 const addToQ = ({ id, name, rating}) => {
     const user = {id, name, rating};
+    q.push(user);
+    const match = matchPlayers(rating);
+    if (match) {
+        moveToRoom ({id, room});
+        moveToRoom ({id: match.id, room})
+    }
     return {user};
 }
+// when user in queue is matched
+const moveToRoom = ({id, room}) => {
+    const index = q.findIndex((use) => use.id === id);
+    if (index !== -1) {
+        const found = q.splice(index, 1)[0];
+        const user = addUser({id, name: found.name, room});
+        return user;
+    }
+}
+
+const matchPlayers = (rating) => q.find((user) => user.rating >= rating);
 
 const removeUser = (id) => {
     const index = users.findIndex((user) => user.id === id);
@@ -41,4 +58,4 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max) +1;
 }
 
-module.exports = {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt, addToQ};
+module.exports = {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt, addToQ, moveToRoom};

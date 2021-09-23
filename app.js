@@ -5,7 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const SERVER_URL = require('./client/src/constants');
 const app = express();
-const {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt, addToQ} = require('./users');
+const {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt, addToQ, moveToRoom} = require('./users');
 const Players = require('./models/Players');
 
 const PORT = process.env.PORT || 3000;

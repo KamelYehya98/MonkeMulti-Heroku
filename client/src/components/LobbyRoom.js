@@ -3,8 +3,12 @@ import React from 'react';
 import sok from "../services/socket";
 import { useHistory } from "react-router-dom";
 import "./dots.css";
+import audio from '../audio/Waiting_Music.mp3';
 
 export default function LobbyRoom({roomID}) {
+    console.log(`Room ID at lobby room ${roomID}`);
+    const music = new Audio(audio);
+    music.play();
     var socket = sok.getSocket();
 
     const history = useHistory();
@@ -12,11 +16,19 @@ export default function LobbyRoom({roomID}) {
         history.push('/room');
     }
 
+    const unlisten = history.listen (location => {
+        music.pause();
+        if (!location.pathname.includes('room')) {
+            console.log("Exited lobby");
+            socket.emit('exitRoom');
+            unlisten();
+        }
+    });
+
     socket.on('goToRoom', () => {
         console.log("Going to join now");
         routerToRoom();
     });
-    console.log(`Room ID at lobby room ${roomID}`);
     return(
         <div className="mt-5">
             <div className="d-flex align-items-baseline justify-content-center pt-5">
