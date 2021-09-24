@@ -149,6 +149,7 @@ module.exports.reset_post = async(req, res) => {
 module.exports.createroom_post = async (req, res) => {
     try{
         const roomID = await Room.createRoom();
+        console.log(`Created room id is ${roomID}`);
         res.status(200).json({roomID});
     }catch(err){
         const errors = handleErrors(err);
@@ -161,6 +162,24 @@ module.exports.joinroom_post = async (req, res) => {
         let id = req.body.room_id;
         console.log("room id entered is: " + id);
         const result = await Room.joinRoom(id);
+        let error = "";
+        if(result == null){
+            error = "Room doesn't exist";
+            res.json({ error })
+        }else{
+            res.status(200).json({});
+        }
+    }catch(err){
+        console.log(err);
+        res.status(400).json({ err });
+    }
+}
+
+module.exports.deleteroom_post = async (req, res) => {
+    try{
+        let id = req.body.roomID;
+        console.log("room id entered is: " + id + " (delete room)");
+        const result = await Room.deleteRoom(id);
         let error = "";
         if(result == null){
             error = "Room doesn't exist";

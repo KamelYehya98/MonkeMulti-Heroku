@@ -64,7 +64,7 @@ class Monke {
     });
 
     this.socket.on('removeDrawImage', (plyr2)=>{
-        //console.log("entering the fucker.....................");
+        //console.log("entering the  er.....................");
         plyr2.DrawCard = null;
         this.Player2 = plyr2;
         document.getElementById("player2pick").setAttribute("src", "");
@@ -1213,7 +1213,7 @@ class Monke {
     }
 
     addPickCardClassOpponent() {
-        //console.log("hasagi motherfucker...........");
+        //console.log("hasagi...........");
         document.getElementById("player2pick").classList.add("pick-card-player2");
         setTimeout(() => {
             document.getElementById("player2pick").classList.remove("pick-card-player2");
@@ -1243,26 +1243,7 @@ class Monke {
         return sum;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     isActive(card) {
         if (card.Value === 0)
             return false;
@@ -1298,12 +1279,12 @@ class Monke {
         }
     }
 
-    remPlayer2Comp() {
-        console.log("Removed PLayer 2 components");
-        document.getElementById("assets-container-player2").parentNode.classList.add("d-none");
-        document.getElementById("assets-container-player2").parentNode.classList.remove("d-flex");
-        document.getElementById("assets-container-player2").parentNode.classList.remove("d-md-flex");
-    }
+    // remPlayer2Comp() {
+    //     console.log("Removed PLayer 2 components");
+    //     document.getElementById("assets-container-player2").parentNode.classList.add("d-none");
+    //     document.getElementById("assets-container-player2").parentNode.classList.remove("d-flex");
+    //     document.getElementById("assets-container-player2").parentNode.classList.remove("d-md-flex");
+    // }
 
 }
 

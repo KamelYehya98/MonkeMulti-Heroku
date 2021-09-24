@@ -1,16 +1,17 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SERVER_URL from "../constants";
+import { useHistory } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function RandomMatch () {
-
-    async function randomMatch() {
-
+    const history = useHistory();
+    const routerToRoom = () => {
+      history.push(`/randomlobby`);
     }
     
     return (
         <div>
-            <button onClick={randomMatch} className="create-room-button">Random Match</button>
+            <button onClick={routerToRoom} className="create-room-button">Random Match</button>
         </div>
     )
 }

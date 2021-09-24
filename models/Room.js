@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+mongoose.set('useFindAndModify', false);
 
 const roomSchema = new mongoose.Schema({
     code:{
@@ -51,6 +52,14 @@ roomSchema.statics.joinRoom = async function(id){
     }
 };
 
+roomSchema.statics.deleteRoom = async function(roomID){
+    try{
+        await this.findOneAndRemove({code: roomID});
+        console.log(`Deleted room ${roomID}`);
+    }catch(error){
+        console.log(error);
+    }
+};
 const Room = mongoose.model('room', roomSchema);
 
 module.exports = Room;

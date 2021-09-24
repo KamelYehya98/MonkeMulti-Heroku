@@ -55,6 +55,15 @@ playerSchema.statics.createPlayer = async function(username){
         console.log(err);
     }
 };
+
+playerSchema.statics.getRating = async function (username) {
+    try {
+        let result = await this.findOne({username});
+        return result.rating;
+    }catch(err){
+        console.log(err);
+    }
+};
 const Player = mongoose.model('player', playerSchema);
 
 module.exports = Player;
