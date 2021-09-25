@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SERVER_URL from "../constants";
 import {getLatestRoundWinner} from "../pages/Room";
 // import MatchHistory from '../../../models/MatchHistory';
+import '../style.css'
 
 class Monke {
     constructor() {
@@ -200,6 +201,16 @@ class Monke {
             this.Player1.BlockAction = false;
         }, 3000);
     });
+
+    this.socket.on('oppSelectCard', (index) => {
+        let element = this.getElement("image-player2", parseInt(index));
+        element.classList.add("opponent-clicked");
+        setTimeout(() => {
+            element.classList.remove("opponent-clicked");
+        }, 1000);
+    });
+
+
 }
 
     async getUsername(){
@@ -610,6 +621,7 @@ class Monke {
             }
             if (!this.isBurntImage(element)) {
                 if (this.Player1.Special && this.Player1.SpecialEnabled && this.Player1.Turn && this.cardsLeft() != 0 && !this.Player1.CantDoAnything) {
+                    this.socket.emit('oppSelectCard', (this.getIndexValue(element)));
                     if (this.cardValue(this.Player1.DrawCard) == 6) {
                         if (this.isPlayerDiv(element)) {
                             let card = this.Player1.Cards[this.getIndexValue(element)];

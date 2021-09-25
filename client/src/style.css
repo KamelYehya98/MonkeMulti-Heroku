@@ -169,6 +169,11 @@ audio{
     display: none !important;
 }
 
+.opponent-clicked{
+    border: 3px solid #0fc473;
+    border-radius: 10%;
+}
+
 #monkeydiv, #monkeydivtutorial {
     color: yellow !important;
     text-shadow: 0 0.1em 20px rgba(0, 0, 0, 1), 0.05em -0.03em 0 rgba(0, 0, 0, 1),

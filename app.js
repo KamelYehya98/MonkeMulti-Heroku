@@ -264,6 +264,11 @@ io.on("connection", socket => {
     const user = getUser(socket.id);
     socket.to(user.room).emit('monke');
   });
+
+  socket.on('oppSelectCard', (index) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('oppSelectCard', (index));
+  });
 });
 
 // database connection

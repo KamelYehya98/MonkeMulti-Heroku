@@ -118,3 +118,17 @@ module.exports.getUsername = (req, res) => {
         res.json({error: "database connection error / user not found"});
     }
 }
+module.exports.update_scores_post = async(req, res) => {
+    const username1 = req.body.u1;
+    const username2 = req.body.u2;
+    const player1 = await Player.findOne({username1});
+    const player2 = await Player.findOne({username2});
+    const newScore1 = req.body.score1;
+    const newScore2 = req.body.score2;
+    if (player1 && player2) {
+        player1.rating = newScore1;
+        player2.rating = newScore2;
+        player1.save();
+        player2.save();
+    }
+}
