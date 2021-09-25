@@ -269,6 +269,27 @@ io.on("connection", socket => {
     const user = getUser(socket.id);
     socket.to(user.room).emit('oppSelectCard', (index));
   });
+
+  socket.on('drawsFirst', ()=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('drawsFirst');
+  });
+
+  socket.on('unBlockAction', ()=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('unBlockAction');
+  });
+
+  socket.on('oppViewedCards', ()=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('oppViewedCards');
+  });
+
+  socket.on('calculateResults', ()=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('calculateResults');
+  });
+  
 });
 
 // database connection

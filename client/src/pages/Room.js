@@ -73,7 +73,7 @@ function Room() {
                 headers: { 'Content-Type' : 'application/json' },
                 credentials: 'include'
             });     
-            routerToRoom();
+            
             } catch(err){
               console.log(err);
         }
@@ -122,6 +122,8 @@ function Room() {
         }catch(error) {
             console.log(error);
         }
+        routerToRoom();
+
     }
 
     function calcRate (rating1, rating2, games1, games2, winner) {
@@ -177,7 +179,7 @@ function Room() {
         let id = e.target.getAttribute("id")[e.target.getAttribute("id").length - 1];
         console.log("Att id is: " + id);
 
-        if(Monke.Player1.BlockAction)
+        if(Monke.Player1.BlockAction || Monke.didViewCards() == false)
             return;
         if(Monke.Player1.Turn && id !== '1')
             return;

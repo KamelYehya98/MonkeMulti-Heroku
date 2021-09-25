@@ -12,6 +12,7 @@ class Monke {
     constructor() {
     this.socket = sok.getSocket();
     this.Deck = Deck;
+    this.endGame = false;
     this.Player1 = new Player();
     this.Player2 = new Player();
     this.isFirst = false;
@@ -22,6 +23,9 @@ class Monke {
     this.MonkeEffect = false;
     this.Username = "";
     this.OppUsername = "";
+    this.drawsFirst = false;
+    this.OppViewedCards = false;
+    this.OppDisconnect = false;
 
     this.socket.on('sendUsername', (username) => {
         this.OppUsername = username;    
@@ -58,7 +62,7 @@ class Monke {
             ////console.log('' + card.Value + card.Suit);
             this.Player1.Cards.push(Object.assign({}, card));
             img = this.getElement("image-player1", i - 1);
-            img.setAttribute("src", Images['' + card.Value + card.Suit]);
+            img.setAttribute("src", Images['backcard']);
             ////console.log("" + card.Value + card.Suit);
         }
         this.socket.emit('setDeck', this.Deck);
@@ -135,7 +139,13 @@ class Monke {
     });
 
     this.socket.on('userDisconnected', (name) => {
-        console.log(`${name} has diconnected`);
+        if(!this.endGame){
+            console.log(`${name} has diconnected`);
+            this.Player1.BlockAction = true;
+            this.OppDisconnect = true;
+            this.endGame = true;
+            this.calculateResult();
+        }
     });
 
     this.socket.on('addClassSeven', (obj)=>{
@@ -166,10 +176,21 @@ class Monke {
     this.socket.on('setOppImage', ()=>{
         this.showCards();
     });
+    this.socket.on('unBlockAction', ()=>{
+        this.Player1.BlockAction = false;
+    });
 
     this.socket.on('setOppDeck', (deck)=>{
         this.Player2.Cards = Object.assign({}, deck);
         console.log("opponent deck set................................");
+    });
+
+    this.socket.on('drawsFirst', ()=>{
+        this.drawsFirst = true;
+    });
+
+    this.socket.on('oppViewedCards', ()=>{
+        this.OppViewedCards = true;
     });
 
     this.socket.on("swapCards", (obj)=>{
@@ -184,7 +205,7 @@ class Monke {
         cardtwo.Suit = aux.Suit;
         this.showCards();
 
-        this.getElement('image-player1', parseInt(obj.ind2)).setAttribute("src", Images[''+cardone.Value+cardone.Suit]);
+        //this.getElement('image-player1', parseInt(obj.ind2)).setAttribute("src", Images[''+cardone.Value+cardone.Suit]);
     });
 
     this.socket.on('monke', ()=>{
@@ -211,6 +232,10 @@ class Monke {
     });
 
 
+    this.socket.on('calculateResults', ()=>{
+        this.Player1.BlockAction = true;
+        this.revealAllCards();
+    });
 }
 
     async getUsername(){
@@ -249,10 +274,13 @@ class Monke {
             ////console.log('' + card.Value + card.Suit);
             this.Player1.Cards.push(Object.assign({}, card));
             img = this.getElement("image-player1", i - 1);
-            img.setAttribute("src", Images['' + card.Value + card.Suit]);
+            img.setAttribute("src", Images['backcard']);
             ////console.log("" + card.Value + card.Suit);
         }
-        this.playerTurn();
+        if(this.Player1.NbCardsView == 1 || this.Player1.NbCardsView == 2){
+            this.drawsFirst = true;
+        }else
+            this.socket.emit('drawsFirst');
         this.socket.emit('oppPlayer', (this.Player1));
         this.socket.emit('setDeck', this.Deck);
         this.printDeck();
@@ -330,10 +358,10 @@ class Monke {
     getImage () {
         //console.log(this.Player1.Cards.length);
         for (var i = 0; i < this.Player1.Cards.length; i++) {
-            this.getElement("image-player1", i).setAttribute("src", Images['' + this.Player1.Cards[i].Value + this.Player1.Cards[i].Suit]);
+            this.getElement("image-player1", i).setAttribute("src", Images['backcard']);
         }
         for (var i = 0; i < this.Player2.Cards.length; i++) {
-            this.getElement("image-player2", i).setAttribute("src", Images['' + this.Player2.Cards[i].Value + this.Player2.Cards[i].Suit]);
+            this.getElement("image-player2", i).setAttribute("src", Images['backcard']);
         }
     }
 
@@ -479,8 +507,8 @@ class Monke {
         this.Player2.SwapCard = null;
         this.NbCardsPickedSeven = 0;
 
-        this.getElement('image-player1', parseInt(player1index)).setAttribute("src", Images[''+cardone.Value+cardone.Suit]);
-        this.getElement('image-player2', parseInt(player2index)).setAttribute("src", Images[''+cardtwo.Value+cardtwo.Suit]);
+        //this.getElement('image-player1', parseInt(player1index)).setAttribute("src", Images['backcard']);
+        //.getElement('image-player2', parseInt(player2index)).setAttribute("src", Images['backcard']);
 
         return;
     }
@@ -589,9 +617,9 @@ class Monke {
                     let i = this.getIndexValue(element);
                     setTimeout(()=>{
                         element.setAttribute("src", Images[''+this.Player1.Cards[i].Value + this.Player1.Cards[i].Suit]);
+                        this.socket.emit('flipCardBackOpponent', {el:i, index: 6});
                     }, 100);
                     setTimeout(()=>{
-                        ////console.log("OK babe");
                         element.classList.remove("flip-image");
                         element.classList.add("unflip-image");
                         element.setAttribute("src", Images['backcard']);
@@ -600,22 +628,22 @@ class Monke {
                         element.classList.remove("unflip-image");
                     }, 3000);
                     this.Player1.ViewedCards++;
+                    if(this.didViewCards()){
+                        if(this.OppViewedCards == false){
+                            this.Player1.BlockAction = true;
+                            this.socket.emit('oppViewedCards');
+                        }
+                        else{
+                            this.socket.emit('unBlockAction');
+                            if(this.drawsFirst){
+                                this.playerTurn();
+                            }else{
+                                this.socket.emit('pass turn', (this.Player1));
+                            }
+                        }
+                    }
                     console.log(this.Player1.ViewedCards);
-
-                    //INSERT CODE TO DECIDE WHO PLAYS FIRST.
-                    // if(this.Player1.didViewCards())
-                    // {
-                    //     if(NbViewedCardsPlayer <= 2)
-                    //         this.Player1.playerTurn();
-                    //     else{
-                    //         bot.BotTurn();
-                    //         document.getElementById("monke").disabled = true;
-                    //         document.getElementById("throwcard").disabled = true;
-                    //         document.getElementById("endturn").disabled = true;
-                    //     }
-                    // }
-                    //this.Player1.playerTurn();
-                        return;
+                    return;
                 }
             return;
             }
@@ -855,7 +883,7 @@ class Monke {
                         } else {
                             pickedcard.Value = this.Player1.DrawCard.Value;
                             pickedcard.Suit = this.Player1.DrawCard.Suit;
-                            element.setAttribute("src", Images["" + pickedcard.Value + pickedcard.Suit]);
+                            element.setAttribute("src", Images['backcard']);
 
                             this.socket.emit('setOppDeck', (this.Player1.Cards));
 
@@ -1027,7 +1055,6 @@ class Monke {
         if (this.cardsLeft() == 0) {
             this.monke();
             this.socket.emit('monke');
-
         }
         // if (game.NbViewedCardsplayer1 != game.viewedCardsplayer1) {
         //     window.alert("SELECT YOUR GODDAMN CARDS MAN.....TF");
@@ -1052,7 +1079,7 @@ class Monke {
 
         this.Player1.Turn = false;
         this.Player2.Turn = true;
-        if (element.getAttribute("src") != "") {
+        if (element.getAttribute("src") != Images["transparent"]) {
             this.setGroundCard(this.Player1.DrawCard);
             this.socket.emit('setGroundCard', {card:this.Player1.DrawCard, plyr:this.Player1});
             this.removeDrawImage();
@@ -1087,20 +1114,25 @@ class Monke {
 
     calculateResult(){
         this.Player1.BlockAction = true;
-        setTimeout(this.revealAllCards, 500);
+        this.revealAllCards();
+        if(!this.OppDisconnect)
+            this.socket.emit('calculateResults');
         setTimeout(()=>{
-            if(this.Player1.Monkey){
+            if(!this.endGame)
                 document.getElementById("formBtn").click();
-            }
         }, 4000);
     }
 
     revealAllCards(){
-        for(var i=0; i<this.Player1.Cards.length; i++){
+        console.log(this.Player1);
+        let length = this.Player1.Cards.length;
+        for(var i=0; i<length; i++){
             if(this.isActive(this.Player1.Cards[i]))
                 this.getElement("image-player1", i).setAttribute('src', Images[""+this.Player1.Cards[i].Value+this.Player1.Cards[i].Suit]);
         }
-        for(var i=0; i<this.Player2.Cards.length; i++){
+        length = this.Player2.Cards.length;
+
+        for(i=0; i<length; i++){
             if(this.isActive(this.Player2.Cards[i]))
                 this.getElement("image-player2", i).setAttribute('src', Images[""+this.Player2.Cards[i].Value+this.Player2.Cards[i].Suit]);
         }
@@ -1277,23 +1309,20 @@ class Monke {
     }
 
     showCards() {
-        let els = document.querySelectorAll(".image-player1");
-        //console.log("player1 cards: " + this.Player1);
-        // for (var i = 0; i < els.length; i++) {
-        //     let index = parseInt(els[i].getAttribute('index'));
-        //     els[i].setAttribute("src", Images["" + this.Player1.Cards[index].Value + this.Player1.Cards[index].Suit]);
-        // }
-        els = document.querySelectorAll(".image-player2");
+        
+        let els = document.querySelectorAll(".image-player2");
         console.log("player 2 cards....");
         for (var i = 0; i < els.length; i++) {
             let index = parseInt(els[i].getAttribute('index'));
             console.log({c:this.Player2.Cards[index]});
-            els[i].setAttribute("src", Images["" + this.Player2.Cards[index].Value + this.Player2.Cards[index].Suit]);
+            els[i].setAttribute("src", Images['backcard']);
         }
     }
 
     calculateScore() {
         let sum = 0;
+        if(this.OppDisconnect)
+            return -1;
         for (var i = 0; i < this.Player1.Cards.length; i++)
             sum += this.cardValue(this.Player1.Cards[i]);
         return sum;
