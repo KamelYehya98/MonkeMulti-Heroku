@@ -13,6 +13,18 @@
     transition: 0.25s;
 }
 
+.message-received{
+    animation-name: blinking;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes blinking {
+    0% {background-color: #0fc473;}
+    50% {background-color: #167e5f;}
+    100%{background-color: #0fc473;}
+}
+
 #showHideChat img{
     width: 100% !important;
 }

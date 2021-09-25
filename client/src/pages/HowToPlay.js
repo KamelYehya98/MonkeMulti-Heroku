@@ -457,8 +457,8 @@ const HowToPlay = () => {
             <button id="next-instruction" onClick={nextInstruction}>Next &gt;</button>
         </div>
         </div>
-        <div className="d-flex justify-content-center align-items-center w-100" id="themaincontainertutorial">
-            <div className="container w-100">  
+        <div className="d-flex justify-content-center align-items-center w-100 mt-2" id="themaincontainertutorial">
+            <div className="container w-100 main-container">  
                 <div className="row d-md-flex flex-md-row justify-content-md-between flex-md-nowrap d-flex flex-column align-content-around opaque" id="player2Stuff">
                     <div className="col-md-6 col-12 col-sm-12 d-flex justify-content-end justify-content-md-between m-0 p-0 order-md-1" id="assets-container-player2">
                         <div className="col-md-3 col-3 m-2 p-0 order-md-3">

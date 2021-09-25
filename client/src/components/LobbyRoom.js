@@ -4,6 +4,7 @@ import sok from "../services/socket";
 import { useHistory } from "react-router-dom";
 import "./dots.css";
 import audio from '../audio/Waiting_Music.mp3';
+import '../pages/css/Welcome.css';
 
 export default function LobbyRoom({roomID}) {
     console.log(`Room ID at lobby room ${roomID}`);
@@ -30,7 +31,7 @@ export default function LobbyRoom({roomID}) {
         routerToRoom();
     });
     return(
-        <div className="mt-5">
+        <div className="waiting-container mt-5">
             <div className="d-flex align-items-baseline justify-content-center pt-5">
                 <h1>Waiting for Opponent</h1>
                 <div class="snippet" data-title=".dot-typing">
