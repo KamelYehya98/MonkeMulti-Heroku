@@ -16,7 +16,7 @@ return (
             <p className="text-center" id="specialtextplayer2"></p>
             <img alt="" src="" className="img-fluid" id="specialimgplayer2" />
         </div>
-        <div className="col-md-3 col-4 d-flex flex-column justify-content-center m-1 pb-4 order-md-2" id="player2buttons">
+        <div className="col-md-3 col-4 d-flex flex-column justify-content-center m-1 order-md-2" id="player2buttons">
             <button className="btn mt-2 btn-sm btn-primary" id="throwcardplayer2">THROW CARD</button>
             <button className="btn mt-2 btn-sm btn-success" id="freethrowplayer2">FREE THROW</button>
             <button className="btn mt-2 btn-sm btn-warning" id="monkeplayer2">MONKE</button>

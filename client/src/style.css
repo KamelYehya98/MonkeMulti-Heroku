@@ -5,7 +5,14 @@ audio{
 }
 
 #themaincontainer, #themaincontainertutorial{
-    padding-top: 4rem;
+    height: 852px;
+    max-height: 852px;
+    position: relative;
+}
+
+.main-container{
+    position: absolute;
+    top: 0;
 }
 
 /* #themaincontainer button, #themaincontainertutorial button{
@@ -214,10 +221,6 @@ audio{
     .vertical-line {
         margin-left: 0.425rem;
         border-left: solid #0fc473;
-    }
-    
-    #themaincontainer, #themaincontainertutorial{
-        height: 100vh;
     }
 }
 

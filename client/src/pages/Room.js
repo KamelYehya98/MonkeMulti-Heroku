@@ -88,12 +88,12 @@ function Room() {
 
     return (
         <Router>
-            <div className="d-flex justify-content-center align-items-center w-100" id="themaincontainer">
+            <div className="mt-2 d-flex justify-content-center align-items-center w-100" id="themaincontainer">
                 <button id="showHideChat" onClick={showHide}>
                     <img src={chatIcon} alt="chat" />
                 </button>
                 <ChatBox/>  
-                <div className="container w-100">
+                <div className="container w-100 main-container">
                     <form onSubmit={submitToDatabase} hidden>
                         <input type='submit' id='formBtn'/>
                     </form>

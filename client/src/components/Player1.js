@@ -22,7 +22,7 @@ return (
         </div>
     </div>
     <div className="col-md-6 col-12 col-sm-12 d-flex justify-content-start justify-content-md-start order-md-1 p-0 m-2 m-md-auto" id="assets-container-player1">
-        <div className="col-md-3 col-4 d-flex flex-column justify-content-center m-1 pt-4 order-md-2" id="player1buttons">
+        <div className="col-md-3 col-4 d-flex flex-column justify-content-center m-1 order-md-2" id="player1buttons">
             <button className="btn mt-2 btn-sm btn-primary" id="throwcardplayer1" onClick={CallButtons}>THROW CARD</button>
             <button className="btn mt-2 btn-sm btn-success" id="freethrowplayer1" onClick={CallButtons}>FREE THROW</button>
             <button className="btn mt-2 btn-sm btn-warning" id="monkeplayer1" onClick={CallButtons}>MONKE</button>

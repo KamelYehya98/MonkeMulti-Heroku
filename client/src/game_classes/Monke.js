@@ -67,7 +67,7 @@ class Monke {
         //console.log("entering the  er.....................");
         plyr2.DrawCard = null;
         this.Player2 = plyr2;
-        document.getElementById("player2pick").setAttribute("src", "");
+        document.getElementById("player2pick").setAttribute("src", Images["transparent"]);
     });
 
     this.socket.on('setGroundCard', (obj)=>{
@@ -920,7 +920,7 @@ class Monke {
 
     removeDrawImage() {
         let element = document.getElementById("player1pick");
-        element.setAttribute("src", "");
+        element.setAttribute("src", Images["transparent"]);
     }
 
     isOppDiv(element) {
