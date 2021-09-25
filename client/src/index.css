@@ -168,7 +168,6 @@ footer{
 
 footer p{
     color: white;
-    display: none;
 }
 
 footer p::before{

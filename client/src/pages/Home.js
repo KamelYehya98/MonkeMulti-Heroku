@@ -8,7 +8,7 @@ const Home = () => {
 
     return (
         <div className="container-fluid fluid-container">
-                <div className="row d-flex flex-no-wrap flex-md-row flex-column">
+                <div className="row d-flex flex-no-wrap flex-md-row flex-column justify-content-center align-items-center">
                     <div className="col-md-6 order-md-0 order-1 d-flex justify-content-center left-col">
                         <img src={logo} alt='Monkey Logo' onContextMenu="return false;"/>
                     </div>

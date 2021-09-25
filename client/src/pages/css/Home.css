@@ -18,26 +18,11 @@
 }
 
 .fluid-container{
-    padding: 0 5em;
-}
-
-.left-col{
-    padding-top: 5.5em;
+    padding-top: 3em;
 }
 
 .left-col img{
-    padding: 0 4em;
-    width: 100%;
-}
-
-.right-col{
-    padding-top: 4em;
-}
-
-.right-col-content{
-    padding-top: 5em;
-    padding-left: 5em;
-    padding-right: 4em;
+    width: 65%;
 }
 
 .right-col-content h1{
@@ -48,11 +33,10 @@
 
 .right-col-content p{
     font-size: 1.4em;
-    margin: 2em 0 1em;
+    margin: 1em 0 1em;
     color: white;
+    padding-right: 5em;
 }
-
-/* Change the headers in each of the log in sign up forget pages */
 
 .play-now-btn{
     display: inline-block;
