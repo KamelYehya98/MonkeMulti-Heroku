@@ -19,10 +19,21 @@ export default function JoinRoom() {
         let error_div = document.getElementById('error_div');
         //creating the error text
         let err_text = document.createElement('div');
-        err_text.classList.add('text-danger', 'text-center');
+        err_text.classList.add('text-light', 'text-center');
+        err_text.id = "errtxt";
         error_div.appendChild(err_text);
 
+        setTimeout(() => {
+            document.getElementById("errtxt").remove();
+            if(document.getElementById('errtxt') == null){
+                document.querySelector(".join-room-input").style.borderTopLeftRadius = "8px";
+                document.querySelector(".join-room-input").style.borderTopRightRadius = "8px";
+            }
+        }, 5000);
+
         if(room_id == null){
+            document.querySelector(".join-room-input").style.borderTopLeftRadius = "0";
+            document.querySelector(".join-room-input").style.borderTopRightRadius = "0";
             err_text.innerHTML = "Please enter a room ID";
             return;
         }else {
@@ -39,6 +50,8 @@ export default function JoinRoom() {
               const data = await res.json();
               if(data.error)
               {
+                document.querySelector(".join-room-input").style.borderTopLeftRadius = "0";
+                document.querySelector(".join-room-input").style.borderTopRightRadius = "0";
                 err_text.innerHTML = "Room doesn't exist";
                   return;
               }
@@ -60,7 +73,7 @@ export default function JoinRoom() {
     return (
         <div className="w-100">
             <div>
-                <div id='error_div' className="bg-light"></div>
+                <div id='error_div' className="bg-danger"></div>
                 <input type="text" id="room_id" name="room_id" className="join-room-input" placeholder="Enter Room ID"/>
             </div>
             <button onClick={joinRoom} className="join-room-button">Join Room</button>
