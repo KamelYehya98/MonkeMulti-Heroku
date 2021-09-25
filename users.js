@@ -19,25 +19,24 @@ const addUser =({ id, name, room }) => {
 
 const addToQ = ({ id, name, rating}) => {
     const user = {id, name, rating};
-    q.push(user);
     const match = matchPlayers(rating);
     if (match) {
-        moveToRoom ({id, room});
-        moveToRoom ({id: match.id, room})
+        return {id1: id, id2: match.id};
     }
-    return {user};
+    else {
+        q.push(user);
+    }
+    return {res: 'Not found'};
 }
 // when user in queue is matched
-const moveToRoom = ({id, room}) => {
-    const index = q.findIndex((use) => use.id === id);
+const delFromQ = (id) => {
+    const index = q.findIndex((user) => user.id === id);
     if (index !== -1) {
-        const found = q.splice(index, 1)[0];
-        const user = addUser({id, name: found.name, room});
-        return user;
+        return q.splice(index, 1)[0];
     }
 }
 
-const matchPlayers = (rating) => q.find((user) => user.rating >= rating);
+const matchPlayers = (rating) => q.find((user) => Math.abs(user.rating - rating) <= 100);
 
 const removeUser = (id) => {
     const index = users.findIndex((user) => user.id === id);
@@ -58,4 +57,4 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max) +1;
 }
 
-module.exports = {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt, addToQ, moveToRoom};
+module.exports = {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt, addToQ, delFromQ};

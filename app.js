@@ -5,8 +5,9 @@ const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
 const SERVER_URL = require('./client/src/constants');
 const app = express();
-const {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt, addToQ, moveToRoom} = require('./users');
+const {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt, addToQ, delFromQ} = require('./users');
 const Players = require('./models/Players');
+const Room = require ('./models/Room');
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () =>{
@@ -119,7 +120,12 @@ io.on("connection", socket => {
   socket.on('disconnect', (reason) => {
     const user = removeUser(socket.id);
 
-    if (user) console.log(user.name + " left the room with id: " + socket.id + "because of " + reason);
+    if (user) {
+      console.log(user.name + " left the room with id: " + socket.id + "because of " + reason);
+      if (playersInRoom(user.room) === 0 && user.room !== '5d6ru') {
+        Room.deleteRoom (user.room);
+      }
+    }
 
     //if (user) console.log(user.name + " left the chat with id: " + socket.id);
   });
@@ -166,12 +172,38 @@ io.on("connection", socket => {
       console.log(user.name + " left the room with id: " + socket.id);
       socket.leave(user.room);
       socket.to(user.room).emit('userDisconnected', (user.name));
+      if (playersInRoom(user.room) === 0 && user.room !== '5d6ru') {
+        Room.deleteRoom (user.room);
+      }
     }
   });
+  
+  socket.on('join queue', (roomID, callback) => {
+    let rating;
+    Players.getRating(socket.username).then(function (r) {
+      rating = r;
+    });
+    setTimeout(() => {
+      console.log(`${socket.username} entered the queue`);
+      console.log(rating);
+      console.log(`${socket.username}'s rating is ${rating}`);
+      const {id1, id2, res} = addToQ({id: socket.id, name: socket.username, rating: rating});
+      if (!res) {
+        delFromQ(id1);
+        delFromQ(id2);
+        callback(true);
+        io.to(id1).to(id2).emit('join from queue', roomID);
+        return;
+      }
+      callback(false);
+      }, 500);
+  });
 
-  socket.on('join queue', () => {
-    const plyr = Players.findOne({username: socket.username});
-    const user = addToQ(socket.id, socket.username, plyr.rating);
+  socket.on('exit queue', () => {
+    const user = delFromQ(socket.id);
+    if (user) {
+      console.log(`${user.name} left the queue`);
+    }
   });
 
   socket.on('removeClassFromAllElements', (str)=>{
@@ -218,7 +250,6 @@ io.on("connection", socket => {
     const user = getUser(socket.id);
     socket.to(user.room).emit('monke');
   });
-  
 });
 
 // database connection

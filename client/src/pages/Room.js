@@ -70,7 +70,7 @@ function Room() {
                     console.log("Executing EndTurn........");
                     Monke.endTurn();
                     break;
-            default: console.log("Aklna khara.............."); break;
+            default: console.log("Aklna  .............."); break;
         }
         
     }

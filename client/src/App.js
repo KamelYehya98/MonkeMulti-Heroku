@@ -11,7 +11,7 @@ import sok from "./services/socket";
 import HowToPlay from "./pages/HowToPlay";
 import About from "./pages/About";
 import Footer from "./components/Footer";
-import CreateRoom from "./pages/Lobby";
+import RandomLobby from "./pages/RandomLobby";
 
 function App() {
     let socket = null;
@@ -68,6 +68,7 @@ function App() {
                     <Route path='/howtoplay' exact component={HowToPlay} />
                     <Route path='/about' exact component={About} />
                     <Route path='/lobby/:roomID' exact  component={Lobby} />
+                    <Route path='/randomlobby' exact component={RandomLobby} />
                 </Switch>
             </main>
             <Footer/>
