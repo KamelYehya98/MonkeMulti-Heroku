@@ -10,30 +10,69 @@ import sok from "../services/socket";
 import ChatBox from '../components/ChatBox';
 import chatIcon from '../img/chat_icon_new.svg';
 import './css/Chat.css';
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+
+async function getLatestRoundWinner(){
+    let username1 = Monke.Username;
+    let username2 = Monke.OppUsername;
+
+    console.log("user1: " + username1);
+    console.log("user2: " + username2);
+    try{
+        console.log('Reacccccccccccccccched getting latest round winner');
+        const res = await fetch(`${SERVER_URL}/getlatestroundresult`, {
+            method: 'POST',
+            body: JSON.stringify({ user1: username1, user2: username2}),
+            headers: { 'Content-Type' : 'application/json' },
+            credentials: 'include'
+        });
+        const data = await res.json();
+        console.log("DAATTTTTAAAAAAAAA FRROOM LAST ROOOOOUND ISSSSS: " + data);
+        if(data.res == username1){
+            Monke.Player1.NbCardsView = 3;
+            Monke.Player2.NbCardsView = 1;
+        }else if(data.res == username2){
+            Monke.Player1.NbCardsView = 1;
+            Monke.Player2.NbCardsView = 3;
+        }else{
+            Monke.Player1.NbCardsView = 2;
+            Monke.Player2.NbCardsView = 2;
+        }
+        console.log(`${username1} cards to view: ${Monke.Player1.NbCardsView}`);
+        console.log(`${username2} cards to view: ${Monke.Player2.NbCardsView}`);
+        
+    }catch(err){
+        console.log(err);
+    }
+}
+
 function Room() {
+
     const socket = sok.getSocket();
     const history = useHistory();
     let chatDisabled = true;
-
+    const routerToRoom = () => {
+        history.push('/welcome');
+    }
     async function submitToDatabase(e){
-        // e.preventDefault();
-        // let user1 = 'taftaf', user2 = 'hasagi';
-        // let score1 = Monke.Player1.calculateScore();
-        // let score2 = Monke.Player2.calculateScore();
-        // try{
-        //     console.log('Reacccccccccccccccched submitting scores to db');
-        //       const res = await fetch(`${SERVER_URL}/creatematchhistory`, {
-        //           method: 'POST',
-        //           body: JSON.stringify({ user1, user2, score1, score2 }),
-        //           headers: { 'Content-Type' : 'application/json' },
-        //           credentials: 'include'
-        //       });          
-        //   }catch(err){
-        //       console.log(err);
-        //   }
+        e.preventDefault();
+        let score1 = Monke.calculateScore();
+        let score2 = Monke.calculateScoreOpp();
+        let user1 = Monke.Username;
+        let user2 = Monke.OppUsername;
+        try{
+            console.log('Reacccccccccccccccched submitting scores to db');
+            const res = await fetch(`${SERVER_URL}/creatematchhistory`, {
+                method: 'POST',
+                body: JSON.stringify({ user1, user2, score1, score2 }),
+                headers: { 'Content-Type' : 'application/json' },
+                credentials: 'include'
+            });     
+            routerToRoom();
+            } catch(err){
+              console.log(err);
+        }
     }
 
     const unlisten = history.listen (location => {
@@ -55,7 +94,7 @@ function Room() {
             return;
         if(Monke.Player1.Turn && id !== '1')
             return;
-        if(Monke.Player1.Turn==false && e.target.getAttribute("id")[0] == 'f' && id !== "1")
+        if(Monke.Player1.Turn == false && e.target.getAttribute("id")[0] == 'f' && id !== "1")
             return;
 
         console.log("Entered Call Buttons.......");
@@ -70,7 +109,7 @@ function Room() {
                     console.log("Executing EndTurn........");
                     Monke.endTurn();
                     break;
-            default: console.log("Aklna  .............."); break;
+            default: console.log("Button not responding.............."); break;
         }
         
     }
@@ -85,6 +124,7 @@ function Room() {
             document.getElementById("chatBox").classList.remove("d-none");
         }
     }
+
 
     return (
         <Router>
@@ -125,6 +165,9 @@ function Room() {
             </div>
         </Router>
     );
+
+
 }
 
+export {getLatestRoundWinner};
 export default Room;

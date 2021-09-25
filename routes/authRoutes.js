@@ -17,5 +17,10 @@ router.post('/checkuser', authController.checkUser);
 
 router.post('/getstats', playerController.getStats);
 router.post('/getmatchhistory', playerController.getMatchHistory);
+router.post('/getgamehistory', playerController.getGameHistory);
 router.post('/creatematchhistory', playerController.createMatchHistory);
+router.post('/getlatestroundresult', playerController.getLatestRoundResult);
+router.post('/getusername', playerController.getUsername);
+
+
 module.exports = router;

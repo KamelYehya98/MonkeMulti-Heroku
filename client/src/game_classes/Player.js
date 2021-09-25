@@ -11,21 +11,12 @@ class Player {
         this.ThrewCard = false;
         this.CantDoAnything = false;
         this.SwapCard = null;
-        this.ViewedCards = 0;
         this.BlockAction = false;
-        // this.NbCardsView = 2;
+
+        this.NbCardsView = 2;
+        this.ViewedCards = 0;
         console.log("NEW PLAYER HAS BEEN CREATED.............................");
-
-
     }
-
-
-
-
 }
-
-// didViewCards () {
-//     return (this.ViewdCards >= this.NbCardsView);
-// };
 
 export default Player;

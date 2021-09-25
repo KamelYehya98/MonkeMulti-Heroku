@@ -5,6 +5,7 @@ import CreateRoom from '../components/CreateRoom';
 import JoinRoom from '../components/JoinRoom';
 import PlayerStats from '../components/PlayerStats';
 import MatchHistory from '../components/MatchHistory';
+import GameHistory from '../components/GameHistory';
 import RandomMatch from '../components/RandomMatch';
 
 const Welcome = ({username}) => {
@@ -21,6 +22,7 @@ const Welcome = ({username}) => {
                 </div>
                 <PlayerStats username={username} />
                 {username!=null && (<MatchHistory username={username}/>)}
+                {username!=null && (<GameHistory username={username}/>)}
             </div>
         </div>
     )

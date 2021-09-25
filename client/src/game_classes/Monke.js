@@ -3,6 +3,9 @@ import Player from './Player';
 import Images from './Images';
 import sok from "../services/socket";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SERVER_URL from "../constants";
+import {getLatestRoundWinner} from "../pages/Room";
+// import MatchHistory from '../../../models/MatchHistory';
 
 class Monke {
     constructor() {
@@ -16,15 +19,27 @@ class Monke {
     this.GroundCard = null;
     this.NbCardsPickedSeven = 0;
     this.MonkeEffect = false;
+    this.Username = "";
+    this.OppUsername = "";
 
-    this.socket.on('start game', () => {
-        console.log("Game started");
-        // document.getElementById("assets-container-player2").parentNode.classList.remove("d-none");
-        // document.getElementById("assets-container-player2").parentNode.classList.add("d-flex");
-        // document.getElementById("assets-container-player2").parentNode.classList.add("d-md-flex");
+    this.socket.on('sendUsername', (username) => {
+        this.OppUsername = username;    
+        console.log("USERRRRRRRRNAMEEE: " + this.Username);
+        console.log("OPPPPPPP USERRRRRRRRNAMMME: " + this.OppUsername);    
+    });
+    this.socket.on('setNbCardsView', (nb) => {
+        this.Player1.NbCardsView = nb;
+        this.Player2.NbCardsView = 4 - nb;
 
-        // document.getElementById("wait").classList.add("d-none");
-        //console.log("Game started");
+        console.log(`${this.Username} cards to view is: ${this.Player1.NbCardsView}`);
+        console.log(`${this.OppUsername} cards to view is: ${this.Player2.NbCardsView}`);
+
+        document.getElementById("specialtextplayer1").innerHTML = this.Player1.NbCardsView;
+        document.getElementById("specialtextplayer2").innerHTML = this.Player2.NbCardsView;
+    });
+    this.socket.on('start game', (username) => {
+        this.Username = username;        
+        this.socket.emit('sendUsername', (username));
         this.startGame();
     });
     this.socket.on('first', () => {
@@ -145,6 +160,7 @@ class Monke {
 
     this.socket.on('setDeck', (deck)=>{
         this.Deck = deck;
+        getLatestRoundWinner();
     });
     this.socket.on('setOppImage', ()=>{
         this.showCards();
@@ -184,9 +200,20 @@ class Monke {
             this.Player1.BlockAction = false;
         }, 3000);
     });
-
-
 }
+
+    async getUsername(){
+            console.log('Reacccccccccccccccched getting username');
+            const id = this.socket.id;
+            const res = await fetch(`${SERVER_URL}/getusername`, {
+                method: 'POST',
+                body: JSON.stringify( {id} ),
+                headers: { 'Content-Type' : 'application/json' },
+                credentials: 'include'
+            });
+            const data = await res.json();
+            return data.id;
+    }
 
     startGame() {
         if (this.Started == false) {
@@ -514,10 +541,6 @@ class Monke {
         this.MonkeEffect = false;
     }
     
-    calculateResult () {
-        setTimeout(this.showCards(), 2000);
-        document.getElementById('formBtn').click();
-    }
     
     async disableSevenEffects () {
         this.Player1.SwapCard = null;
@@ -547,44 +570,44 @@ class Monke {
     async playerAction (element) {
         if(this.Player1.BlockAction === false)
         {
+            if(!this.didViewCards())
+            {
+                if(this.isPlayerDiv(element))
+                {
+                    element.classList.add("flip-image");
+                    let i = this.getIndexValue(element);
+                    setTimeout(()=>{
+                        element.setAttribute("src", Images[''+this.Player1.Cards[i].Value + this.Player1.Cards[i].Suit]);
+                    }, 100);
+                    setTimeout(()=>{
+                        ////console.log("OK babe");
+                        element.classList.remove("flip-image");
+                        element.classList.add("unflip-image");
+                        element.setAttribute("src", Images['backcard']);
+                    }, 2000);
+                    setTimeout(()=>{
+                        element.classList.remove("unflip-image");
+                    }, 3000);
+                    this.Player1.ViewedCards++;
+                    console.log(this.Player1.ViewedCards);
 
-            
-            // if(!this.Player1.didViewCards())
-            // {
-            // if(this.Player1.isPlayerDiv(element))
-            // {
-            //     element.classList.add("flip-image");
-            //     let i = this.getIndexValue(element);
-            //     setTimeout(function(){
-            //         element.setAttribute("src", Images[''+this.Player1.Cards[i].Value + this.Player1.Cards[i].Suit]);
-            //     }, 100);
-            //     setTimeout(function(){
-            //         ////console.log("OK babe");
-            //         element.classList.remove("flip-image");
-            //         element.classList.add("unflip-image");
-            //         element.setAttribute("src", Images['backcard']);
-            //     }, 2000);
-            //     setTimeout(function(){
-            //             element.classList.remove("unflip-image");
-            //         }, 3000);
-            //         this.Player1.ViewedCards++;
-            //         //INSERT CODE TO DECIDE WHO PLAYS FIRST.
-            //         // if(this.Player1.didViewCards())
-            //         // {
-            //         //     if(NbViewedCardsPlayer <= 2)
-            //         //         this.Player1.playerTurn();
-            //         //     else{
-            //         //         bot.BotTurn();
-            //         //         document.getElementById("monke").disabled = true;
-            //         //         document.getElementById("throwcard").disabled = true;
-            //         //         document.getElementById("endturn").disabled = true;
-            //         //     }
-            //         // }
-            //         this.Player1.playerTurn();
-            //         return;
-            // }
-            // return;
-            // }
+                    //INSERT CODE TO DECIDE WHO PLAYS FIRST.
+                    // if(this.Player1.didViewCards())
+                    // {
+                    //     if(NbViewedCardsPlayer <= 2)
+                    //         this.Player1.playerTurn();
+                    //     else{
+                    //         bot.BotTurn();
+                    //         document.getElementById("monke").disabled = true;
+                    //         document.getElementById("throwcard").disabled = true;
+                    //         document.getElementById("endturn").disabled = true;
+                    //     }
+                    // }
+                    //this.Player1.playerTurn();
+                        return;
+                }
+            return;
+            }
             if (!this.isBurntImage(element)) {
                 if (this.Player1.Special && this.Player1.SpecialEnabled && this.Player1.Turn && this.cardsLeft() != 0 && !this.Player1.CantDoAnything) {
                     if (this.cardValue(this.Player1.DrawCard) == 6) {
@@ -880,7 +903,9 @@ class Monke {
 
 
 
-
+    didViewCards () {
+        return (this.Player1.ViewedCards >= this.Player1.NbCardsView);
+    }
     
     isPlayerDiv (element) {
         return element.getAttribute("player") == 1;
@@ -1048,7 +1073,26 @@ class Monke {
         }
     }
 
-    
+    calculateResult(){
+        this.Player1.BlockAction = true;
+        setTimeout(this.revealAllCards, 500);
+        setTimeout(()=>{
+            if(this.Player1.Monkey){
+                document.getElementById("formBtn").click();
+            }
+        }, 4000);
+    }
+
+    revealAllCards(){
+        for(var i=0; i<this.Player1.Cards.length; i++){
+            if(this.isActive(this.Player1.Cards[i]))
+                this.getElement("image-player1", i).setAttribute('src', Images[""+this.Player1.Cards[i].Value+this.Player1.Cards[i].Suit]);
+        }
+        for(var i=0; i<this.Player2.Cards.length; i++){
+            if(this.isActive(this.Player2.Cards[i]))
+                this.getElement("image-player2", i).setAttribute('src', Images[""+this.Player2.Cards[i].Value+this.Player2.Cards[i].Suit]);
+        }
+    }
 
     burn(element, id) {
         
@@ -1243,7 +1287,60 @@ class Monke {
         return sum;
     }
 
-    
+    calculateScoreOpp() {
+        let sum = 0;
+        for (var i = 0; i < this.Player2.Cards.length; i++)
+            sum += this.cardValue(this.Player2.Cards[i]);
+        return sum;
+    }
+
+    async getNbCardsToView(){
+        // const user1 = this.Username;
+        // const user2 = this.OppUsername;
+        // try{
+        //     await MatchHistory.find({            
+        //         $or:[
+        //             {user1, user2},
+        //             {user1: user2, user2: user1}
+        //         ]}, (err, matches) =>{
+            
+        //         console.log("MAAAAAAAAAAAAAAAAAAAAAAAATCHES AREEEEEEEEEE: " + matches);
+        //         if(matches.length == 0){
+        //             return "Empty";
+        //         }else{
+        //             if(matches[0].status1 == "Win")
+        //                 return matches[0].user1;
+        //             else if(matches[0].status1 == "Lose")
+        //                 return matches[0].user2;
+        //             else 
+        //                 return "Draw"
+        //         }
+        //     }).sort({matchdate:-1});
+        // }catch(error){
+        //     console.log(error);
+        // }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     isActive(card) {
         if (card.Value === 0)
             return false;

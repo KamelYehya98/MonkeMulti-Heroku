@@ -60,9 +60,23 @@ io.on("connection", socket => {
     if (playersInRoom(room) === 2) {
       console.log("Game starting");
       io.to(firstID).emit('goToRoom');
-      io.to(room).emit('start game');
+      const users = getUsersInRoom(room);
+      io.to(users[0].id).emit('start game', (users[0].name));
+      io.to(users[1].id).emit('start game', (users[1].name));
     }
   });
+
+  socket.on("sendUsername", (username)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('sendUsername', (username));
+  });
+
+  socket.on("setNbCardsView", (nb)=>{
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('setNbCardsView', (nb));
+  });
+
+  
   //Passing turns
   socket.on("pass turn", (plyr2) => {
     const user = getUser(socket.id);

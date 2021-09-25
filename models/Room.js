@@ -22,7 +22,6 @@ roomSchema.post('save', function(doc, next){
 roomSchema.statics.createRoom = async function(){
     try{
         let code = '', roomId = '';
-
         do{
             code = '';
             var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -55,7 +54,6 @@ roomSchema.statics.joinRoom = async function(id){
 roomSchema.statics.deleteRoom = async function(roomID){
     try{
         await this.findOneAndRemove({code: roomID});
-        console.log(`Deleted room ${roomID}`);
     }catch(error){
         console.log(error);
     }

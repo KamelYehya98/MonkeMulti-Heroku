@@ -47,6 +47,7 @@ MatchHistorySchema.statics.createMatchHistory = async function(user1, user2, sco
         status1 = "Win"; status2 = "Lose";
     }else{
         status1 = status2 = "Draw";
+    
     }
     try{
         await this.create({user1, user2, score1, score2, status1, status2});
@@ -75,12 +76,12 @@ MatchHistorySchema.statics.createMatchHistory = async function(user1, user2, sco
             if(matches[i].user1 == user1){
                 if(matches[i].status1 == "Win")
                     player1wins++;
-                else
+                else if(matches[i].status1 == "Lose")
                     player2wins++;
             }else{
                 if(matches[i].status2 == "Win")
                     player1wins++;
-                else
+                else if(matches[i].status2 == "Lose")
                     player2wins++;
             }
         }
