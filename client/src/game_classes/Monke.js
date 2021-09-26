@@ -1039,7 +1039,8 @@ class Monke {
         playerdiv.setAttribute("src", Images["" + this.Player1.DrawCard.Value + this.Player1.DrawCard.Suit]);
         this.flipButtons(true);
         if (this.cardsLeft() == 0){
-            //console.log("Nb of cards is 0");
+            this.monke();
+            this.socket.emit('monke');
             return;
         }
         if (this.cardValue(this.Player1.DrawCard) >= 6 && this.cardValue(this.Player1.DrawCard) <= 8) {
@@ -1065,10 +1066,6 @@ class Monke {
             this.monke();
             this.socket.emit('monke');
         }
-        // if (game.NbViewedCardsplayer1 != game.viewedCardsplayer1) {
-        //     window.alert("SELECT YOUR GODDAMN CARDS MAN.....TF");
-        //     return;
-        // }
         let element = document.getElementById("player1pick");
         this.flipButtons(false);
         document.getElementById("endturnplayer1").disabled = true;
