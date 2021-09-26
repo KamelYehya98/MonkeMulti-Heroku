@@ -556,7 +556,10 @@ class Monke {
     monkeyEnable () {
         this.MonkeEffect = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
         document.getElementById("monkesound").play();
+=======
+>>>>>>> parent of 5e6b969 (Disappearing Ground Card)
 =======
 >>>>>>> parent of 5e6b969 (Disappearing Ground Card)
         this.MonkeDivContent = document.getElementById("grounddisappear").classList.add("disappear");
