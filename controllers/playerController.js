@@ -70,7 +70,9 @@ module.exports.getGameHistory = async (req, res) => {
 module.exports.createMatchHistory = async (req, res) => {
     const { user1, user2, score1, score2 } = req.body;
     try{
-        MatchHistory.createMatchHistory(user1, user2, score1, score2);
+        await MatchHistory.createMatchHistory(user1, user2, score1, score2);
+        console.log("Wsolet?");
+        return;
     }catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});
@@ -119,16 +121,18 @@ module.exports.getUsername = (req, res) => {
     }
 }
 module.exports.update_scores_post = async(req, res) => {
-    const username1 = req.body.u1;
-    const username2 = req.body.u2;
-    const player1 = await Player.findOne({username1});
-    const player2 = await Player.findOne({username2});
-    const newScore1 = req.body.score1;
-    const newScore2 = req.body.score2;
+    const {user1, user2, newScore1, newScore2} = req.body;
+    const player1 = await Player.findOne({user1});
+    const player2 = await Player.findOne({user2});
     if (player1 && player2) {
         player1.rating = newScore1;
         player2.rating = newScore2;
-        player1.save();
-        player2.save();
+        player1.save().then((saveduser)=>{
+            console.log(saveduser);
+            res.json({ message: "Player 1's stats updated" });
+        });;
+        player2.save().then((saveduser)=>{
+            console.log(saveduser);
+        });;
     }
 }

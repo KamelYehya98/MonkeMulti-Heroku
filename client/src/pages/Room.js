@@ -67,16 +67,19 @@ function Room() {
         if (score1 === score2) winner = 0;
         try{
             console.log('Reacccccccccccccccched submitting scores to db');
-            const res = await fetch(`${SERVER_URL}/creatematchhistory`, {
-                method: 'POST',
-                body: JSON.stringify({ user1, user2, score1, score2 }),
-                headers: { 'Content-Type' : 'application/json' },
-                credentials: 'include'
-            });     
-            
-            } catch(err){
-              console.log(err);
+              const res = await fetch(`${SERVER_URL}/creatematchhistory`, {
+                  method: 'POST',
+                  body: JSON.stringify({ user1, user2, score1, score2 }),
+                  headers: { 'Content-Type' : 'application/json' },
+                  credentials: 'include'
+              });
+            const data = res.json();
+            if (data.error) console.log(data.error);
+            console.log("Stuck in the body mayhaps");
+        }catch(err){
+            console.log(err);
         }
+        console.log("Done with create match");
 
         //Fetching stats for Player 1
         try {
@@ -92,6 +95,7 @@ function Room() {
         }catch(error) {
             console.log(error);
         }
+        console.log(rating1);
         
         //Fetching stats for PLayer 2
         try {
@@ -110,7 +114,9 @@ function Room() {
 
         //Calculating new rating for Player 1 and Player 2
         const{newScore1, newScore2} = calcRate(rating1, rating2, games1, games2, winner);
-
+        console.log("New Score 1: ");
+        console.log(newScore1);
+        console.log(newScore2);
         //Updating Players' rating
         try {
             const res = await fetch(`${SERVER_URL}/updaterating`, {
