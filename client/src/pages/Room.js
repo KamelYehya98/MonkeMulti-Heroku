@@ -213,11 +213,12 @@ function Room() {
         if (!chatDisabled) {
             chatDisabled = true;
             document.getElementById("chatBox").classList.add("d-none");
+
+        }
+        else {
             if(document.getElementById("showHideChat").classList.contains("message-received")){
                 document.getElementById("showHideChat").classList.remove("message-received");
             }
-        }
-        else {
             chatDisabled = false;
             document.getElementById("chatBox").classList.remove("d-none");
         }

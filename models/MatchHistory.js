@@ -57,7 +57,7 @@ MatchHistorySchema.statics.createMatchHistory = async function(user1, user2, sco
         let roundsPlayed = player1.roundsPlayed + 1;
         await Players.findOneAndUpdate({"username": user1}, {roundsPlayed});
 
-        //Update Player 1 stats
+        //Update Player 2 stats
         let player2 = await Players.findOne({username: user2});
         roundsPlayed = player2.roundsPlayed + 1;
         await Players.findOneAndUpdate({"username": user2}, {roundsPlayed});

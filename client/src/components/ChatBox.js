@@ -6,6 +6,9 @@ export default function ChatBox(){
     const socket = sok.getSocket();
 
     socket.on('message', (mesObj) => {
+        if(document.getElementById('chatBox').classList.contains('d-none')){
+            document.getElementById('showHideChat').classList.add('message-received');
+        }
         var list = document.getElementById("messageList");
         var entryText = document.createElement("p");
         //get user that sent it using mesObj.user

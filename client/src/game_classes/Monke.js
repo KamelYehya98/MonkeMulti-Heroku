@@ -231,7 +231,6 @@ class Monke {
         }, 1000);
     });
 
-
     this.socket.on('calculateResults', ()=>{
         this.Player1.BlockAction = true;
         this.revealAllCards();
@@ -649,10 +648,10 @@ class Monke {
             }
             if (!this.isBurntImage(element)) {
                 if (this.Player1.Special && this.Player1.SpecialEnabled && this.Player1.Turn && this.cardsLeft() != 0 && !this.Player1.CantDoAnything) {
-                    this.socket.emit('oppSelectCard', (this.getIndexValue(element)));
                     if (this.cardValue(this.Player1.DrawCard) == 6) {
                         if (this.isPlayerDiv(element)) {
                             let card = this.Player1.Cards[this.getIndexValue(element)];
+                            //this.socket.emit('oppSelectCard', (this.getIndexValue(element)));
                             element.setAttribute("src", Images["" + card.Value + card.Suit]);
                             this.flipCardBack(element, 6);
                             this.socket.emit('flipCardBackOpponent', {el:element.getAttribute("index"), index: 6});
@@ -795,6 +794,7 @@ class Monke {
                     }
                     else if (this.Player1.ThrowCard && this.Player1.Turn && !this.Player1.CantDoAnything && this.isPlayerDiv(element)) {
                         if (this.cardValue(pickedcard) == this.cardValue(this.Player1.DrawCard)) {
+                            this.socket.emit('oppSelectCard', (this.getIndexValue(element)));
                             this.setGroundCard(pickedcard);
                             this.socket.emit('setGroundCard', {card:pickedcard, plyr:this.Player1});
                             this.removeCard(this.getIndexValue(element), 1);
@@ -818,6 +818,7 @@ class Monke {
                             return;
                         } else {
                             this.burn(element, 1);
+                            this.socket.emit('oppSelectCard', (this.getIndexValue(element)));
                             console.trace();
                             this.socket.emit('burnImage', (element.getAttribute("index")));
 
@@ -828,6 +829,7 @@ class Monke {
                         }
                     } else if (this.Player1.FreeThrow && this.isPlayerDiv(element)) {
                         if (this.cardValue(pickedcard) == this.cardValue(this.GroundCard)) {
+                            this.socket.emit('oppSelectCard', (this.getIndexValue(element)));
                             this.setGroundCard(pickedcard);
                             this.socket.emit('setGroundCard', {card:pickedcard, plyr:this.Player1});
                             this.removeCard(index, 1);
@@ -852,6 +854,7 @@ class Monke {
                             return;
                         } else {
                             this.burn(element, 1);
+                            this.socket.emit('oppSelectCard', (this.getIndexValue(element)));
                             console.trace();
                             this.socket.emit('burnImage', (element.getAttribute("index")));
                                                         
@@ -863,6 +866,7 @@ class Monke {
                     } else if (!this.Player1.FreeThrow && !this.Player1.ThrowCards && this.Player1.Turn && !this.Player1.CantDoAnything && this.isPlayerDiv(element)) {
                         this.setGroundCard(pickedcard);
                         this.socket.emit('setGroundCard', {card:pickedcard, plyr:this.Player1});
+                        this.socket.emit('oppSelectCard', (this.getIndexValue(element)));
                         if (this.cardValue(this.Player1.DrawCard) == this.cardValue(pickedcard)) {
                             this.removeCard(element.getAttribute("index"), 1);
                             this.socket.emit('removeCard', {index:element.getAttribute("index"), id:2, plyr:this.Player1});
