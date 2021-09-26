@@ -11,6 +11,7 @@ import ChatBox from '../components/ChatBox';
 import chatIcon from '../img/chat_icon_new.svg';
 import './css/Chat.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import monkeAudio from '../audio/MONKE.mp3';
 
 
 async function getLatestRoundWinner(){
