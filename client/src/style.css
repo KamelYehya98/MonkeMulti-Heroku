@@ -236,14 +236,14 @@ audio{
     }
 
     #themaincontainer button, #themaincontainertutorial button{
-        font-size: 20px;
+        font-size: 13px;
     }
     
 }
 
 @media only screen and (min-width: 1201px) and (max-width: 1399px) {
     #monkeydiv, #monkeydivtutorial{
-        font-size: 15em;
+        font-size: 13em;
     }
 }
 
@@ -270,6 +270,7 @@ audio{
 @media only screen and (min-width: 0px) and (max-width: 767px) {    
     #monkeydiv, #monkeydivtutorial{
         font-size: 5em;
+        height: auto;
     }
 }
 

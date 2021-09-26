@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const Footer = () => {
 
     return (
-        <footer className="footer">
+        <footer className="footer d-none">
             <p>Copyright &copy; MONKE - 2021</p>
         </footer>
     )

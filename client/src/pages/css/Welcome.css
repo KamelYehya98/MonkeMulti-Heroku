@@ -139,3 +139,18 @@
         max-width: 1000px;
     }
 }
+
+@media only screen and (max-width: 768px) {
+    .welcome-container{
+        width: 100%;
+    }
+
+    .welcome-container td{
+        display: block;
+        width: 100%;
+    }
+
+    .welcome-container tr{
+        display: block;
+    }
+}

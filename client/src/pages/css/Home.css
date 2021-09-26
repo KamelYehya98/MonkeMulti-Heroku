@@ -18,7 +18,7 @@
 }
 
 .fluid-container{
-    padding-top: 3em;
+    padding-top: 5em;
 }
 
 .left-col img{
@@ -114,7 +114,8 @@
     .left-col img{
         position: static;
         height: auto;
-        width: 100%;
+        width: 70%;
+        margin-top: 5rem;
     }
 
     .right-col{
@@ -131,10 +132,11 @@
 
     .learn-to-play{
         margin-top: 1em;
-        margin-left: 0em;
+        margin-left: 1rem;
     }
 
     .right-col-content{
         margin-top: 0;
+        padding-right: 0;
     }
 }
