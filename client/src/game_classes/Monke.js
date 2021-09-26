@@ -555,7 +555,10 @@ class Monke {
     
     monkeyEnable () {
         this.MonkeEffect = true;
+<<<<<<< HEAD
         document.getElementById("monkesound").play();
+=======
+>>>>>>> parent of 5e6b969 (Disappearing Ground Card)
         this.MonkeDivContent = document.getElementById("grounddisappear").classList.add("disappear");
         let el = document.querySelector(".adddisablemonkey");
         let monk = document.querySelector(".disableformonkey");
