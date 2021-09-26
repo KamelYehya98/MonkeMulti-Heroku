@@ -27,7 +27,7 @@ export default function GameHistory({ username }) {
         row.appendChild(col);
 
         col = document.createElement('td');
-        col.innerHTML = "" + matchdate;
+        col.innerHTML = "" + new Date(Date.parse(matchdate)).toLocaleString();
         row.appendChild(col);
 
 

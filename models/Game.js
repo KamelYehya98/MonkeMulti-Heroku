@@ -35,6 +35,7 @@ GameSchema.post('save', function(doc, next){
 //Static method to log in the user
 GameSchema.statics.createGameHistory = async function(user1, user2, status1, status2, nbrounds){
     try{
+        console.log("Entered creating game history");
         await this.create({user1, user2, status1, status2, nbrounds});
     }catch(err){
         console.log(err);

@@ -64,7 +64,7 @@ MatchHistorySchema.statics.createMatchHistory = async function(user1, user2, sco
 
         //Check if there is a winner of the game
         let player1wins = 0, player2wins = 0;
-        let matches = await MatchHistory.find({
+        let matches = await this.find({
             $or:[
                 {user1, user2},
                 {user1: user2, user2: user1}
@@ -88,7 +88,7 @@ MatchHistorySchema.statics.createMatchHistory = async function(user1, user2, sco
         console.log(user1 + " wins: " + player1wins);
         console.log(user2 + " wins: " + player2wins);
         if(player1wins >= 3 || player2wins >=3 || matches.length == 5){
-            await MatchHistory.deleteMany({
+            await this.deleteMany({
                 $or:[
                     {user1, user2},
                     {user1: user2, user2: user1}
@@ -104,8 +104,9 @@ MatchHistorySchema.statics.createMatchHistory = async function(user1, user2, sco
                 status1 = "Draw";
                 status2 = "Draw";
             }
-            await Games.createGameHistory(user1, user2, status1, status2, matches.length);
+            Games.createGameHistory(user1, user2, status1, status2, matches.length);
         }
+        console.log("Done with MatchHistory.js");
     }catch(err){
         console.log(err);
     }
