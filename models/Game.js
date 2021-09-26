@@ -24,7 +24,7 @@ const GameSchema = new mongoose.Schema({
     },
     gamedate: {
         type: Date,
-        default: Date.now
+        required: true
     }
 });
 
@@ -38,20 +38,17 @@ GameSchema.post('save', function(doc, next){
 GameSchema.statics.createGameHistory = async function(user1, user2, status1, status2, nbrounds){
     try{
 
-        await this.create({user1, user2, nbrounds, status1, status2});
+        let dte = Date.now();
+        await this.create({user1, user2, nbrounds, status1, status2, gamedate: dte});
 
         const player1 = await Players.findOne({username: user1});
         let gamesPlayed1 = player1.gamesPlayed + 1;
-        let gamesWon1 = 0;
-        if(status1 == "Win")
-            gamesWon1 = player1.gamesWon + 1;
+        let gamesWon1 = status1 == "Win" ? player1.gamesWon + 1 : player1.gamesWon;
         let winrate1 = (gamesWon1 / gamesPlayed1) * 100;
 
         const player2 = await Players.findOne({username: user2});
         let gamesPlayed2 = player2.gamesPlayed + 1;
-        let gamesWon2 = 0;
-        if(status2 == "Win")
-            gamesWon2 = player2.gamesWon + 1;
+        let gamesWon2 = status2 == "Win" ? player2.gamesWon + 1 : player2.gamesWon;
         let winrate2 = (gamesWon2 / gamesPlayed2) * 100;
 
         await Players.findOneAndUpdate({"username": user1}, {gamesPlayed: gamesPlayed1, gamesWon: gamesWon1, winrate: winrate1});
