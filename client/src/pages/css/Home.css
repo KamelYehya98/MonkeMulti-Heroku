@@ -124,6 +124,7 @@
 
     .right-col p{
         margin: 1em 0;
+        padding-right: 0;
     }
 
     .play-now-btn{

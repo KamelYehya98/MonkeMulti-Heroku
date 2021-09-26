@@ -272,6 +272,10 @@ audio{
         font-size: 5em;
         height: auto;
     }
+
+    #themaincontainer, #themaincontainertutorial{
+        height: auto;
+    }
 }
 
 /* ---------------
