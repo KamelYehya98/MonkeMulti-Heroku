@@ -183,10 +183,6 @@ audio{
     font-family: "Luckiest Guy", cursive;
 }
 
-#monkeydiv span, #monkeydivtutorial span{
-    color: yellow !important;
-}
-
 #monkeydivtutorial, #monkeydiv{
     opacity: 1;
     position: absolute;
