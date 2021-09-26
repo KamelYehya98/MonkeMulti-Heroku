@@ -11,6 +11,7 @@ import ChatBox from '../components/ChatBox';
 import chatIcon from '../img/chat_icon_new.svg';
 import './css/Chat.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import monkeAudio from '../audio/MONKE.mp3';
 
 
 async function getLatestRoundWinner(){
@@ -132,6 +133,7 @@ function Room() {
     return (
         <Router>
             <div className="mt-2 d-flex justify-content-center align-items-center w-100" id="themaincontainer">
+                <audio id="monkesound" src={monkeAudio}></audio>
                 <button id="showHideChat" onClick={showHide}>
                     <img src={chatIcon} alt="chat" />
                 </button>

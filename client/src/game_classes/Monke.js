@@ -560,7 +560,8 @@ class Monke {
     
     monkeyEnable () {
         this.MonkeEffect = true;
-        // this.MonkeDivContent = document.getElementById("grounddisappear").classList.add("disappear");
+        document.getElementById("monkesound").play();
+        this.MonkeDivContent = document.getElementById("grounddisappear").classList.add("disappear");
         let el = document.querySelector(".adddisablemonkey");
         let monk = document.querySelector(".disableformonkey");
     
@@ -574,7 +575,7 @@ class Monke {
     monkeyDisable  () {
         let monk = document.querySelector(".adddisablemonkey");
         let el = document.querySelector(".disableformonkey");
-        // document.getElementById("grounddisappear").classList.remove("disappear");
+        document.getElementById("grounddisappear").classList.remove("disappear");
     
         this.removeClassFromAllElements("disableformonkey");
         this.removeClassFromAllElements("adddisablemonkey");
@@ -1106,7 +1107,6 @@ class Monke {
             this.Player1.BlockAction = true;
             document.getElementById("monkeplayer1").disabled = true;
             this.Player1.Monkey = true;
-            //document.getElementById("monkeyaudio").play();
             this.monkeyOpacityEnable();
             this.monkeyEnable();
             setTimeout(()=>{
