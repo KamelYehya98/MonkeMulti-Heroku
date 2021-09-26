@@ -17,10 +17,10 @@ module.exports.getStats = async (req, res) => {
             return;
         }
         res.json({
-            gamesPlayed: '-',
-            winrate: '-',
-            roundsPlayed: '-',
-            rating: '-'
+            gamesPlayed: 0,
+            winrate: 0,
+            roundsPlayed: 0,
+            rating: 0
         });
     }catch(error){
         console.log(error);
@@ -57,7 +57,6 @@ module.exports.getGameHistory = async (req, res) => {
                 return;
             }
             else{
-                console.log(`GAMESSSSSS AREEEEEEEEEEEE: ${games}`);
                 res.json({games});
             }
         });
@@ -118,21 +117,5 @@ module.exports.getUsername = (req, res) => {
     catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});
-    }
-}
-module.exports.update_scores_post = async(req, res) => {
-    const {user1, user2, newScore1, newScore2} = req.body;
-    const player1 = await Player.findOne({user1});
-    const player2 = await Player.findOne({user2});
-    if (player1 && player2) {
-        player1.rating = newScore1;
-        player2.rating = newScore2;
-        player1.save().then((saveduser)=>{
-            console.log(saveduser);
-            res.json({ message: "Player 1's stats updated" });
-        });;
-        player2.save().then((saveduser)=>{
-            console.log(saveduser);
-        });;
     }
 }

@@ -8,10 +8,10 @@ export default function PlayerStats({ username }) {
 
     const [stats, setStats] = useState(
         {
-            rating: '-',
-            winrate: '-',
-            roundsPlayed: '-',
-            gamesPlayed: '-',
+            rating: 0,
+            winrate: 0,
+            roundsPlayed: 0,
+            gamesPlayed: 0,
         }
     );
     

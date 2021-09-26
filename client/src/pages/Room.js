@@ -61,10 +61,7 @@ function Room() {
         let score2 = Monke.calculateScoreOpp();
         let user1 = Monke.Username;
         let user2 = Monke.OppUsername;
-        let winner, rating1, rating2, games1, games2;
-        if (score1 > score2) winner = 1;
-        if (score1 < score2) winner = 2;
-        if (score1 === score2) winner = 0;
+
         try{
             console.log('Reacccccccccccccccched submitting scores to db');
               const res = await fetch(`${SERVER_URL}/creatematchhistory`, {
@@ -90,12 +87,9 @@ function Room() {
                 credentials: 'include'
             });
             const data = await res.json();
-            rating1 = data.rating;
-            games1 = data.gamesPlayerd;
         }catch(error) {
             console.log(error);
         }
-        console.log(rating1);
         
         //Fetching stats for PLayer 2
         try {
@@ -106,69 +100,16 @@ function Room() {
                 credentials: 'include'
             });
             const data = await res.json();
-            rating2 = data.rating;
-            games2 = data.gamesPlayerd;
         }catch(error) {
             console.log(error);
         }
 
         //Calculating new rating for Player 1 and Player 2
-        const{newScore1, newScore2} = calcRate(rating1, rating2, games1, games2, winner);
-        console.log("New Score 1: ");
-        console.log(newScore1);
-        console.log(newScore2);
-        //Updating Players' rating
-        try {
-            const res = await fetch(`${SERVER_URL}/updaterating`, {
-                method: 'POST',
-                body: JSON.stringify({ user1, user2, newScore1, newScore2 }),
-                headers: { 'Content-Type' : 'application/json' },
-                credentials: 'include'
-            });
-        }catch(error) {
-            console.log(error);
-        }
+
         routerToRoom();
 
     }
 
-    function calcRate (rating1, rating2, games1, games2, winner) {
-        let newScore1, newScore2, score1 = rating1, score2 = rating2;
-        let s1, s2;
-        if (winner === 1) {
-            s1 = 1;
-            s2 = 1;
-        }
-        else if (winner === 2) {
-            s1 = -1;
-            s2 = 0;
-        }
-        else if (winner === 0) {
-            s1 = 0;
-            s2 = 0.5;
-        }
-        //If A and B are both on Provisional Ranking:
-        if (games1 < 20 && games2 < 20) {
-            newScore1 = (score1 * games1 + (score1 + score2) / 2 + 100 * s1) / games1 + 1;
-            newScore2 = (score2 * games2 + (score1 + score2) / 2 + 100 * s1) / games2 + 1;
-        }
-        //If A is on the Provisional Ranking, and B on the Established one:
-        if (games1 < 20 && games2 >= 20) {
-            newScore2 = (score2 * games2 + score1 + 200 * s1) / games2 + 1;
-            newScore1 = (score1 * games1 + score2 + 200 * s1) / games1 + 1;
-        }
-        //If A is on the Established Ranking, and B on the Provisional one:
-        if (games1 >= 20 && games2 < 20) {
-            newScore1 = score1 + 32 * games2 / 20 * (s2 - (1 / 1 + Math.pow(10, (score2 - score1) / 400)));
-            newScore2 = score2 + 32 * games1 / 20 * (s2 - (1 / 1 + Math.pow(10, (score1 - score2) / 400)));
-        }
-        //If A and B are both on the Established Ranking:
-        if (games1 >= 20 && games2 >= 20) {
-            newScore1 = score1 + 32 * (s2 - (1 / 1 + Math.pow(10, (score2 - score1) / 400)));
-            newScore2 = score2 + 32 * (s2 - (1 / 1 + Math.pow(10, (score1 - score2) / 400)));
-        }
-        return {newScore1, newScore2};
-    }
 
     const unlisten = history.listen (location => {
         console.log("Exited room");
