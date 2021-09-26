@@ -22,6 +22,4 @@ router.post('/creatematchhistory', playerController.createMatchHistory);
 router.post('/getlatestroundresult', playerController.getLatestRoundResult);
 router.post('/getusername', playerController.getUsername);
 
-
-router.post('/updaterating', playerController.update_scores_post);
 module.exports = router;

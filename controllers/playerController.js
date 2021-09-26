@@ -17,10 +17,10 @@ module.exports.getStats = async (req, res) => {
             return;
         }
         res.json({
-            gamesPlayed: '-',
-            winrate: '-',
-            roundsPlayed: '-',
-            rating: '-'
+            gamesPlayed: 0,
+            winrate: 0,
+            roundsPlayed: 0,
+            rating: 0
         });
     }catch(error){
         console.log(error);
@@ -40,7 +40,7 @@ module.exports.getMatchHistory = async (req, res) => {
             else{
                 res.json({matches});
             }
-        });
+        }).sort({matchdate:-1});
     }catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});
@@ -57,10 +57,9 @@ module.exports.getGameHistory = async (req, res) => {
                 return;
             }
             else{
-                console.log(`GAMESSSSSS AREEEEEEEEEEEE: ${games}`);
                 res.json({games});
             }
-        });
+        }).sort({gamedate:-1});
     }catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});
@@ -70,9 +69,8 @@ module.exports.getGameHistory = async (req, res) => {
 module.exports.createMatchHistory = async (req, res) => {
     const { user1, user2, score1, score2 } = req.body;
     try{
-        await MatchHistory.createMatchHistory(user1, user2, score1, score2);
+        MatchHistory.createMatchHistory(user1, user2, score1, score2);
         console.log("Wsolet?");
-        return;
     }catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});
@@ -88,7 +86,6 @@ module.exports.getLatestRoundResult = async (req, res) => {
                 {user1: user2, user2: user1}
             ]}, (err, matches) =>{
         
-            console.log("MAAAAAAAAAAAAAAAAAAAAAAAATCHES AREEEEEEEEEE: " + matches);
             if(matches.length == 0){
                 res.json({res: "Empty"});
             }else{
@@ -118,21 +115,5 @@ module.exports.getUsername = (req, res) => {
     catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});
-    }
-}
-module.exports.update_scores_post = async(req, res) => {
-    const {user1, user2, newScore1, newScore2} = req.body;
-    const player1 = await Player.findOne({user1});
-    const player2 = await Player.findOne({user2});
-    if (player1 && player2) {
-        player1.rating = newScore1;
-        player2.rating = newScore2;
-        player1.save().then((saveduser)=>{
-            console.log(saveduser);
-            res.json({ message: "Player 1's stats updated" });
-        });;
-        player2.save().then((saveduser)=>{
-            console.log(saveduser);
-        });;
     }
 }

@@ -87,7 +87,7 @@ export default function MatchHistory({ username }) {
                     <th>Date</th>
                 </tr>
             </table>
-            {/* <button onClick={createMatchHistory}>Create Fake Match</button> */}
+            <button onClick={createMatchHistory}>Create Fake Match</button>
         </div>
     );
 }

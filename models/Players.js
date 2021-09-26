@@ -34,6 +34,10 @@ const playerSchema = new mongoose.Schema({
     inGame: {
         type: Boolean,
         required: true
+    }, 
+    gamesWon: {
+        type: Number,
+        required: true
     }
 });
 
@@ -47,10 +51,11 @@ playerSchema.statics.createPlayer = async function(username){
     const gamesPlayed = 0;
     const roundsPlayed = 0;
     const winrate = 0;
+    const gamesWon = 0;
     const rating = 1500;
     const isConnected = false, inQueue = false, inGame = false;
     try{
-        await this.create({username, gamesPlayed, roundsPlayed, winrate, rating, isConnected, inQueue, inGame});
+        await this.create({username, gamesPlayed, roundsPlayed, winrate, rating, isConnected, inQueue, inGame, gamesWon});
     }catch(err){
         console.log(err);
     }

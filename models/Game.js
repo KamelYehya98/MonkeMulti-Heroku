@@ -24,7 +24,7 @@ const GameSchema = new mongoose.Schema({
     },
     gamedate: {
         type: Date,
-        default: Date.now
+        required: true
     }
 });
 
@@ -33,32 +33,28 @@ GameSchema.post('save', function(doc, next){
     next();
 });
 
+
 //Static method to log in the user
 GameSchema.statics.createGameHistory = async function(user1, user2, status1, status2, nbrounds){
     try{
+
+        let dte = Date.now();
+        await this.create({user1, user2, nbrounds, status1, status2, gamedate: dte});
+
         const player1 = await Players.findOne({username: user1});
-        let nbOfWins1 = Math.ceil((player1.winrate * player1.gamesPlayed)/100);
-        player1.gamesPlayed = player1.gamesPlayed + 1;
-        if(status1 == "Won")
-            nbOfWins1 += 1;
-        player1.winrate = (nbOfWins1 / player1.gamesPlayed) * 100;
+        let gamesPlayed1 = player1.gamesPlayed + 1;
+        let gamesWon1 = status1 == "Win" ? player1.gamesWon + 1 : player1.gamesWon;
+        let winrate1 = (gamesWon1 / gamesPlayed1) * 100;
 
         const player2 = await Players.findOne({username: user2});
-        let nbOfWins2 = Math.ceil((player2.winrate * player2.gamesPlayed)/100);
-        player2.gamesPlayerd = player2.gamesPlayed + 1;
-        if(status2 == "Won")
-            nbOfWins2 += 1;
-        player2.winrate = (nbOfWins2 / player2.gamesPlayed) * 100;
+        let gamesPlayed2 = player2.gamesPlayed + 1;
+        let gamesWon2 = status2 == "Win" ? player2.gamesWon + 1 : player2.gamesWon;
+        let winrate2 = (gamesWon2 / gamesPlayed2) * 100;
+
+        await Players.findOneAndUpdate({"username": user1}, {gamesPlayed: gamesPlayed1, gamesWon: gamesWon1, winrate: winrate1});
+        await Players.findOneAndUpdate({"username": user2}, {gamesPlayed: gamesPlayed2, gamesWon: gamesWon2, winrate: winrate2});
 
 
-        player1.save().then((savedplayer1)=>{
-            console.log(`${user1} winrate updated successfully`);
-            console.log(savedplayer1);
-        });
-        player2.save().then((savedplayer2)=>{
-            console.log(`${user2} winrate updated successfully`);
-            console.log(savedplayer2);
-        });
         
     }catch(err){
         console.log(err);

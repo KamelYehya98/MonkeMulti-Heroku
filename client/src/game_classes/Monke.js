@@ -66,6 +66,7 @@ class Monke {
             ////console.log("" + card.Value + card.Suit);
         }
         this.socket.emit('setDeck', this.Deck);
+        this.socket.emit('getlatestroundwinner');
         this.printDeck();
         this.socket.emit('oppPlayer', (this.Player1));
     });
@@ -171,8 +172,12 @@ class Monke {
 
     this.socket.on('setDeck', (deck)=>{
         this.Deck = deck;
+    });
+
+    this.socket.on('getlatestroundwinner', ()=>{
         getLatestRoundWinner();
     });
+
     this.socket.on('setOppImage', ()=>{
         this.showCards();
     });
