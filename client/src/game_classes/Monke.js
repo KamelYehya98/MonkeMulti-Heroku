@@ -555,7 +555,7 @@ class Monke {
     
     monkeyEnable () {
         this.MonkeEffect = true;
-        this.MonkeDivContent = document.getElementById("grounddisappear").classList.add("disappear");
+        // this.MonkeDivContent = document.getElementById("grounddisappear").classList.add("disappear");
         let el = document.querySelector(".adddisablemonkey");
         let monk = document.querySelector(".disableformonkey");
     
@@ -569,7 +569,7 @@ class Monke {
     monkeyDisable  () {
         let monk = document.querySelector(".adddisablemonkey");
         let el = document.querySelector(".disableformonkey");
-        document.getElementById("grounddisappear").classList.remove("disappear");
+        // document.getElementById("grounddisappear").classList.remove("disappear");
     
         this.removeClassFromAllElements("disableformonkey");
         this.removeClassFromAllElements("adddisablemonkey");
