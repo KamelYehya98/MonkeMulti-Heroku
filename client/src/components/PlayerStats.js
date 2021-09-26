@@ -17,6 +17,7 @@ export default function PlayerStats({ username }) {
     
     async function getStats(){
         try{
+            console.log('Reacccccccccccccccched getting stats');
             const res = await fetch(`${SERVER_URL}/getstats`, {
                 method: 'POST',
                 body: JSON.stringify({ username }),
@@ -24,11 +25,16 @@ export default function PlayerStats({ username }) {
                 credentials: 'include'
             });
             const data = await res.json();
-
+            let err_text = document.getElementById('stats-container');
+            // if(data.error != undefined){
+            //     err_text.innerHTML = "Your session ended - Please login again";
+            // }else{
             if (data.rating !== stats.rating || data.winrate !== stats.winrate || data.roundsPlayed !== stats.roundsPlayed || data.gamesPlayed !== stats.gamesPlayed)
             {
-                setStats({rating: parseInt(data.rating), winrate: parseFloat(data.winrate).toFixed(2) , roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
-            }            
+                console.log(data.rating + data.winrate);
+                setStats({rating:data.rating, winrate:data.winrate, roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
+            }
+            //}
         }catch(err){
             console.log(err);
         }

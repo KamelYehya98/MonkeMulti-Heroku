@@ -40,7 +40,7 @@ module.exports.getMatchHistory = async (req, res) => {
             else{
                 res.json({matches});
             }
-        }).sort({matchdate:-1});
+        });
     }catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});
@@ -59,7 +59,7 @@ module.exports.getGameHistory = async (req, res) => {
             else{
                 res.json({games});
             }
-        }).sort({gamedate:-1});
+        });
     }catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});
@@ -69,8 +69,9 @@ module.exports.getGameHistory = async (req, res) => {
 module.exports.createMatchHistory = async (req, res) => {
     const { user1, user2, score1, score2 } = req.body;
     try{
-        MatchHistory.createMatchHistory(user1, user2, score1, score2);
+        await MatchHistory.createMatchHistory(user1, user2, score1, score2);
         console.log("Wsolet?");
+        return;
     }catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});
@@ -86,6 +87,7 @@ module.exports.getLatestRoundResult = async (req, res) => {
                 {user1: user2, user2: user1}
             ]}, (err, matches) =>{
         
+            console.log("MAAAAAAAAAAAAAAAAAAAAAAAATCHES AREEEEEEEEEE: " + matches);
             if(matches.length == 0){
                 res.json({res: "Empty"});
             }else{

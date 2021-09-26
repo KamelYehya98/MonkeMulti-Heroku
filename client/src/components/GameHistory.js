@@ -50,7 +50,7 @@ export default function GameHistory({ username }) {
             }
             data.games.map(game=>{
                 //setMatchHistory([
-                    createRow(game.user1, game.user2, game.nbrounds, game.status1, game.status2, game.gamedate)
+                    createRow(game.user1, game.user2, game.nbrounds, game.status1, game.status2, game.matchdate)
                 //]);
             });
         }catch(err){

@@ -108,11 +108,6 @@ io.on("connection", socket => {
     socket.to(user.room).emit('freeThrowButton', (str));
   });
 
-  socket.on('getlatestroundwinner', ()=>{
-    const user = getUser(socket.id);
-    socket.to(user.room).emit('getlatestroundwinner');
-  });
-
   socket.on('throwCardButton', (str) => {
     const user = getUser(socket.id);
     socket.to(user.room).emit('throwCardButton', (str));
