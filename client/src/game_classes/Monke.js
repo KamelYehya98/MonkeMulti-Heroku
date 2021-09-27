@@ -234,6 +234,10 @@ class Monke {
         this.Player1.BlockAction = true;
         this.revealAllCards();
     });
+
+    this.socket.on('start next round', () => {
+        this.startGame();
+    })
 }
 
     async getUsername(){
@@ -1396,8 +1400,16 @@ class Monke {
         }
     }
 
-    nextRound() {
-        
+    nextRound(first) {
+        let user1 = this.Username;
+        let user2 = this.OppUsername;
+        game = new Monke();
+        this.Username = user1;
+        this.OppUsername = user2;
+        this.isFirst = first;
+        getLatestRoundWinner();
+        this.startGame();
+        this.socket.emit('start next round');
     }
 
     // remPlayer2Comp() {

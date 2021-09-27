@@ -119,3 +119,31 @@ module.exports.getUsername = (req, res) => {
         res.json({error: "database connection error / user not found"});
     }
 }
+
+module.exports.getNbRoundsWon = async (req, res) => {
+    const { user1 , user2 } = req.body;
+    console.log(`User 1: ${user1} User 2: ${user2}`);
+    let player1wins = 0, player2wins = 0;
+    let matches = await MatchHistory.find({
+        $or:[
+            {user1, user2},
+            {user1: user2, user2: user1}
+        ]
+    });
+    for(var i=0; i<matches.length; i++){
+        if(matches[i].user1 == user1){
+            if(matches[i].status1 == "Win")
+                player1wins++;
+            else if(matches[i].status1 == "Lose")
+                player2wins++;
+        }else{
+            if(matches[i].status2 == "Win")
+                player1wins++;
+            else if(matches[i].status2 == "Lose")
+                player2wins++;
+        }
+    }
+    let matchCount = matches.length;
+    console.log(`Player 1 wins: ${player1wins} Player 2 wins: ${player2wins}, Match Count: ${matchCount}`);
+    res.json({player1wins, player2wins, matchCount});
+}

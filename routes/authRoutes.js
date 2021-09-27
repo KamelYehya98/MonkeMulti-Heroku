@@ -21,5 +21,6 @@ router.post('/getgamehistory', playerController.getGameHistory);
 router.post('/creatematchhistory', playerController.createMatchHistory);
 router.post('/getlatestroundresult', playerController.getLatestRoundResult);
 router.post('/getusername', playerController.getUsername);
+router.post('/getRoundsWon', playerController.getNbRoundsWon);
 
 module.exports = router;

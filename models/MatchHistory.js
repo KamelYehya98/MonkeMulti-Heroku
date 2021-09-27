@@ -201,6 +201,7 @@ MatchHistorySchema.statics.createMatchHistory = async function(user1, user2, sco
         console.log(err);
     }
 };
+
 const MatchHistory = mongoose.model('matchhistory', MatchHistorySchema);
 
 module.exports = MatchHistory;

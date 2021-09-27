@@ -289,6 +289,31 @@ io.on("connection", socket => {
     const user = getUser(socket.id);
     socket.to(user.room).emit('calculateResults');
   });
+
+  socket.on('showRoundPrompt', (obj) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('showRoundPrompt', {user1: obj.user1, user2: obj.user2, score1: obj.score1, score2: obj.score2, rounds1: obj.rounds1, rounds2: obj.rounds2});
+  });
+
+  socket.on('hideRoundButton', () => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('hideRoundButton');
+  });
+
+  socket.on('nextPressed', () => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('nextPressed');
+  });
+
+  socket.on('nextRound', (first) => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('nextRound', (first));
+  });
+
+  socket.on('start next round', () => {
+    const user = getUser(socket.id);
+    socket.to(user.room).emit('start next round');
+  });
   
 });
 

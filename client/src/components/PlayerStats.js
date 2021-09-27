@@ -31,7 +31,7 @@ export default function PlayerStats({ username }) {
             // }else{
             if (data.rating !== stats.rating || data.winrate !== stats.winrate || data.roundsPlayed !== stats.roundsPlayed || data.gamesPlayed !== stats.gamesPlayed)
             {
-                setStats({rating:parseInt(data.rating), winrate:parseFloat(data.winrate).toFixed(2), roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
+                setStats({rating:data.rating, winrate:data.winrate, roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
             }
             //}
         }catch(err){
@@ -51,8 +51,8 @@ export default function PlayerStats({ username }) {
                     <th>Rounds Played</th>
                 </tr>
                 <tr className="text-light">
-                    <th id="rating">{stats.rating}</th>
-                    <th id="winrate">{stats.winrate}%</th>
+                    <th id="rating">{parseInt(stats.rating)}</th>
+                    <th id="winrate">{parseFloat(stats.winrate).toFixed(2)}%</th>
                     <th id="gamesPlayed">{stats.gamesPlayed}</th>
                     <th id="roundsPlayed">{stats.roundsPlayed}</th>
                 </tr>

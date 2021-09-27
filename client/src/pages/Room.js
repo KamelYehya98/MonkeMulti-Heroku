@@ -50,10 +50,23 @@ async function getLatestRoundWinner(){
     }
 }
 
+async function getRoundsWon(user1, user2) {
+    const res = await fetch(`${SERVER_URL}/getRoundsWon`, {
+        method: 'POST',
+        body: JSON.stringify({ user1, user2 }),
+        headers: { 'Content-Type' : 'application/json' },
+        credentials: 'include'
+    });
+    const data = await res.json();
+    console.log(`Wins for 1: ${data.player1wins}, Wins for 2: ${data.player2wins}`);
+    let win1 = data.player1wins, win2 = data.player2wins, matchCount = data.matchCount;
+    return {win1, win2, matchCount};
+}
+
 function Room() {
 
     const socket = sok.getSocket();
-    let score1, score2, user1, user2;
+    let score1, score2, user1, user2, rounds1, rounds2, matches, nextsPressed = 0;
     const history = useHistory();
     let chatDisabled = true;
     const routerToRoom = () => {
@@ -68,9 +81,24 @@ function Room() {
         user2 = Monke.OppUsername;
 
         //Display round won prompt
+
+        const {win1, win2, matchCount} = getRoundsWon(user1, user2);
+        rounds1 = win1;
+        rounds2 = win2;
+        matches = matchCount;
+        console.log(`Rounds 1: ${rounds1} Rounds 2: ${rounds2} Matches: ${matches}`);
         document.getElementById("roundsPrompt").classList.remove("d-none");
-        document.getElementById('user1details').innerHTML = "Username: " + user1 + "  Score: " + score1 + "  Nb Rounds Won: ";
-        document.getElementById('user2details').innerHTML = "Username: " + user2 + "  Score: " + score2 + "  Nb Rounds Won: ";
+        document.getElementById('user1details').innerHTML = "Username: " + user1 + "  Score: " + score1 + "  Nb Rounds Won: " + rounds1;
+        document.getElementById('user2details').innerHTML = "Username: " + user2 + "  Score: " + score2 + "  Nb Rounds Won: " + rounds2;
+        if (matches === 5 || rounds1 === 3 || rounds2 === 3)
+            {
+                document.getElementById("playNext").classList.add("d-none");
+                socket.emit('hideRoundButton');
+            }
+        socket.emit('showRoundPrompt', ({user1, user2, score1, score2, rounds1, rounds2}));
+
+        console.log('IN SUBMITTING TO DATABASE INSIDE ROOM: ');
+        console.log(score1 + " :" + score2 + ": " + user1 + " :" + user2);
 
         Monke.socket.emit('')
         console.log('Reacccccccccccccccched submitting scores to db');
@@ -143,8 +171,37 @@ function Room() {
     }
 
     function nextRound() {
-        Monke = Monke.nextRound();
+        console.log("Pressed next round");
+        document.getElementById("playNext").classList.add("opaque");
+        let first = false;
+        socket.emit('nextPressed');
+        nextsPressed++;
+        if (nextsPressed === 1) first = true;
+        if (nextsPressed === 2)
+            {
+                console.log("Starting next round!");
+                Monke.nextRound(first);
+                socket.emit('nextRound', (first));
+            }
     }
+
+    socket.on('showRoundPrompt', (obj) => {
+        document.getElementById("roundsPrompt").classList.remove("d-none");
+        document.getElementById('user1details').innerHTML = "Username: " + obj.user1 + "  Score: " + obj.score1 + "  Nb Rounds Won: " + obj.rounds1;
+        document.getElementById('user2details').innerHTML = "Username: " + obj.user2 + "  Score: " + obj.score2 + "  Nb Rounds Won: " + obj.rounds2;
+    });
+
+    socket.on('hideRoundButton', () => {
+        document.getElementById("playNext").classList.add("d-none");
+    });
+
+    socket.on('nextPressed', () => {
+        nextsPressed++;
+    });
+
+    socket.on('nextRound', (first) => {
+        Monke.nextRound(first);
+    });
 
 
     return (
@@ -159,8 +216,8 @@ function Room() {
                         <p id='user2details'></p>
                     </div>
                     <div className="d-flex justify-content-between">
-                        <button id="leave">Leave</button>
-                        <button id="playNext">Play Next Round</button>
+                        <button id="leave" onClick={leaveMatch}>Leave</button>
+                        <button id="playNext" onClick={nextRound}>Play Next Round</button>
                     </div>
                 </div>
 
