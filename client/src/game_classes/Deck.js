@@ -28,5 +28,5 @@ function Deck() {
         }
     }
 }
-let deck = new Deck();
-export default deck;
+//let deck = new Deck();
+export default Deck;

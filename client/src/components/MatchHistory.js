@@ -88,11 +88,11 @@ export default function MatchHistory({ username }) {
                 </tr>
             </table>
             <div className="container mt-2 border stats-table">
-                <div className="row">
+                <div className="row fake-match-maker">
                     <span for="user1" className="col-3">Username:</span><input name="user1" type="text" className="col-9 text-dark" />
                     <span for="score1" className="col-3">Score:</span><input name="score1" type="text" className="col-9 text-dark"/>
                 </div>
-                <div className="row">
+                <div className="row fake-match-maker">
                     <span for="user2" className="col-3">Username:</span><input name="user2" type="text" className="col-9 text-dark" />
                     <span for="score2" className="col-3">Score:</span><input name="score2" type="text" className="col-9 text-dark" />
                 </div>

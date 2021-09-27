@@ -305,14 +305,9 @@ io.on("connection", socket => {
     socket.to(user.room).emit('nextPressed');
   });
 
-  socket.on('nextRound', (first) => {
+  socket.on('nextRound', (room) => {
     const user = getUser(socket.id);
-    socket.to(user.room).emit('nextRound', (first));
-  });
-
-  socket.on('start next round', () => {
-    const user = getUser(socket.id);
-    socket.to(user.room).emit('start next round');
+    socket.to(user.room).emit('nextRound', (room));
   });
   
 });

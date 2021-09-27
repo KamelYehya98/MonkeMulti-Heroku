@@ -65,13 +65,13 @@ async function getRoundsWon(user1, user2) {
 }
 
 function Room() {
-
     const socket = sok.getSocket();
+    let room;
     let score1, score2, user1, user2, rounds1, rounds2, matches, nextsPressed = 0;
     const history = useHistory();
     let chatDisabled = true;
-    const routerToRoom = () => {
-        history.push('/welcome');
+    const routerToWelcome = () => {
+        window.location.assign('/welcome');
     }
 
     async function submitToDatabase(e){
@@ -87,12 +87,12 @@ function Room() {
         rounds1 = moratrat[0];
         rounds2 = moratrat[1];
         matches = moratrat[2]+1;
-        if (score1 > score2) rounds1++;
-        else if (score1 < score2) rounds2++;
+        if (score1 > score2) rounds2++;
+        else if (score1 < score2) rounds1++;
         console.log(`Rounds 1: ${rounds1} Rounds 2: ${rounds2} Matches: ${matches}`);
         document.getElementById("roundsPrompt").classList.remove("d-none");
-        document.getElementById('user1details').innerHTML = "Username: " + user1 + "  Score: " + score1 + "  Nb Rounds Won: " + rounds1;
-        document.getElementById('user2details').innerHTML = "Username: " + user2 + "  Score: " + score2 + "  Nb Rounds Won: " + rounds2;
+        document.getElementById('user1details').innerHTML = "Username: " + user1 + "<br/>  Score: " + score1 + "<br/>  Nb Rounds Won: " + rounds1;
+        document.getElementById('user2details').innerHTML = "Username: " + user2 + "<br/>  Score: " + score2 + "<br/>  Nb Rounds Won: " + rounds2;
         if (matches === 5 || rounds1 === 3 || rounds2 === 3)
             {
                 document.getElementById("playNext").classList.add("d-none");
@@ -102,8 +102,7 @@ function Room() {
 
         console.log('IN SUBMITTING TO DATABASE INSIDE ROOM: ');
         console.log(score1 + " :" + score2 + ": " + user1 + " :" + user2);
-
-        Monke.socket.emit('')
+        
         console.log('Reacccccccccccccccched submitting scores to db');
         await fetch(`${SERVER_URL}/creatematchhistory`, {
             method: 'POST',
@@ -114,13 +113,16 @@ function Room() {
     }
 
     const unlisten = history.listen (location => {
-        console.log("Exited room");
-        socket.emit('exitRoom');
-        unlisten();
+        if (!location.pathname.includes('room')) {
+            console.log("Exited lobby");
+            socket.emit('exitRoom');
+            unlisten();
+        }
     });
 
     function playerAction(e){
         Monke.playerAction(e.target);
+        console.log("BATATAAAAAAAAAAAAAAA");
     }
 
     function CallButtons(e){
@@ -153,6 +155,50 @@ function Room() {
         
     }
 
+    const routerToRoom = () => {
+        history.push('/room');
+    }
+
+    async function createRoom(){
+        try{
+            console.log('Reacccccccccccccccched creating room');
+              const res = await fetch(`${SERVER_URL}/createroom`, {
+                  method: 'POST',
+                  headers: { 'Content-Type' : 'application/json' },
+                  credentials: 'include'
+              });
+              const data = await res.json();
+              room = data.roomID;
+              console.log(`New room data is ${data.roomID}`);
+              socket.emit('join room', data.roomID, (err) => {
+                routerToRoom();
+              });
+          }catch(err){
+              console.log(err);
+          }
+    }
+
+    async function joinRoom(roomid) {
+        try{
+            console.log('Reacccccccccccccccched joining room');
+              const res = await fetch(`${SERVER_URL}/joinroom`, {
+                  method: 'POST',
+                  body: JSON.stringify({ roomid }),
+                  headers: { 'Content-Type' : 'application/json' },
+                  credentials: 'include'
+              });
+              socket.emit('join room', roomid, (err) => {
+                if (err) {
+                    console.log("What it do error man");
+                    return;
+                }
+                routerToRoom();
+            });
+            }catch(err) {
+
+            }
+    }
+
     function showHide() {
         if (!chatDisabled) {
             chatDisabled = true;
@@ -169,8 +215,51 @@ function Room() {
     }
 
     function leaveMatch() {
-        routerToRoom();
+        routerToWelcome();
         document.getElementById("roundsPrompt").classList.add("d-none");
+    }
+
+    function reloadComponents(){
+        for (var i = 0; i < 4; i++) {
+            let parent = document.getElementById("1" + i);
+            if (parent)
+                parent.removeChild(parent.firstChild);
+        }
+        
+        
+        for (i = 0; i < 4; i++) {
+            let parent = document.getElementById("2" + i);
+            if (parent)
+                parent.removeChild(parent.firstChild);
+        }
+        
+        let img, parent;
+        for(i=0; i<4; i++)
+        {
+            parent = document.getElementById("2" + i);
+            console.log(parent);
+            img = document.createElement('img');
+            img.setAttribute("src", "");
+            img.classList.add('img-fluid', 'image-player2');
+            img.setAttribute('index', ""+i);
+            img.setAttribute('player', ""+2);
+
+            //img.setAttribute("onclick", playerAction());
+            parent.appendChild(img);
+        }
+        for(i=0; i<4; i++)
+        {
+            parent = document.getElementById("1" + i);
+            console.log(parent);
+            img = document.createElement('img');
+            img.setAttribute("src", "");
+            img.classList.add('img-fluid', 'image-player1');
+            img.setAttribute('index', ""+i);
+            img.setAttribute('player', ""+1);
+
+            //img.setAttribute("onclick", playerAction());
+            parent.appendChild(img);
+        }
     }
 
     function nextRound() {
@@ -179,19 +268,27 @@ function Room() {
         let first = false;
         socket.emit('nextPressed');
         nextsPressed++;
-        if (nextsPressed === 1) first = true;
+        console.log("Next presSEDDEDEDD: " + nextsPressed);
+        if (nextsPressed === 1) {
+            first = true;
+            console.log(`First is ${first}`);
+        }
         if (nextsPressed === 2)
             {
+                document.getElementById("roundsPrompt").classList.add("d-none");
                 console.log("Starting next round!");
+                createRoom();
+                reloadComponents();
+                socket.emit('nextRound', (room));
                 Monke.nextRound(first);
-                socket.emit('nextRound', (first));
+                //window.location.assign('/room');
             }
     }
 
     socket.on('showRoundPrompt', (obj) => {
         document.getElementById("roundsPrompt").classList.remove("d-none");
-        document.getElementById('user1details').innerHTML = "Username: " + obj.user1 + "  Score: " + obj.score1 + "  Nb Rounds Won: " + obj.rounds1;
-        document.getElementById('user2details').innerHTML = "Username: " + obj.user2 + "  Score: " + obj.score2 + "  Nb Rounds Won: " + obj.rounds2;
+        document.getElementById('user1details').innerHTML = "Username: " + obj.user1 + "<br/>  Score: " + obj.score1 + "<br/>  Nb Rounds Won: " + obj.rounds1;
+        document.getElementById('user2details').innerHTML = "Username: " + obj.user2 + "<br/>  Score: " + obj.score2 + "<br/>  Nb Rounds Won: " + obj.rounds2;
     });
 
     socket.on('hideRoundButton', () => {
@@ -202,8 +299,13 @@ function Room() {
         nextsPressed++;
     });
 
-    socket.on('nextRound', (first) => {
-        Monke.nextRound(first);
+    socket.on('nextRound', (roomid) => {
+        console.log("2inno fet fiya lal socket next round");
+        document.getElementById("roundsPrompt").classList.add("d-none");
+        joinRoom(roomid);
+        reloadComponents();
+        Monke.nextRound(true);
+        //window.location.assign('/room');
     });
 
 
@@ -215,8 +317,8 @@ function Room() {
                 <div className="next-round d-none"  id="roundsPrompt">
                     <h1>Rounds Won</h1>
                     <div className="d-flex justify-content-evenly">
-                        <p id='user1details'></p>
-                        <p id='user2details'></p>
+                        <p className="me-5" id='user1details'></p>
+                        <p className="ms-5" id='user2details'></p>
                     </div>
                     <div className="d-flex justify-content-between">
                         <button id="leave" onClick={leaveMatch}>Leave</button>

@@ -26,16 +26,16 @@ return (
         <div className="order-md-0 vertical-line rounded"></div>
     </div>
     <div className="col-md-6 d-flex flex-row justify-content-around col-12 m-md-1 m-2 p-0 order-md-0 gap-1" id="cards-container-player2">
-        <div className="col-md-3 col-2 d-flex justify-content-center flex-column">
+        <div className="col-md-3 col-2 d-flex justify-content-center flex-column" id = "20">
             <img alt="" src="" className="img-fluid image-player2" index="0" player="2" onClick={playerAction}/>
         </div>
-        <div className="col-md-3 col-2 d-flex justify-content-center flex-column">
+        <div className="col-md-3 col-2 d-flex justify-content-center flex-column" id = "21">
             <img alt="" src="" className="img-fluid image-player2" index="1" player="2" onClick={playerAction}/>
         </div>
-        <div className="col-md-3 col-2 d-flex justify-content-center flex-column">
+        <div className="col-md-3 col-2 d-flex justify-content-center flex-column" id = "22">
             <img alt="" src="" className="img-fluid image-player2" index="2" player="2" onClick={playerAction}/>
         </div>
-        <div className="col-md-3 col-2 d-flex justify-content-center flex-column">
+        <div className="col-md-3 col-2 d-flex justify-content-center flex-column" id = "23">
             <img alt="" src="" className="img-fluid image-player2" index="3" player="2" onClick={playerAction}/>
         </div>
     </div>

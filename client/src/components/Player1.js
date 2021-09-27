@@ -8,16 +8,16 @@ export default function Player1({playerAction, CallButtons}) {
 return (
     <div className="row d-md-flex flex-md-row justify-content-md-between flex-md-nowrap d-flex flex-column align-content-around addopacitymonkey">
     <div className="col-md-6 d-flex flex-row justify-content-around col-12 m-1 p-0 order-md-0 gap-1" id="cards-container-player1">
-        <div className="col-md-3 col-2 d-flex justify-content-center flex-column image">
+        <div className="col-md-3 col-2 d-flex justify-content-center flex-column image" id = "10">
             <img alt="" src="" className="img-fluid image-player1" index="0" player="1" onClick={playerAction}/>
         </div>
-        <div className="col-md-3 col-2 d-flex justify-content-center flex-column image">
+        <div className="col-md-3 col-2 d-flex justify-content-center flex-column image" id = "11">
             <img alt="" src="" className="img-fluid image-player1" index="1" player="1" onClick={playerAction}/>
         </div>
-        <div className="col-md-3 col-2 d-flex justify-content-center flex-column image">
+        <div className="col-md-3 col-2 d-flex justify-content-center flex-column image" id = "12">
             <img alt="" src="" className="img-fluid image-player1" index="2" player="1" onClick={playerAction}/>
         </div>
-        <div className="col-md-3 col-2 d-flex justify-content-center flex-column image">
+        <div className="col-md-3 col-2 d-flex justify-content-center flex-column image" id = "13">
             <img alt="" src="" className="img-fluid image-player1" index="3" player="1" onClick={playerAction}/>
         </div>
     </div>

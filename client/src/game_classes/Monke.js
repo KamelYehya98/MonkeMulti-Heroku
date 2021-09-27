@@ -10,7 +10,7 @@ import '../style.css'
 class Monke {
     constructor() {
     this.socket = sok.getSocket();
-    this.Deck = Deck;
+    this.Deck = new Deck();
     this.endGame = false;
     this.Player1 = new Player();
     this.Player2 = new Player();
@@ -234,10 +234,6 @@ class Monke {
         this.Player1.BlockAction = true;
         this.revealAllCards();
     });
-
-    this.socket.on('start next round', () => {
-        this.startGame();
-    })
 }
 
     async getUsername(){
@@ -255,9 +251,10 @@ class Monke {
 
     startGame() {
         if (this.Started == false) {
-            //console.log("Starto");
+            console.log("Starto");
             this.Started = true;
             if (this.isFirst) {
+                console.log("Shuffling cards bleep bloop");
                 this.Deck.shuffleCards();
                 this.dealCards();
                 this.socket.emit('deal', { plyr: this.Player2, deck: this.Deck });
@@ -1401,15 +1398,27 @@ class Monke {
     }
 
     nextRound(first) {
-        let user1 = this.Username;
-        let user2 = this.OppUsername;
-        game = new Monke();
-        this.Username = user1;
-        this.OppUsername = user2;
+        this.socket = sok.getSocket();
+        this.Deck = new Deck();
+        this.endGame = false;
+        this.Player1 = new Player();
+        this.Player2 = new Player();
+        this.Started = false;
+        this.GroundCards = [];
+        this.GroundCard = null;
+        this.NbCardsPickedSeven = 0;
+        this.MonkeEffect = false;
+        this.drawsFirst = false;
+        this.OppViewedCards = false;
+        this.OppDisconnect = false;
+        // let user1 = this.Username;
+        // let user2 = this.OppUsername;
+        // game = new Monke();
+        // this.Username = user1;
+        // this.OppUsername = user2;
         this.isFirst = first;
         getLatestRoundWinner();
         this.startGame();
-        this.socket.emit('start next round');
     }
 
     // remPlayer2Comp() {
