@@ -9,7 +9,7 @@ const playerSchema = new mongoose.Schema({
     },
     gamesPlayed:{
         type: Number,
-        required: [true, 'Please enter an email'],
+        required: true
     },
     roundsPlayed:{
         type: Number,

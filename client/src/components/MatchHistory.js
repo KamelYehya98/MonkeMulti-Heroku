@@ -57,11 +57,11 @@ export default function MatchHistory({ username }) {
 
     getMatchHistory();
 
-    async function createMatchHistory(){
-        const user1 = 'hasagi';
-        const user2 = 'taftaf';
-        const score1 = 4;
-        const score2 = 2;
+    async function createFakeMatchHistory(){
+        const user1 = document.getElementsByName("user1")[0].value;
+        const user2 = document.getElementsByName("user2")[0].value;
+        const score1 = parseInt(document.getElementsByName("score1")[0].value);
+        const score2 = parseInt(document.getElementsByName("score2")[0].value);
 
         try{
             console.log('Reacccccccccccccccched creating match history');
@@ -87,7 +87,17 @@ export default function MatchHistory({ username }) {
                     <th>Date</th>
                 </tr>
             </table>
-            <button onClick={createMatchHistory}>Create Fake Match</button>
+            <div className="container mt-2 border stats-table">
+                <div className="row">
+                    <span for="user1" className="col-3">Username:</span><input name="user1" type="text" className="col-9 text-dark" />
+                    <span for="score1" className="col-3">Score:</span><input name="score1" type="text" className="col-9 text-dark"/>
+                </div>
+                <div className="row">
+                    <span for="user2" className="col-3">Username:</span><input name="user2" type="text" className="col-9 text-dark" />
+                    <span for="score2" className="col-3">Score:</span><input name="score2" type="text" className="col-9 text-dark" />
+                </div>
+                <button onClick={createFakeMatchHistory} className="btn btn-success mt-1">Create Fake Match</button>
+            </div>
         </div>
     );
 }
