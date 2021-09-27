@@ -39,40 +39,51 @@ MatchHistorySchema.post('save', function(doc, next){
 });
 
 function calcRate (rating1, rating2, games1, games2, winner) {
+
     let newScore1, newScore2, score1 = rating1, score2 = rating2;
-    let s1, s2;
+    let s1A, s2A, s1B, s2B;
     if (winner === 1) {
-        s1 = 1;
-        s2 = 1;
+        s1A = 1;
+        s2A = 1;
+        s1B = -1;
+        s2B = 0;
     }
     else if (winner === 2) {
-        s1 = -1;
-        s2 = 0;
+        s1A = -1;
+        s2A = 0;
+        s1B = 1;
+        s2B = 1;
     }
     else if (winner === 0) {
-        s1 = 0;
-        s2 = 0.5;
+        s1A = s1B = 0;
+        s2A = s2B = 0.5;
     }
     //If A and B are both on Provisional Ranking:
-    if (games1 < 20 && games2 < 20) {
-        newScore1 = (score1 * games1 + (score1 + score2) / 2 + 100 * s1) / games1 + 1;
-        newScore2 = (score2 * games2 + (score1 + score2) / 2 + 100 * s1) / games2 + 1;
+    if (games1 < 5 && games2 < 5) {
+        console.log("entered first if............");
+        newScore1 = ((score1 * games1) + ((score1 + score2) / 2) + (100 * s1A)) / (games1 + 1);
+        newScore2 = ((score2 * games2) + ((score1 + score2) / 2) + (100 * s1B)) / (games2 + 1);
     }
     //If A is on the Provisional Ranking, and B on the Established one:
-    if (games1 < 20 && games2 >= 20) {
-        newScore2 = (score2 * games2 + score1 + 200 * s1) / games2 + 1;
-        newScore1 = (score1 * games1 + score2 + 200 * s1) / games1 + 1;
+    else if (games1 < 5 && games2 >= 5) {
+        console.log("entered second if............");
+        newScore2 = ((score2 * games2) + score1 + (200 * s1A)) / (games2 + 1);
+        newScore1 = ((score1 * games1) + score2 + (200 * s1B)) / (games1 + 1);
     }
     //If A is on the Established Ranking, and B on the Provisional one:
-    if (games1 >= 20 && games2 < 20) {
-        newScore1 = score1 + 32 * games2 / 20 * (s2 - (1 / 1 + Math.pow(10, (score2 - score1) / 400)));
-        newScore2 = score2 + 32 * games1 / 20 * (s2 - (1 / 1 + Math.pow(10, (score1 - score2) / 400)));
+    else if (games1 >= 5 && games2 < 5) {
+        console.log("entered third if............");
+        newScore1 = (score1) + (32 * (games2 / 20)) * (s2A - (1 / (1 + Math.pow(10, ((score2 - score1) / 400)))));
+        newScore2 = (score2) + (32 * (games1 / 20)) * (s2B - (1 / (1 + Math.pow(10, ((score1 - score2) / 400)))));
     }
     //If A and B are both on the Established Ranking:
-    if (games1 >= 20 && games2 >= 20) {
-        newScore1 = score1 + 32 * (s2 - (1 / 1 + Math.pow(10, (score2 - score1) / 400)));
-        newScore2 = score2 + 32 * (s2 - (1 / 1 + Math.pow(10, (score1 - score2) / 400)));
+    else if (games1 >= 5 && games2 >= 5) {
+        console.log("entered fourth if............");
+        newScore1 = score1 + (32 * (s2A - (1 / (1 + Math.pow(10, ((score2 - score1) / 400))))));
+        newScore2 = score2 + (32 * (s2B - (1 / (1 + Math.pow(10, ((score1 - score2) / 400))))));
     }
+    console.log("newScore1 in calc is: " + newScore1);
+    console.log("newScore2 in calc is: " + newScore2);
     return {newScore1, newScore2};
 }
 
@@ -155,16 +166,11 @@ MatchHistorySchema.statics.createMatchHistory = async function(user1, user2, sco
             Games.createGameHistory(user1, user2, status1, status2, matches.length);
 
             const{newScore1, newScore2} = calcRate(rating1, rating2, games1, games2, winner);
-            console.log("New Score 1: ");
-            console.log(newScore1);
-            console.log(newScore2);
+            console.log("newScore1 in creatematch is: " + newScore1);
+            console.log("newScore2 in creatematch is: " + newScore2);
+
             //Updating Players' rating
             console.log("REEEEEEEEEEEEEEEEACHED THE UPDATE SCORES::::::::::::::::::::::");
-            console.log("user1: " + user1);
-            console.log("user2: " + user2);
-            console.log("rating1: " + newScore1);
-            console.log("rating2: " + newScore2);
-            
         
             await Players.findOneAndUpdate({"username": user1}, {rating: newScore1});
             await Players.findOneAndUpdate({"username": user2}, {rating: newScore2});

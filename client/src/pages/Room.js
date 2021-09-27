@@ -1,3 +1,4 @@
+import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Monke from '../game_classes/Monke';
 import Player1 from '../components/Player1';
@@ -10,8 +11,8 @@ import sok from "../services/socket";
 import ChatBox from '../components/ChatBox';
 import chatIcon from '../img/chat_icon_new.svg';
 import './css/Chat.css';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import monkeAudio from '../audio/MONKE.mp3';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import monkeAudio from "../audio/MONKE.mp3";
 
 
 async function getLatestRoundWinner(){
@@ -29,6 +30,7 @@ async function getLatestRoundWinner(){
             credentials: 'include'
         });
         const data = await res.json();
+
         console.log("DAATTTTTAAAAAAAAA FRROOM LAST ROOOOOUND ISSSSS: " + data);
         if(data.res == username1){
             Monke.Player1.NbCardsView = 3;
@@ -56,67 +58,32 @@ function Room() {
     const routerToRoom = () => {
         history.push('/welcome');
     }
+
     async function submitToDatabase(e){
         e.preventDefault();
         let score1 = Monke.calculateScore();
         let score2 = Monke.calculateScoreOpp();
         let user1 = Monke.Username;
         let user2 = Monke.OppUsername;
+        console.log('IN SUBMITTING TO DATABASE INSIDE ROOM: ');
+        console.log(score1 + " :" + score2 + ": " + user1 + " :" + user2);
 
-        try{
-            console.log('Reacccccccccccccccched submitting scores to db');
-              const res = await fetch(`${SERVER_URL}/creatematchhistory`, {
-                  method: 'POST',
-                  body: JSON.stringify({ user1, user2, score1, score2 }),
-                  headers: { 'Content-Type' : 'application/json' },
-                  credentials: 'include'
-              });
-            const data = res.json();
-            if (data.error) console.log(data.error);
-            console.log("Stuck in the body mayhaps");
-        }catch(err){
-            console.log(err);
-        }
-        console.log("Done with create match");
-
-        //Fetching stats for Player 1
-        try {
-            const res = await fetch(`${SERVER_URL}/getstats`, {
-                method: 'POST',
-                body: JSON.stringify({ user1 }),
-                headers: { 'Content-Type' : 'application/json' },
-                credentials: 'include'
-            });
-            const data = await res.json();
-        }catch(error) {
-            console.log(error);
-        }
-        
-        //Fetching stats for PLayer 2
-        try {
-            const res = await fetch(`${SERVER_URL}/getstats`, {
-                method: 'POST',
-                body: JSON.stringify({ user2 }),
-                headers: { 'Content-Type' : 'application/json' },
-                credentials: 'include'
-            });
-            const data = await res.json();
-        }catch(error) {
-            console.log(error);
-        }
-
-        //Calculating new rating for Player 1 and Player 2
-
+        console.log('Reacccccccccccccccched submitting scores to db');
+        await fetch(`${SERVER_URL}/creatematchhistory`, {
+            method: 'POST',
+            body: JSON.stringify({ user1, user2, score1, score2 }),
+            headers: { 'Content-Type' : 'application/json' },
+            credentials: 'include'
+        });
         routerToRoom();
-
     }
-
 
     const unlisten = history.listen (location => {
         console.log("Exited room");
         socket.emit('exitRoom');
         unlisten();
     });
+
     function playerAction(e){
         Monke.playerAction(e.target);
     }
