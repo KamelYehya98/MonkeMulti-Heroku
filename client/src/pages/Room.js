@@ -244,12 +244,26 @@ function Room() {
             img.setAttribute('index', ""+i);
             img.setAttribute('player', ""+2);
 
-            //img.setAttribute("onclick", playerAction());
-            parent.appendChild(img);
+            img.addEventListener("click", ()=>{playerAction(img)});
+
+            if(parent == null){
+                parent = document.createElement("div");
+                parent.classList.add('col-md-3', 'col-2', 'd-flex', 'justify-content-center', 'flex-column', 'image');
+                parent.id = "2" + i;
+                parent.appendChild(img);
+                document.getElementById('cards-container-player2').appendChild(parent);
+                console.log(parent + " newwwwwww");
+            }else{
+                parent.appendChild(img);
+                console.log(parent);
+            }
+
         }
+
         for(i=0; i<4; i++)
         {
             parent = document.getElementById("1" + i);
+
             console.log(parent);
             img = document.createElement('img');
             img.setAttribute("src", "");
@@ -257,8 +271,19 @@ function Room() {
             img.setAttribute('index', ""+i);
             img.setAttribute('player', ""+1);
 
-            //img.setAttribute("onclick", playerAction());
-            parent.appendChild(img);
+            img.addEventListener("click", ()=>{playerAction(img)});
+            
+            if(parent == null){
+                parent = document.createElement("div");
+                parent.classList.add('col-md-3', 'col-2', 'd-flex', 'justify-content-center', 'flex-column', 'image');
+                parent.id = '1' + i;
+                parent.appendChild(img);
+                document.getElementById('cards-container-player1').appendChild(parent);
+                console.log(parent + " newwwwwww");
+            }else{
+                console.log(parent);
+                parent.appendChild(img);
+            }
         }
     }
 
