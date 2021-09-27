@@ -60,7 +60,8 @@ async function getRoundsWon(user1, user2) {
     const data = await res.json();
     console.log(`Wins for 1: ${data.player1wins}, Wins for 2: ${data.player2wins}`);
     let win1 = data.player1wins, win2 = data.player2wins, matchCount = data.matchCount;
-    return {win1, win2, matchCount};
+    let ratrut = [win1, win2, matchCount];
+    return ratrut;
 }
 
 function Room() {
@@ -82,10 +83,12 @@ function Room() {
 
         //Display round won prompt
 
-        const {win1, win2, matchCount} = getRoundsWon(user1, user2);
-        rounds1 = win1;
-        rounds2 = win2;
-        matches = matchCount;
+        const moratrat = await getRoundsWon(user1, user2);
+        rounds1 = moratrat[0];
+        rounds2 = moratrat[1];
+        matches = moratrat[2]+1;
+        if (score1 > score2) rounds1++;
+        else if (score1 < score2) rounds2++;
         console.log(`Rounds 1: ${rounds1} Rounds 2: ${rounds2} Matches: ${matches}`);
         document.getElementById("roundsPrompt").classList.remove("d-none");
         document.getElementById('user1details').innerHTML = "Username: " + user1 + "  Score: " + score1 + "  Nb Rounds Won: " + rounds1;
