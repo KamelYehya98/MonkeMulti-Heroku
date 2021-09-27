@@ -5,7 +5,6 @@ import sok from "../services/socket";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SERVER_URL from "../constants";
 import {getLatestRoundWinner} from "../pages/Room";
-// import MatchHistory from '../../../models/MatchHistory';
 import '../style.css'
 
 class Monke {
@@ -1337,31 +1336,10 @@ class Monke {
     }
 
     async getNbCardsToView(){
-        // const user1 = this.Username;
-        // const user2 = this.OppUsername;
-        // try{
-        //     await MatchHistory.find({            
-        //         $or:[
-        //             {user1, user2},
-        //             {user1: user2, user2: user1}
-        //         ]}, (err, matches) =>{
-            
-        //         console.log("MAAAAAAAAAAAAAAAAAAAAAAAATCHES AREEEEEEEEEE: " + matches);
-        //         if(matches.length == 0){
-        //             return "Empty";
-        //         }else{
-        //             if(matches[0].status1 == "Win")
-        //                 return matches[0].user1;
-        //             else if(matches[0].status1 == "Lose")
-        //                 return matches[0].user2;
-        //             else 
-        //                 return "Draw"
-        //         }
-        //     }).sort({matchdate:-1});
-        // }catch(error){
-        //     console.log(error);
-        // }
+        console.log("do nothing");
     }
+
+    
 
 
 

@@ -66,11 +66,13 @@ function Room() {
         score2 = Monke.calculateScoreOpp();
         user1 = Monke.Username;
         user2 = Monke.OppUsername;
+
         //Display round won prompt
         document.getElementById("roundsPrompt").classList.remove("d-none");
-        console.log('IN SUBMITTING TO DATABASE INSIDE ROOM: ');
-        console.log(score1 + " :" + score2 + ": " + user1 + " :" + user2);
+        document.getElementById('user1details').innerHTML = "Username: " + user1 + "  Score: " + score1 + "  Nb Rounds Won: ";
+        document.getElementById('user2details').innerHTML = "Username: " + user2 + "  Score: " + score2 + "  Nb Rounds Won: ";
 
+        Monke.socket.emit('')
         console.log('Reacccccccccccccccched submitting scores to db');
         await fetch(`${SERVER_URL}/creatematchhistory`, {
             method: 'POST',
@@ -149,17 +151,19 @@ function Room() {
         <Router>
             <div className="mt-2 d-flex justify-content-center align-items-center w-100" id="themaincontainer">
                 <audio id="monkesound" src={monkeAudio}></audio>
-                <div className="next-round" id = "roundsPrompt" class = "d-none">
+                
+                <div className="next-round d-none"  id="roundsPrompt">
                     <h1>Rounds Won</h1>
                     <div className="d-flex justify-content-evenly">
-                        <p>{user1}: {score1}</p>
-                        <p>{user2}: {score2}</p>
+                        <p id='user1details'></p>
+                        <p id='user2details'></p>
                     </div>
                     <div className="d-flex justify-content-between">
-                        <button id="leave" onClick={leaveMatch}>Leave</button>
-                        <button id="playNext" onClick={nextRound}>Play Next Round</button>
+                        <button id="leave">Leave</button>
+                        <button id="playNext">Play Next Round</button>
                     </div>
                 </div>
+
                 <button id="showHideChat" onClick={showHide}>
                     <img src={chatIcon} alt="chat" />
                 </button>

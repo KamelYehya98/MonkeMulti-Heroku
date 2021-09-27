@@ -40,7 +40,7 @@ module.exports.getMatchHistory = async (req, res) => {
             else{
                 res.json({matches});
             }
-        });
+        }).sort({matchdate:-1});
     }catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});
@@ -59,7 +59,7 @@ module.exports.getGameHistory = async (req, res) => {
             else{
                 res.json({games});
             }
-        });
+        }).sort({gamedate:-1});
     }catch(error){
         console.log(error);
         res.json({error: "database connection error / user not found"});

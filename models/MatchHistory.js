@@ -87,7 +87,28 @@ function calcRate (rating1, rating2, games1, games2, winner) {
     return {newScore1, newScore2};
 }
 
-
+MatchHistorySchema.statics.getNbRoundsPlayed = async function(user1, user2){
+    let matches = await this.find({
+        $or:[
+            {user1, user2},
+            {user1: user2, user2: user1}
+        ]
+    });
+    for(var i=0; i<matches.length; i++){
+        if(matches[i].user1 == user1){
+            if(matches[i].status1 == "Win")
+                player1wins++;
+            else if(matches[i].status1 == "Lose")
+                player2wins++;
+        }else{
+            if(matches[i].status2 == "Win")
+                player1wins++;
+            else if(matches[i].status2 == "Lose")
+                player2wins++;
+        }
+    }
+    return {player1wins, player2wins};
+}
 
 //Static method to log in the user
 MatchHistorySchema.statics.createMatchHistory = async function(user1, user2, score1, score2){
