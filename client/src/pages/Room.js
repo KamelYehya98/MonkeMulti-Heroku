@@ -244,7 +244,7 @@ function Room() {
             img.setAttribute('index', ""+i);
             img.setAttribute('player', ""+2);
 
-            img.addEventListener("click", ()=>{playerAction(img)});
+            img.addEventListener("click", playerAction);
 
             if(parent == null){
                 parent = document.createElement("div");
@@ -271,7 +271,7 @@ function Room() {
             img.setAttribute('index', ""+i);
             img.setAttribute('player', ""+1);
 
-            img.addEventListener("click", ()=>{playerAction(img)});
+            img.addEventListener("click", playerAction);
             
             if(parent == null){
                 parent = document.createElement("div");
