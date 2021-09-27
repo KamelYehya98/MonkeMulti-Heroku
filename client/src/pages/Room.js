@@ -53,6 +53,7 @@ async function getLatestRoundWinner(){
 function Room() {
 
     const socket = sok.getSocket();
+    let score1, score2, user1, user2;
     const history = useHistory();
     let chatDisabled = true;
     const routerToRoom = () => {
@@ -61,10 +62,12 @@ function Room() {
 
     async function submitToDatabase(e){
         e.preventDefault();
-        let score1 = Monke.calculateScore();
-        let score2 = Monke.calculateScoreOpp();
-        let user1 = Monke.Username;
-        let user2 = Monke.OppUsername;
+        score1 = Monke.calculateScore();
+        score2 = Monke.calculateScoreOpp();
+        user1 = Monke.Username;
+        user2 = Monke.OppUsername;
+        //Display round won prompt
+        document.getElementById("roundsPrompt").classList.remove("d-none");
         console.log('IN SUBMITTING TO DATABASE INSIDE ROOM: ');
         console.log(score1 + " :" + score2 + ": " + user1 + " :" + user2);
 
@@ -75,7 +78,6 @@ function Room() {
             headers: { 'Content-Type' : 'application/json' },
             credentials: 'include'
         });
-        routerToRoom();
     }
 
     const unlisten = history.listen (location => {
@@ -133,11 +135,31 @@ function Room() {
         }
     }
 
+    function leaveMatch() {
+        routerToRoom();
+        document.getElementById("roundsPrompt").classList.add("d-none");
+    }
+
+    function nextRound() {
+        Monke = Monke.nextRound();
+    }
+
 
     return (
         <Router>
             <div className="mt-2 d-flex justify-content-center align-items-center w-100" id="themaincontainer">
                 <audio id="monkesound" src={monkeAudio}></audio>
+                <div className="next-round" id = "roundsPrompt" class = "d-none">
+                    <h1>Rounds Won</h1>
+                    <div className="d-flex justify-content-evenly">
+                        <p>{user1}: {score1}</p>
+                        <p>{user2}: {score2}</p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <button id="leave" onClick={leaveMatch}>Leave</button>
+                        <button id="playNext" onClick={nextRound}>Play Next Round</button>
+                    </div>
+                </div>
                 <button id="showHideChat" onClick={showHide}>
                     <img src={chatIcon} alt="chat" />
                 </button>

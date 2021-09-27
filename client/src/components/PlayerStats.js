@@ -32,7 +32,7 @@ export default function PlayerStats({ username }) {
             if (data.rating !== stats.rating || data.winrate !== stats.winrate || data.roundsPlayed !== stats.roundsPlayed || data.gamesPlayed !== stats.gamesPlayed)
             {
                 console.log(data.rating + data.winrate);
-                setStats({rating:data.rating, winrate:data.winrate, roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
+                setStats({rating:parseInt(data.rating), winrate:parseFloat(data.winrate).toFixed(2), roundsPlayed:data.roundsPlayed, gamesPlayed:data.gamesPlayed});
             }
             //}
         }catch(err){

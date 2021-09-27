@@ -15,6 +15,65 @@ audio{
     top: 0;
 }
 
+.next-round{
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    border: 2px solid #198754;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 3px 6px 6px black;
+    transform: translate(-50%, -25%);
+    z-index: 2;
+    background: #2c2f38;
+}
+
+.next-round h1{
+    text-align: center;
+    text-decoration: underline;
+    text-decoration-thickness: 0.25rem;
+    text-decoration-color: #0fc473;
+    font-family: "Baloo 2", sans-serif;
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 3rem;
+}
+
+.next-round p{
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    display: unset;
+    font-size: 1.25rem;
+}
+
+#leave{
+    background: #dc3545;
+    padding: 0.4rem;
+    min-width: 5.5rem;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-right: 1rem;
+}
+
+#playNext{
+    background: #0fc473;
+    padding: 0.4rem;
+    min-width: 5.5rem;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+    margin-top: 2rem;
+}
+
+
 /* #themaincontainer button, #themaincontainertutorial button{
     width: 100%;
     min-height: 2.1rem;

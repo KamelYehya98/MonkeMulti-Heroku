@@ -1418,6 +1418,10 @@ class Monke {
         }
     }
 
+    nextRound() {
+        
+    }
+
     // remPlayer2Comp() {
     //     console.log("Removed PLayer 2 components");
     //     document.getElementById("assets-container-player2").parentNode.classList.add("d-none");
