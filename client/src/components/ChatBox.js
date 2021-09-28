@@ -1,13 +1,16 @@
 import React from 'react';
 import sok from '../services/socket';
 import "../pages/css/Chat.css";
+import messageAudio from "../audio/Incoming Message.mp3";
 
 export default function ChatBox(){
     const socket = sok.getSocket();
+    const incomingMessage = new Audio(messageAudio);
 
     socket.on('message', (mesObj) => {
         if(document.getElementById('chatBox').classList.contains('d-none')){
             document.getElementById('showHideChat').classList.add('message-received');
+            incomingMessage.play();
         }
         var list = document.getElementById("messageList");
         var entryText = document.createElement("p");
