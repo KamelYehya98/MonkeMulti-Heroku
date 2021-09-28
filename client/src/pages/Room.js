@@ -67,7 +67,7 @@ async function getRoundsWon(user1, user2) {
 function Room() {
     const socket = sok.getSocket();
     let room;
-    let score1, score2, user1, user2, rounds1, rounds2, matches, nextsPressed = 0;
+    let score1, score2, user1, user2, rounds1, rounds2, matches, nextsPressed = 0, stateOfMatch1 ="", stateOfMatch2 ="";
     const history = useHistory();
     let chatDisabled = true;
     const routerToWelcome = () => {
@@ -87,18 +87,38 @@ function Room() {
         rounds1 = moratrat[0];
         rounds2 = moratrat[1];
         matches = moratrat[2]+1;
-        if (score1 > score2) rounds2++;
-        else if (score1 < score2) rounds1++;
+        if (score1 > score2) {
+            rounds2++;
+            stateOfMatch1 = "You Lost The Round...";
+            stateOfMatch2 = "You Won The Round!";
+        } 
+        else if (score1 < score2) {
+            rounds1++;
+            stateOfMatch1 = "You Won The Round!";
+            stateOfMatch2 = "You Lost The Round...";
+        }
+        else stateOfMatch1 = stateOfMatch2 = "Draw!";
         console.log(`Rounds 1: ${rounds1} Rounds 2: ${rounds2} Matches: ${matches}`);
         document.getElementById("roundsPrompt").classList.remove("d-none");
+        document.getElementById("match state").innerHTML = stateOfMatch1;
         document.getElementById('user1details').innerHTML = "Username: " + user1 + "<br/>  Score: " + score1 + "<br/>  Nb Rounds Won: " + rounds1;
         document.getElementById('user2details').innerHTML = "Username: " + user2 + "<br/>  Score: " + score2 + "<br/>  Nb Rounds Won: " + rounds2;
         if (matches === 5 || rounds1 === 3 || rounds2 === 3)
             {
+                if (rounds1 > rounds2) {
+                    stateOfMatch1 = "You Won The Match!!";
+                    stateOfMatch2 = "You Lost The Match..";
+                }
+                else if (rounds1 < rounds2) {
+                    stateOfMatch1 = "You Lost The Match..";
+                    stateOfMatch2 = "You Won The Match!!";
+                }
+                else stateOfMatch1 = stateOfMatch2 = "Draw!";
+                document.getElementById("match state").innerHTML = stateOfMatch1;
                 document.getElementById("playNext").classList.add("d-none");
                 socket.emit('hideRoundButton');
             }
-        socket.emit('showRoundPrompt', ({user1, user2, score1, score2, rounds1, rounds2}));
+        socket.emit('showRoundPrompt', ({user1, user2, score1, score2, rounds1, rounds2, stateOfMatch2}));
 
         console.log('IN SUBMITTING TO DATABASE INSIDE ROOM: ');
         console.log(score1 + " :" + score2 + ": " + user1 + " :" + user2);
@@ -304,6 +324,7 @@ function Room() {
                 console.log("Starting next round!");
                 createRoom();
                 reloadComponents();
+                document.getElementById("playNext").classList.remove("opaque");
                 socket.emit('nextRound', (room));
                 Monke.nextRound(first);
                 //window.location.assign('/room');
@@ -312,6 +333,8 @@ function Room() {
 
     socket.on('showRoundPrompt', (obj) => {
         document.getElementById("roundsPrompt").classList.remove("d-none");
+        stateOfMatch1 = obj.stateOfMatch2;
+        document.getElementById("match state").innerHTML = stateOfMatch1;
         document.getElementById('user1details').innerHTML = "Username: " + obj.user1 + "<br/>  Score: " + obj.score1 + "<br/>  Nb Rounds Won: " + obj.rounds1;
         document.getElementById('user2details').innerHTML = "Username: " + obj.user2 + "<br/>  Score: " + obj.score2 + "<br/>  Nb Rounds Won: " + obj.rounds2;
     });
@@ -329,6 +352,7 @@ function Room() {
         document.getElementById("roundsPrompt").classList.add("d-none");
         joinRoom(roomid);
         reloadComponents();
+        document.getElementById("playNext").classList.remove("opaque");
         Monke.nextRound(true);
         //window.location.assign('/room');
     });
@@ -340,7 +364,7 @@ function Room() {
                 <audio id="monkesound" src={monkeAudio}></audio>
                 
                 <div className="next-round d-none"  id="roundsPrompt">
-                    <h1>Rounds Won</h1>
+                    <h1 id ="match state">{stateOfMatch1}</h1>
                     <div className="d-flex justify-content-evenly">
                         <p className="me-5" id='user1details'></p>
                         <p className="ms-5" id='user2details'></p>

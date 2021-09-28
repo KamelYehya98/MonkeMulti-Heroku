@@ -292,7 +292,7 @@ io.on("connection", socket => {
 
   socket.on('showRoundPrompt', (obj) => {
     const user = getUser(socket.id);
-    socket.to(user.room).emit('showRoundPrompt', {user1: obj.user1, user2: obj.user2, score1: obj.score1, score2: obj.score2, rounds1: obj.rounds1, rounds2: obj.rounds2});
+    socket.to(user.room).emit('showRoundPrompt', {user1: obj.user1, user2: obj.user2, score1: obj.score1, score2: obj.score2, rounds1: obj.rounds1, rounds2: obj.rounds2, stateOfMatch2: obj.stateOfMatch2});
   });
 
   socket.on('hideRoundButton', () => {
