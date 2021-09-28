@@ -6,6 +6,16 @@ import messageAudio from "../audio/Incoming Message.mp3";
 export default function ChatBox(){
     const socket = sok.getSocket();
     const incomingMessage = new Audio(messageAudio);
+    
+    setTimeout(()=>{
+        document.getElementById("messageInput")
+        .addEventListener("keyup", (event)=>{
+            event.preventDefault();
+            if (event.key === "Enter") {
+                document.getElementById("sendMessageBtn").click();
+            }
+        });
+    }, 1500);
 
     socket.on('message', (mesObj) => {
         if(document.getElementById('chatBox').classList.contains('d-none')){
@@ -52,7 +62,7 @@ export default function ChatBox(){
             <div className="send-message d-flex align-items-end">
                 <input type="text" placeholder="Message" id="messageInput"/>
                 <div>
-                    <button onClick={sendMessage}>Send</button>
+                    <button onClick={sendMessage} id="sendMessageBtn">Send</button>
                 </div>
             </div>
         </div>

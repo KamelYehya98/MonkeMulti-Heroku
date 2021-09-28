@@ -142,7 +142,7 @@ class Monke {
             console.log(`${name} has diconnected`);
             this.Player1.BlockAction = true;
             this.OppDisconnect = true;
-            this.endGame = true;
+            
             this.calculateResult();
         }
     });
@@ -1118,9 +1118,16 @@ class Monke {
         this.revealAllCards();
         if(!this.OppDisconnect)
             this.socket.emit('calculateResults');
+        else{
+            //Display some shit
+            console.log("display some shit........");
+        }
         setTimeout(()=>{
-            if(!this.endGame)
+            if(!this.endGame){
+                this.endGame = true;
+                console.log("entered the fucker...........");
                 document.getElementById("formBtn").click();
+            }
         }, 4000);
     }
 

@@ -5,6 +5,7 @@ import Images from "../game_classes/Images";
 
 export default function Player1({playerAction, CallButtons}) {
 
+
 return (
     <div className="row d-md-flex flex-md-row justify-content-md-between flex-md-nowrap d-flex flex-column align-content-around addopacitymonkey">
     <div className="col-md-6 d-flex flex-row justify-content-around col-12 m-1 p-0 order-md-0 gap-1" id="cards-container-player1">

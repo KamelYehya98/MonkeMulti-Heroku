@@ -37,7 +37,6 @@ GameSchema.post('save', function(doc, next){
 //Static method to log in the user
 GameSchema.statics.createGameHistory = async function(user1, user2, status1, status2, nbrounds){
     try{
-
         await this.create({user1, user2, nbrounds, status1, status2});
 
         const player1 = await Players.findOne({username: user1});
@@ -52,8 +51,6 @@ GameSchema.statics.createGameHistory = async function(user1, user2, status1, sta
 
         await Players.findOneAndUpdate({"username": user1}, {gamesPlayed: gamesPlayed1, gamesWon: gamesWon1, winrate: winrate1});
         await Players.findOneAndUpdate({"username": user2}, {gamesPlayed: gamesPlayed2, gamesWon: gamesWon2, winrate: winrate2});
-
-
         
     }catch(err){
         console.log(err);

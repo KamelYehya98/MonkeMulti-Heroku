@@ -65,7 +65,7 @@ export default function MatchHistory({ username }) {
 
         try{
             console.log('Reacccccccccccccccched creating match history');
-            const res = await fetch(`${SERVER_URL}/creatematchhistory`, {
+            await fetch(`${SERVER_URL}/creatematchhistory`, {
                 method: 'POST',
                 body: JSON.stringify({ user1, user2, score1, score2 }),
                 headers: { 'Content-Type' : 'application/json' },
