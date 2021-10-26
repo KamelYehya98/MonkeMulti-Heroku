@@ -10,7 +10,7 @@
 
 .welcome-container{
     padding: 5em 0;
-    max-width: 700px;
+    /* max-width: 700px; */
 }
 
 .fake-match-maker input {
@@ -87,20 +87,23 @@
     border: none;
     border-radius: 8px;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 5px;
     color: white;
     background: #0C643D;
     box-shadow: 0px 2px 4px black;
     transition: 250ms;
+}
+.join-room-button{
+    margin-top:15px;
 }
 
 .create-room-button:hover, .join-room-button:hover{
     box-shadow: 0px 6px 12px black;
 }
 
-.waiting-container{
+/* .waiting-container{
     min-height: 565px;
-}
+} */
 
 .or{
     font-size: 1.4rem !important;
@@ -109,7 +112,8 @@
     color: white;
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #stats-container, .history-container{
@@ -121,6 +125,7 @@
     width: 100%;
     color: white;
     text-align: center;
+    display: block;
 }
 
 .stats-table th {
@@ -145,22 +150,41 @@
     border-bottom: 0px !important;
 }
 
-@media only screen and (min-width: 1900px) {
+@media only screen and (min-width: 1201px) {
     .welcome-container{
-        max-width: 1000px;
+        max-width: 75%;
+        min-width: 70%;
+    }
+    :root{
+        font-size: 1rem;
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .welcome-container{
+        max-width: 80%;
+        min-width: 75%;
+    }
+    :root{
+        font-size: 0.9rem;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px){
+    .welcome-container{
+        max-width: 90%;
+        min-width: 80%;
+    }
+    :root{
+        font-size: 0.8rem;
+    }
+}
+
+@media only screen and (max-width: 767px) {
     .welcome-container{
         width: 100%;
     }
-
-    .welcome-container td{
-        width: 100%;
-    }
-
-    .welcome-container tr{
-        display: block;
+    :root{
+        font-size: 0.6rem;
     }
 }

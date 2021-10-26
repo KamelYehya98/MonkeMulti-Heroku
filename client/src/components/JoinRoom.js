@@ -24,7 +24,8 @@ export default function JoinRoom() {
         error_div.appendChild(err_text);
 
         setTimeout(() => {
-            document.getElementById("errtxt").remove();
+            if(document.getElementById("errtxt") != null)
+                document.getElementById("errtxt").remove();
             if(document.getElementById('errtxt') == null){
                 document.querySelector(".join-room-input").style.borderTopLeftRadius = "8px";
                 document.querySelector(".join-room-input").style.borderTopRightRadius = "8px";

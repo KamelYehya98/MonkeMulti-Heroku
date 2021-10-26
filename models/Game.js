@@ -37,6 +37,15 @@ GameSchema.post('save', function(doc, next){
 //Static method to log in the user
 GameSchema.statics.createGameHistory = async function(user1, user2, status1, status2, nbrounds){
     try{
+        //Only save the latest 5 games
+        await GameHistory.find({}, async(err, allgames) =>{
+            if(err){
+                console.log("Error getting all gamehistories");
+            }
+            if(allgames.length >= 5){
+                await GameHistory.findOneAndDelete({},{"sort": { "_id": 1 }});
+            }
+        });
         await this.create({user1, user2, nbrounds, status1, status2});
 
         const player1 = await Players.findOne({username: user1});

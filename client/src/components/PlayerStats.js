@@ -43,18 +43,18 @@ export default function PlayerStats({ username }) {
     return (
         <div id='stats-container' className="welcome-card w-100">
             <p>{username}'s stats</p>
-            <table className="stats-table">
-                <tr>
-                    <th>Rating</th>
-                    <th>Winrate</th>
-                    <th>Games Played</th>
-                    <th>Rounds Played</th>
+            <table className="stats-table text-center">
+                <tr className='col-12 d-flex justify-content-between'>
+                    <th className='w-25'>Rating</th>
+                    <th className='w-25'>Winrate</th>
+                    <th className='w-25'>Games Played</th>
+                    <th className='w-25'>Rounds Played</th>
                 </tr>
-                <tr className="text-light">
-                    <th id="rating">{parseInt(stats.rating)}</th>
-                    <th id="winrate">{parseFloat(stats.winrate).toFixed(2)}%</th>
-                    <th id="gamesPlayed">{stats.gamesPlayed}</th>
-                    <th id="roundsPlayed">{stats.roundsPlayed}</th>
+                <tr className="text-light col-12 d-flex justify-content-between">
+                    <th className='w-25' id="rating">{parseInt(stats.rating)}</th>
+                    <th className='w-25' id="winrate">{parseFloat(stats.winrate).toFixed(2)}%</th>
+                    <th className='w-25' id="gamesPlayed">{stats.gamesPlayed}</th>
+                    <th className='w-25' id="roundsPlayed">{stats.roundsPlayed}</th>
                 </tr>
             </table>
         </div>

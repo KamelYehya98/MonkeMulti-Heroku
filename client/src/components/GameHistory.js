@@ -11,23 +11,27 @@ export default function GameHistory({ username }) {
     {
         let table = document.getElementById("gameTable");
         let row = document.createElement('tr');
-        row.classList.add('text-light');
+        row.classList.add('text-light', 'col-12', 'd-flex');
         
         let col;
         col = document.createElement('td');
         col.innerHTML = "" + user1 + "<br>" + user2;
+        col.classList.add('text-center', 'w-25');
         row.appendChild(col);
-
+        
         col = document.createElement('td');
         col.innerHTML = "" + status1 + "<br>" + status2;
+        col.classList.add('text-center', 'w-25');
         row.appendChild(col);
 
         col = document.createElement('td');
         col.innerHTML = "" + nbrounds;
+        col.classList.add('text-center', 'w-25');
         row.appendChild(col);
 
         col = document.createElement('td');
         col.innerHTML = "" + new Date(Date.parse(matchdate)).toLocaleString();
+        col.classList.add('text-center', 'w-25');
         row.appendChild(col);
 
 
@@ -63,14 +67,14 @@ export default function GameHistory({ username }) {
     getGameHistory();
 
     return (
-        <div className="history-container  welcome-card w-100">
+        <div className="history-container welcome-card w-100">
             <p>{username}'s game history</p>
-            <table className="stats-table" id="gameTable">
-                <tr className="text-light">
-                    <th>Username</th>
-                    <th>Status</th>
-                    <th>Nb Rounds</th>
-                    <th>Date</th>
+            <table className="stats-table col-12 text-center" id="gameTable">
+                <tr className="text-light col-12 d-flex justify-content-between">
+                    <th className="col-3 text-center">Username</th>
+                    <th className="col-3 text-center">Status</th>
+                    <th className="col-3 text-center">Nb Rounds</th>
+                    <th className="col-3 text-center">Date</th>
                 </tr>
             </table>
         </div>

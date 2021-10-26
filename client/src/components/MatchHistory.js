@@ -9,23 +9,27 @@ export default function MatchHistory({ username }) {
     {
         let table = document.getElementById("matchTable");
         let row = document.createElement('tr');
-        row.classList.add('text-light');
+        row.classList.add('text-light', 'd-flex', 'justify-content-between');
         
         let col;
         col = document.createElement('td');
         col.innerHTML = "" + user1 + "<br>" + user2;
+        col.classList.add('text-center', 'w-25');
         row.appendChild(col);
 
         col = document.createElement('td');
         col.innerHTML = "" + score1 + "<br>" + score2;
+        col.classList.add('text-center', 'w-25');
         row.appendChild(col);
 
         col = document.createElement('td');
         col.innerHTML = "" + status1 + "<br>" + status2;
+        col.classList.add('text-center', 'w-25');
         row.appendChild(col);
 
         col = document.createElement('td');
         col.innerHTML = "" + new Date(Date.parse(matchdate)).toLocaleString();
+        col.classList.add('text-center', 'w-25');
         row.appendChild(col);
 
         table.appendChild(row);
@@ -77,17 +81,17 @@ export default function MatchHistory({ username }) {
     }
     
     return (
-        <div className="history-container  welcome-card w-100">
+        <div className="history-container welcome-card w-100">
             <p>{username}'s match history</p>
-            <table className="stats-table" id="matchTable">
-                <tr className="text-light">
-                    <th>Username</th>
-                    <th>Score</th>
-                    <th>Status</th>
-                    <th>Date</th>
+            <table className="stats-table table text-center" id="matchTable">
+                <tr className="text-light col-12 d-flex justify-content-center">
+                    <th className="w-25 text-center">Username</th>
+                    <th className="w-25 text-center">Score</th>
+                    <th className="w-25 text-center">Status</th>
+                    <th className="w-25 text-center">Date</th>
                 </tr>
             </table>
-            <div className="container mt-2 border stats-table">
+            {/* <div className="container mt-2 border stats-table">
                 <div className="row fake-match-maker">
                     <span for="user1" className="col-3">Username:</span><input name="user1" type="text" className="col-9 text-dark" />
                     <span for="score1" className="col-3">Score:</span><input name="score1" type="text" className="col-9 text-dark"/>
@@ -97,7 +101,7 @@ export default function MatchHistory({ username }) {
                     <span for="score2" className="col-3">Score:</span><input name="score2" type="text" className="col-9 text-dark" />
                 </div>
                 <button onClick={createFakeMatchHistory} className="btn btn-success mt-1">Create Fake Match</button>
-            </div>
+            </div> */}
         </div>
     );
 }

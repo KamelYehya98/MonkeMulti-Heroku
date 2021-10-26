@@ -8,15 +8,17 @@ const Home = () => {
 
     return (
         <div className="container-fluid fluid-container">
-                <div className="row d-flex flex-no-wrap flex-md-row flex-column justify-content-center align-items-center">
-                    <div className="col-md-6 order-md-0 order-1 d-flex justify-content-center left-col">
-                        <img src={logo} alt='Monkey Logo' onContextMenu="return false;"/>
+                <div className="d-flex flex-xl-row flex-column align-items-center row" >
+                
+                    <div className="order-1 order-xl-0 col-12 mt-5 col-md-8 offset-md-2 col-xl-5 offset-xl-0">
+                        <img src={logo} alt='Monkey Logo' onContextMenu="return false;" className="mb-2 col-10 offset-1 offset-md-0 col-xl-10 offset-xl-1"/>
                     </div>
-
-                    <div className="col-md-6 order-md-1 order-0 d-flex justify-content-center right-col">
-                        <div className="right-col-content">
+                    
+                    <div className="order-0 order-xl-0 col right-col mb-lg-5 col-xl-7 offset-xl-0 align-items-xl-center mb-xl-0">
+                    
+                        <div className="text-center right-col-content col-12 col-md-10 offset-md-1 col-xl-10 offset-xl-1">
                             <h1>Welcome To Monke!</h1>
-                            <p>Challenge your friends and other people online in this exciting card game that is fit for all ages!</p>
+                            <p className="text-center">Challenge your friends and other people online in this exciting card game that is fit for all ages!</p>
                             <Link to='/welcome' className="play-now-btn">PLAY NOW!</Link>
                             <Link to = '/howtoplay' className="learn-to-play">Learn to play.</Link>
                         </div>

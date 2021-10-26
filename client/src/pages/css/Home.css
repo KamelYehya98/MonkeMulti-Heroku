@@ -21,10 +21,6 @@
     padding-top: 5em;
 }
 
-.left-col img{
-    width: 65%;
-}
-
 .right-col-content h1{
     font-size: 2.6em;
     font-family: 'Baloo 2', sans-serif;
@@ -35,7 +31,6 @@
     font-size: 1.4em;
     margin: 1em 0 1em;
     color: white;
-    padding-right: 5em;
 }
 
 .play-now-btn{
@@ -80,42 +75,35 @@
     -webkit-text-fill-color: transparent;
 }
 
-@media only screen and (min-width: 1900px) {
+@media only screen and (min-width: 993px) {
     :root{
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+    }
+    html{
+        font-size: 1.2rem;
     }
 }
 
-@media only screen and (max-width: 1024px){
+@media only screen and (min-width: 768px) and (max-width: 992px){
     html{
-        font-size: 0.75rem;
-    }
-
-    .left-col img{
-        width: 100%;
+        font-size: 1.3rem;
     }
 
     .right-col-content{
         margin-top: 1em;
     }
+
 }
 
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 767px){
 
     html{
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     .right-col-content{
         text-align: center;
         padding: 0 0 0;
-    }
-    
-    .left-col img{
-        position: static;
-        height: auto;
-        width: 70%;
-        margin-top: 5rem;
     }
 
     .right-col{
