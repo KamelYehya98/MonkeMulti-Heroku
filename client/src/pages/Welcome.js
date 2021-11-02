@@ -28,6 +28,26 @@ const Welcome = ({username}) => {
         document.getElementById('loginrequire').remove();
     }
 
+    async function checkIfUserLoggedIn(){
+        console.log("Checking if User is logged in..............");
+        let loggedIn = false;
+        try{
+            console.log('Reacccccccccccccccched Checking if theres a cookie');
+              const res = await fetch(`${SERVER_URL}/checkuser`, {
+                  method: 'POST',
+                  body: JSON.stringify({ }),
+                  headers: { 'Content-Type' : 'application/json' },
+                  credentials: 'include'
+              });
+              const data = await res.json();
+              if(data.user != null)
+                loggedIn = true;
+        }catch(err){
+            console.log(err);
+        }
+        return loggedIn;
+    }
+
     function isGuest(){
         if(username != null && username.length > 6 && username.slice(0, 6) === "Guest_")
             return true;
@@ -44,11 +64,11 @@ const Welcome = ({username}) => {
                             <img src={guestImage} alt="Guest"/>
                         </button>
                     </div>
-                    <JoinRoom />
+                    <JoinRoom checkIfUserLoggedIn={checkIfUserLoggedIn}/>
                     <p className="or">OR</p>
-                    <CreateRoom />
+                    <CreateRoom checkIfUserLoggedIn={checkIfUserLoggedIn}/>
                     <p className="or">OR</p>
-                    <RandomMatch/>  
+                    <RandomMatch checkIfUserLoggedIn={checkIfUserLoggedIn}/>  
                 </div>
                 {!isGuest() && (<PlayerStats username={username} />)}
                 {username!=null && !isGuest() && (<MatchHistory username={username}/>)} 

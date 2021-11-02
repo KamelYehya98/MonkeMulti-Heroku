@@ -6,28 +6,15 @@ import SERVER_URL from "../constants";
 import sok from "../services/socket";
 import '../pages/css/Welcome.css';
 
-export default function JoinRoom() {
+export default function JoinRoom({checkIfUserLoggedIn}) {
     const history = useHistory();
     const routerToRoom = () => {
       history.push('/room');
     }
 
     async function joinRoom(){
-        let notlogged = false;
-        try{
-            console.log('Reacccccccccccccccched Checking if theres a cookie');
-              const res = await fetch(`${SERVER_URL}/checkUser`, {
-                  method: 'POST',
-                  body: JSON.stringify({ }),
-                  headers: { 'Content-Type' : 'application/json' },
-                  credentials: 'include'
-              });
-              if(res.user == null){
-                notlogged = true;
-              }
-        }catch(err){
-            console.log(err);
-        }
+        let loggedIn = await checkIfUserLoggedIn();
+
         const room_id = document.getElementById('room_id').value;
         let error_div = document.getElementById('error_div');
         //creating the error text
@@ -50,7 +37,8 @@ export default function JoinRoom() {
             document.querySelector(".join-room-input").style.borderTopRightRadius = "0";
             err_text.innerHTML = "Please enter a room ID";
             return;
-        }else if(notlogged){
+        }else if(!loggedIn){
+            console.log("User is not logged in..........");
             document.querySelector(".join-room-input").style.borderTopLeftRadius = "0";
             document.querySelector(".join-room-input").style.borderTopRightRadius = "0";
             let login_err_text = document.getElementById("loginrequire");

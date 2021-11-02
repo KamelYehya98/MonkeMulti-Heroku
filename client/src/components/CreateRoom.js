@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SERVER_URL from "../constants";
 import sok from "../services/socket";
 
-export default function CreateRoom() {
+export default function CreateRoom({checkIfUserLoggedIn}) {
     let data;
     const history = useHistory();
     const routerToRoom = () => {
@@ -12,6 +12,17 @@ export default function CreateRoom() {
     }
 
     async function createRoom(){
+        let loggedIn = await checkIfUserLoggedIn();
+        if(!loggedIn){
+            document.querySelector(".join-room-input").style.borderTopLeftRadius = "0";
+            document.querySelector(".join-room-input").style.borderTopRightRadius = "0";
+            let login_err_text = document.getElementById("loginrequire");
+            login_err_text.classList.remove('d-none');
+            let txt = document.createElement('p');
+            txt.innerHTML = "Please Login or SignUp in order to continue.<br/> You can click on the MONKE icon above to play as a guest or SignUp and keep track of your winrate, rating, match history and more.";
+            login_err_text.appendChild(txt);
+            return;
+        }
         try{
             console.log('Reacccccccccccccccched creating room');
               const res = await fetch(`${SERVER_URL}/createroom`, {
