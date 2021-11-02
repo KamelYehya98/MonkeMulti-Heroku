@@ -8,6 +8,8 @@ const app = express();
 const {addUser, removeUser, getUser, getUsersInRoom, playersInRoom, getRandomInt, addToQ, delFromQ} = require('./users');
 const Players = require('./models/Players');
 const Room = require ('./models/Room');
+const User = require('./models/User');
+let usr = undefined;
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () =>{
@@ -28,11 +30,15 @@ const first = getRandomInt(2);
 let firstID;
 console.log(`Player ${first} is starting first`);
 
-
+function isGuest(username){
+  console.log(username);
+  if(username != null && username.length > 6 && username.slice(0, 6) === "Guest_")
+      return true;
+  return false;
+}
 
 io.on("connection", socket => {
   console.log("user connected socketid: " + socket.id);
-
   socket.on("set username", (username) => {
     socket.username = username;
   });
@@ -129,19 +135,27 @@ io.on("connection", socket => {
 
   socket.on('welcome', ()=>{
     console.log(socket.username + " connected to welcome socket with id: " + socket.id);
+    usr = socket.username;
   });
 
   socket.on('disconnect', (reason) => {
+    console.log(socket.id);
+    console.log(usr);
+    if(isGuest(usr)){
+      console.log("ACKNOWLEDGED USER IS GUEST.........");
+      User.findOneAndRemove({username: usr}, error=>{
+        if(error)
+          console.log(error);
+      });
+    }
     const user = removeUser(socket.id);
-
+    console.log("DISCONNECTING.........");
     if (user) {
       console.log(user.name + " left the room with id: " + socket.id + "because of " + reason);
       if (playersInRoom(user.room) === 0 && user.room !== '5d6ru') {
         Room.deleteRoom (user.room);
       }
     }
-
-    //if (user) console.log(user.name + " left the chat with id: " + socket.id);
   });
 
   socket.on('deal', (dealObj) => {

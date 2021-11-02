@@ -4,17 +4,30 @@ import 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SERVER_URL from "../constants";
 import sok from "../services/socket";
-import Monke from "../game_classes/Monke";
 import '../pages/css/Welcome.css';
 
 export default function JoinRoom() {
     const history = useHistory();
     const routerToRoom = () => {
-      //history.push('/joinRoom');
       history.push('/room');
     }
 
     async function joinRoom(){
+        let notlogged = false;
+        try{
+            console.log('Reacccccccccccccccched Checking if theres a cookie');
+              const res = await fetch(`${SERVER_URL}/checkUser`, {
+                  method: 'POST',
+                  body: JSON.stringify({ }),
+                  headers: { 'Content-Type' : 'application/json' },
+                  credentials: 'include'
+              });
+              if(res.user == null){
+                notlogged = true;
+              }
+        }catch(err){
+            console.log(err);
+        }
         const room_id = document.getElementById('room_id').value;
         let error_div = document.getElementById('error_div');
         //creating the error text
@@ -32,14 +45,24 @@ export default function JoinRoom() {
             }
         }, 5000);
 
-        if(room_id == null){
+        if(room_id === ""){
             document.querySelector(".join-room-input").style.borderTopLeftRadius = "0";
             document.querySelector(".join-room-input").style.borderTopRightRadius = "0";
             err_text.innerHTML = "Please enter a room ID";
             return;
+        }else if(notlogged){
+            document.querySelector(".join-room-input").style.borderTopLeftRadius = "0";
+            document.querySelector(".join-room-input").style.borderTopRightRadius = "0";
+            let login_err_text = document.getElementById("loginrequire");
+            login_err_text.classList.remove('d-none');
+            let txt = document.createElement('p');
+            txt.innerHTML = "Please Login or SignUp in order to continue.<br/> You can click on the MONKE icon above to play as a guest or SignUp and keep track of your winrate, rating, match history and more.";
+            login_err_text.appendChild(txt);
+            return;
         }else {
             err_text.innerHTML = "";
         }
+        //Join The Room
         try{
             console.log('Reacccccccccccccccched joining room');
               const res = await fetch(`${SERVER_URL}/joinroom`, {
@@ -65,12 +88,13 @@ export default function JoinRoom() {
                 }
                 console.log(data);
                 routerToRoom();
-                //Monke.remPlayer2Comp();
             });
           }catch(err){
               console.log(err);
           }
     }
+
+
     return (
         <div className="w-100">
             <div>

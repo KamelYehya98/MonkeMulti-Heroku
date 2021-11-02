@@ -150,6 +150,23 @@
     border-bottom: 0px !important;
 }
 
+.login-required-error{
+    border-radius: 15px;
+}
+
+.login-required-error p{
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.login-required-error img{
+    width: 15%;
+    height: 15%;
+    background: white;
+    border-radius: 100%;
+}
+
 @media only screen and (min-width: 1201px) {
     .welcome-container{
         max-width: 75%;
@@ -178,6 +195,10 @@
     :root{
         font-size: 0.8rem;
     }
+    .login-required-error img{
+        width: 15%;
+        height: 15%;
+    }
 }
 
 @media only screen and (max-width: 767px) {
@@ -186,5 +207,8 @@
     }
     :root{
         font-size: 0.6rem;
+    }
+    .login-required-error img{
+        width:20%; height: 20%;
     }
 }

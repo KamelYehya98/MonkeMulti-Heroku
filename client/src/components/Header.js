@@ -59,10 +59,12 @@ const Header = ({user, checkUser}) => {
     }
 
     async function logOutCall(){
+        let usr = await GetUsername();
         try{
             console.log('Reacccccccccccccccched logout');
-            const res = await fetch(`${SERVER_URL}/logout`, {
+            await fetch(`${SERVER_URL}/logout`, {
                 method: 'POST',
+                body: JSON.stringify({usr}),
                 headers: { 'Content-Type' : 'application/json' },
                 credentials: 'include'  
             });
@@ -71,6 +73,24 @@ const Header = ({user, checkUser}) => {
         }catch(err){
             console.log(err);
         }
+    }
+
+    async function GetUsername(){
+        let usr = undefined;
+        try{
+            console.log("GETTTTTTTTTTTING USEER");
+            const res = await fetch(`${SERVER_URL}/checkuser`, {
+                method: 'POST',
+                headers: { 'Content-Type' : 'application/json' },
+                credentials: 'include' 
+            });
+            const data = await res.json();
+            usr = data.user;
+            console.log("USER IN HEADER IS: " + usr);
+        }catch(err){
+            console.log(err);
+        }
+        return usr.username;
     }
 
     return (
@@ -99,7 +119,7 @@ const Header = ({user, checkUser}) => {
                     {user!=null &&
                         (
                             <div className="account-nav" onClick={hideShowOptions}>
-                                <p>{user}</p> <img src={accountImage} alt="Account Image"/>
+                                <p>{user}</p> <img src={accountImage} alt="Account"/>
                             </div>
                         )
                     }       

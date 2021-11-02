@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { isEmail } = require('validator');
 const Player = require('./Players');
+const MatchHistory = require('./MatchHistory');
+const GameHistory = require('./Game');
 
 const userSchema = new mongoose.Schema({
     username:{
@@ -26,6 +28,10 @@ const userSchema = new mongoose.Schema({
     },
     expireToken:{
         type: Date,
+    }, 
+    isGuest:{
+        type: Boolean, 
+        default: false
     }
 });
 
@@ -38,6 +44,18 @@ userSchema.post('save', function(doc, next){
 userSchema.pre('save', async function(next){
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
+
+userSchema.pre('findOneAndRemove', async function(next){
+    console.log("REAACHED REMOVING USER GUEST ON DISCONNECT");
+    await Player.findOneAndRemove({username: this.username});
+    await MatchHistory.deleteMany({
+        $or:[
+            {user1: this.username},
+            {user2: this.username}
+        ]
+    });
     next();
 });
 

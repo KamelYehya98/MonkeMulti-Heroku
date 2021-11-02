@@ -77,7 +77,7 @@ module.exports.login_post = async (req, res) => {
 module.exports.signup_post = async (req, res) => {
     const{username, email, password} = req.body;
     try{
-        const user = await User.create({username, email, password, resetToken:"0", expireToken:Date.now()});
+        const user = await User.create({username, email, password, resetToken:"0", expireToken:Date.now(), isGuest:false});
         const token = createToken(user._id);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000});
         User.connectPlayer(user.username);
@@ -89,7 +89,16 @@ module.exports.signup_post = async (req, res) => {
 }
 
 module.exports.logout_post = (req, res) => {
+    const {usr} = req.body;
+    console.log("USER IS: " + usr);
     console.log("loggin out..........................");
+    if(isGuest(usr)){
+        console.log("ACKNOWLEDGED USER IS GUEST.........");
+        User.findOneAndRemove({username: usr}, error=>{
+          if(error)
+            console.log(error);
+        });
+      }
     res.cookie('jwt', '', {maxAge: 1});
     res.redirect('/');
 }
@@ -215,3 +224,10 @@ module.exports.checkUser = (req, res)=>{
         //next();
     }
 }
+
+function isGuest(username){
+    console.log(username);
+    if(username != null && username.length > 6 && username.slice(0, 6) === "Guest_")
+        return true;
+    return false;
+  }
