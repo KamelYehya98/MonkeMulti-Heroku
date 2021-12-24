@@ -1,5 +1,5 @@
 # MonkeMulti-Heroku
-MonkeMulti is an online card game made with MERN stack and sockets.io
+MonkeMulti is a multiplayer online card game made with MERN stack and sockets.io
 It's a fun and competitive game and quite simple to play, it has an interactive tutorial to make things a bit easier for beginners, 
 a ranking system to score all your winrates and ratings, and an in-game simple chat application to communicate with your opponent.
 
